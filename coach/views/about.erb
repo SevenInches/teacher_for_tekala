@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="author" content="萌萌学车">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="icon" href="/images/icon.png">
+
+    <title>萌萌学车</title>
+    <%=javascript_include_tag 'jquery-1.11.0.min' %>
+
+    <!-- Bootstrap core CSS -->
+    <%=stylesheet_link_tag 'bootstrap.min', 'font-awesome.min', 'sweetalert'%>
+    <%=javascript_include_tag 'sweetalert.min'%>
+
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body>
+    <script type="text/javascript">
+      $('body').fadeOut(0).fadeIn(1000);
+    </script>
+   	
+   	<div class="container" >
+   		
+   		<div class="rows">
+
+   			<div class="col-xs-12">
+   				<%=image_tag 'iTunesArtwork.png', :class=>'img-responsive img-circle', :style=>'margin:0 auto;width:50%;margin-top:10%;' %>
+   				<br>
+				<p style='font-size:16px;'>萌萌学车是学车届的滴滴，直接连接教练与学员，一对一教学，按小时付费，每小时119 元。</p>
+				<p style='font-size:15px;'>教学结束通过银行转账付款，保障教练利益。</p>
+				<hr >
+				<h4>加入我们</h4>
+				<p style='font-size:16px;' >联系我们：<a href='tel:400-845-6866'>400-845-6866</a> </p>
+   				</p>
+   				<br>
+				<br>
+   			</div>
+
+   		</div>
+
+   	</div>
+   
+    <div style='display:none'>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255409445'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255409445%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+
+    </body>
+</html>

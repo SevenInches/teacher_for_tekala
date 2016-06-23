@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="author" content="萌萌学车">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="icon" href="/images/icon.png">
+
+    <title>萌萌学车</title>
+    <%=javascript_include_tag 'jquery-1.11.0.min' %>
+
+    <!-- Bootstrap core CSS -->
+    <%=stylesheet_link_tag 'bootstrap.min', 'font-awesome.min', 'sweetalert'%>
+    <%=javascript_include_tag 'sweetalert.min'%>
+
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body>
+      <script type="text/javascript">
+        $('body').fadeOut(0).fadeIn(1000);
+      </script>
+      <style type="text/css">
+      .container{
+        padding:0px;
+      }
+      </style>
+     	
+     	<div class="container" >
+     		<%=image_tag "photo_letter_for_teacher_#{params[:city]}.jpg", :class => 'img-responsive' %>
+      </div>
+   
+    </body>
+</html>

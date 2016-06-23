@@ -1,0 +1,12 @@
+SELECT id, address, longitude, latitude, ( 6371 * acos( cos( radians(22.527975) ) * cos( radians( 113.914605 ) ) * cos( radians
+( 22.527975 ) - radians(113.914605) ) + sin( radians(22.527975) ) * sin( radians( 113.962906 ) ) ) ) AS distance
+ FROM train_fields HAVING distance < 25 ORDER BY distance LIMIT 0 , 100;
+
+ (2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*(y-lat)/360),2)+COS(PI()*x/180)* COS(lat * PI()/180)*POW(SIN(PI()*(x-lng)/360),2))))
+
+
+( 3959 * acos( cos( radians(37) ) * cos( radians( @latitude ) ) * cos( radians( @longtitude ) - radians(-122) ) + sin( radians(37) ) * sin( radians( @latitude ) ) ) )
+
+ http://www.putaor.com/?p=586
+
+ SELECT ROUND(6371 * acos(cos(radians(22.527975)) * cos(radians(latitude)) * cos(radians(longitude) - radians(113.914605)) + sin(radians(22.527975)) * sin(radians(latitude)))) as distance,latitude,longitude from train_fields HAVING distance<=20  order by distance

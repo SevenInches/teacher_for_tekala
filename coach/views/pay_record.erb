@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>教练打款记录</title>
+    <meta name="author" content="萌萌学车">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="icon" href="/images/icon.png">
+    <meta name="format-detection" content="telephone=no">
+    <title>萌萌学车</title>
+    <%=javascript_include_tag 'jquery-1.11.0.min' %>
+    <%=stylesheet_link_tag 'bootstrap.min', 'font-awesome.min', 'font-awesome.min'%>
+
+</head>
+<body>
+	<div class="container">
+	<div class="row" style='margin-top:20px;'>
+
+		<div class="col-xs-6">
+			
+			<a href='<%=url(:v1, :pay_record, :token => params[:token], :teacher_id => params[:teacher_id], :num => (@num - 1))%>' class='btn btn-warning button'><i class="fa fa-angle-left"></i> 上周</a>
+
+		</div>
+		<div class="col-xs-6">
+			
+			<a href='<%=url(:v1, :pay_record, :token => params[:token], :teacher_id => params[:teacher_id], :num => (@num + 1))%>' class='btn btn-warning button'>下周 <i class="fa fa-angle-right"></i> </a>
+		</div>
+	</div>
+	<div class='row'>
+		<div class="col-xs-12">
+			<p style='font-size:1.1em;margin-top:10px;'> <%=@result%></p>
+		</div>
+		<div class="clear"></div>
+		<hr>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+		<h4>订单详情</h4>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>学车时间</th>
+					<th>学时</th>
+				</tr>
+			</thead>
+			<%@orders.each do |order|%>
+				<tr>
+					<td>
+					<% if order.exam_type == 2%>
+						<label class='label label-info'>C2</label>
+					<%else%>
+						<label class='label label-info'>C1</label>
+					<%end%>
+					<%=order.user.name%> </td>
+					<td><%=order.book_time.strftime('%H:%M')%> - <%=(order.book_time + order.quantity.hours).strftime('%H:%M')%></td>
+					<td><%=order.quantity%></td>
+				</tr>
+			<%end%>
+		</table>
+		
+		</div>
+		<div class="clear"></div>
+		<hr>
+	</div>
+	<div class="row">
+
+		<div class="col-xs-12" style='color:red;'>
+			*说明：手动档 119元/小时 自动档129元/小时，总收入小于3万元，免平台服务费，高于3万元，收取10%的平台服务费。
+		<br>
+		<br>
+		</div>
+
+	</div>
+		
+	</div>
+	<style type="text/css">
+	.button{
+		width:100%;
+	}
+	.clear{
+		clear: both;
+	}
+	hr{
+		margin-bottom:2px;
+		margin-top:2px;
+	}
+	</style>
+	<script type="text/javascript">
+	$(function(){
+		$('.button').
+	})
+	</script>
+
+</body>
+</html>

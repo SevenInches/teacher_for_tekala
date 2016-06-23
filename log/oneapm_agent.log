@@ -1,0 +1,394 @@
+# Logfile created on 2016-06-16 09:56:47 +0800 by logger.rb/47272
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Starting the OneApm agent in "development" environment.
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Using JSON marshaller (json)
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Environment: development
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Dispatcher: puma
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Application: mmxueche
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Sidekiq instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Sinatra instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Padrino instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Curb instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Net instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Redis Instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing deferred Rack instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Installing Rack::Builder middleware instrumentation
+[06/16/16 09:56:47 +0800 ChrisMac.local (19593)] INFO : Finished instrumentation
+[06/16/16 09:56:50 +0800 ChrisMac.local (19593)] INFO : Doing deferred library-detection before Rack startup
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Starting the OneApm agent in "development" environment.
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Using JSON marshaller (json)
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Environment: development
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Dispatcher: puma
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Application: mmxueche
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Sidekiq instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Sinatra instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Padrino instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Curb instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Net instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Redis Instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing deferred Rack instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Installing Rack::Builder middleware instrumentation
+[06/16/16 09:57:55 +0800 ChrisMac.local (19612)] INFO : Finished instrumentation
+[06/16/16 09:57:57 +0800 ChrisMac.local (19612)] INFO : Doing deferred library-detection before Rack startup
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Starting the OneApm agent in "development" environment.
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Using JSON marshaller (json)
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Environment: development
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Dispatcher: puma
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Application: mmxueche
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Sidekiq instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Sinatra instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Padrino instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Curb instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Net instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Redis Instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing deferred Rack instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Installing Rack::Builder middleware instrumentation
+[06/16/16 10:02:46 +0800 ChrisMac.local (19637)] INFO : Finished instrumentation
+[06/16/16 10:02:48 +0800 ChrisMac.local (19637)] INFO : Doing deferred library-detection before Rack startup
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Starting the OneApm agent in "development" environment.
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Using JSON marshaller (json)
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Environment: development
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : No known dispatcher detected.
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Application: mmxueche
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Creating Ruby Agent worker thread.
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Sidekiq instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Sinatra instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Padrino instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Curb instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Net instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Redis Instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing deferred Rack instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Installing Rack::Builder middleware instrumentation
+[06/17/16 14:53:58 +0800 ChrisMac.local (29163)] INFO : Finished instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Starting the OneApm agent in "development" environment.
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Using JSON marshaller (json)
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Environment: development
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Dispatcher: puma
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Application: mmxueche
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Sidekiq instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Sinatra instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Padrino instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Curb instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Net instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Redis Instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing deferred Rack instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Installing Rack::Builder middleware instrumentation
+[06/17/16 14:54:28 +0800 ChrisMac.local (29180)] INFO : Finished instrumentation
+[06/17/16 14:54:31 +0800 ChrisMac.local (29180)] INFO : Doing deferred library-detection before Rack startup
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Starting the OneApm agent in "development" environment.
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Using JSON marshaller (json)
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Environment: development
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : No known dispatcher detected.
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Application: mmxueche
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Creating Ruby Agent worker thread.
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Sidekiq instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Sinatra instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Padrino instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Curb instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Net instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Redis Instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing deferred Rack instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Installing Rack::Builder middleware instrumentation
+[06/17/16 14:57:29 +0800 ChrisMac.local (29287)] INFO : Finished instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Starting the OneApm agent in "development" environment.
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Using JSON marshaller (json)
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Environment: development
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : No known dispatcher detected.
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Application: mmxueche
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Creating Ruby Agent worker thread.
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Sidekiq instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Sinatra instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Padrino instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Curb instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Net instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Redis Instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing deferred Rack instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Installing Rack::Builder middleware instrumentation
+[06/17/16 15:13:08 +0800 ChrisMac.local (29359)] INFO : Finished instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Starting the OneApm agent in "development" environment.
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Using JSON marshaller (json)
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Environment: development
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Dispatcher: puma
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Application: mmxueche
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Sidekiq instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Sinatra instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Padrino instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Curb instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Net instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Redis Instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing deferred Rack instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Installing Rack::Builder middleware instrumentation
+[06/18/16 11:03:11 +0800 ChrisMac.local (32041)] INFO : Finished instrumentation
+[06/18/16 11:03:14 +0800 ChrisMac.local (32041)] INFO : Doing deferred library-detection before Rack startup
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Starting the OneApm agent in "development" environment.
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_mmxueche)
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Using JSON marshaller (json)
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Environment: development
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Dispatcher: puma
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Application: mmxueche
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Sidekiq instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Sinatra instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Padrino instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Curb instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Net instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Redis Instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing deferred Rack instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Installing Rack::Builder middleware instrumentation
+[06/18/16 11:26:41 +0800 ChrisMac.local (32282)] INFO : Finished instrumentation
+[06/18/16 11:26:44 +0800 ChrisMac.local (32282)] INFO : Doing deferred library-detection before Rack startup
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Using JSON marshaller (json)
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Environment: development
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Dispatcher: puma
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Application: mmxueche
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Padrino instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Curb instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Net instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Redis Instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:09:29 +0800 ChrisMac.local (30967)] INFO : Finished instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Using JSON marshaller (json)
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Environment: development
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Dispatcher: puma
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Application: mmxueche
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Padrino instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Curb instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Net instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Redis Instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:13:32 +0800 ChrisMac.local (30990)] INFO : Finished instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Using JSON marshaller (json)
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Environment: development
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Dispatcher: puma
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Application: mmxueche
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Padrino instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Curb instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Net instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Redis Instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:14:58 +0800 ChrisMac.local (30997)] INFO : Finished instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Using JSON marshaller (json)
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Environment: development
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Dispatcher: puma
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Application: mmxueche
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Padrino instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Curb instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Net instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Redis Instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:15:34 +0800 ChrisMac.local (31003)] INFO : Finished instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Using JSON marshaller (json)
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Environment: development
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Dispatcher: puma
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Application: mmxueche
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Padrino instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Curb instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Net instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Redis Instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:19:38 +0800 ChrisMac.local (31028)] INFO : Finished instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Using JSON marshaller (json)
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Environment: development
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Dispatcher: puma
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Application: mmxueche
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Padrino instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Curb instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Net instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Redis Instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:20:40 +0800 ChrisMac.local (31050)] INFO : Finished instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Using JSON marshaller (json)
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Environment: development
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Dispatcher: puma
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Application: mmxueche
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Padrino instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Curb instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Net instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Redis Instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:21:25 +0800 ChrisMac.local (31056)] INFO : Finished instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Using JSON marshaller (json)
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Environment: development
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Dispatcher: puma
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Application: mmxueche
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Padrino instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Curb instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Net instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Redis Instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:22:54 +0800 ChrisMac.local (31069)] INFO : Finished instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Using JSON marshaller (json)
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Environment: development
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Dispatcher: puma
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Application: mmxueche
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Padrino instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Curb instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Net instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Redis Instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:24:48 +0800 ChrisMac.local (31077)] INFO : Finished instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Using JSON marshaller (json)
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Environment: development
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Dispatcher: puma
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Application: mmxueche
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Padrino instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Curb instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Net instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Redis Instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:28:25 +0800 ChrisMac.local (31086)] INFO : Finished instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Using JSON marshaller (json)
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Environment: development
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Dispatcher: puma
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Application: mmxueche
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Padrino instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Curb instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Net instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Redis Instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:28:49 +0800 ChrisMac.local (31092)] INFO : Finished instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Using JSON marshaller (json)
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Environment: development
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Dispatcher: puma
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Application: mmxueche
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Padrino instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Curb instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Net instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Redis Instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:29:15 +0800 ChrisMac.local (31098)] INFO : Finished instrumentation
+[06/23/16 20:29:18 +0800 ChrisMac.local (31098)] INFO : Doing deferred library-detection before Rack startup
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Using JSON marshaller (json)
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Environment: development
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Dispatcher: puma
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Application: mmxueche
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Padrino instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Curb instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Net instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Redis Instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:34:02 +0800 ChrisMac.local (31109)] INFO : Finished instrumentation
+[06/23/16 20:34:06 +0800 ChrisMac.local (31109)] INFO : Doing deferred library-detection before Rack startup
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Using JSON marshaller (json)
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Environment: development
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : No known dispatcher detected.
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Application: mmxueche
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Creating Ruby Agent worker thread.
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Sidekiq instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Sinatra instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Padrino instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Curb instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Net instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Redis Instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing deferred Rack instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 20:37:00 +0800 ChrisMac.local (31138)] INFO : Finished instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Starting the OneApm agent in "development" environment.
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Reading configuration from ./config/oneapm.yml (/Users/john/teacher_for_tekala)
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Using JSON marshaller (json)
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Environment: development
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Dispatcher: puma
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Application: mmxueche
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Deferring startup of agent reporting thread because puma may fork.
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Sidekiq instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Sinatra instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Padrino instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Curb instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Net instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Redis Instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing deferred Rack instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Installing Rack::Builder middleware instrumentation
+[06/23/16 21:11:59 +0800 ChrisMac.local (31807)] INFO : Finished instrumentation
+[06/23/16 21:12:02 +0800 ChrisMac.local (31807)] INFO : Doing deferred library-detection before Rack startup
