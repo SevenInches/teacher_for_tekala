@@ -11,7 +11,7 @@ Szcgs::Coach.controllers  :v1, :orders  do
   get '/', :provides => [:json] do 
 
     # @orders = Order.all(:teacher_id => @teacher.id, :order => :id.desc, :type => 0)
-    @orders = Order.all(:teacher_id => @teacher.id, :status.gt => 101, :order => :id.desc, :type => Order::NORMALTYPE, :order_confirm => OrderConfirm.all(:status => 1))
+    @orders = Order.all(:teacher_id => @teacher.id, :status.gt => 1, :order => :id.desc, :type => 1, :order_confirm => OrderConfirm.all(:status => 1))
     
     @total  = @orders.count
     @orders = @orders.paginate(:page => params[:page], :per_page => 20)

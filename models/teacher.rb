@@ -56,10 +56,10 @@ class Teacher
   #银行卡持卡人姓名
   property :bank_account_name, String, :default => ''
 
-  #'未知'=>0, 'C1'=>1, 'C2'=>2, 'C1/C2'=>3 #mok 2015-07-24
-  property :exam_type, Enum[ 0, 1, 2, 3], :default => 1 #教练教学的车型
-  # '科目二/科目三 => 0', '科目二 => 1'，'科目三 => 2'
-  property :tech_type, Enum[ 0, 1, 2], :default => 0 #教练教学的类型
+  #'未知'=>1, 'C1'=>2, 'C2'=>3, 'C1/C2'=>4
+  property :exam_type, Integer, :default => 1 #教练教学的车型
+  # '科目二/科目三 => 1', '科目二 => 2'，'科目三 => 3'
+  property :tech_type, Integer, :default => 1 #教练教学的类型
 
   property :mobile, String, :unique => true, :required => true,
            :messages => {:is_unique => "手机号已经存在",
@@ -85,8 +85,8 @@ class Teacher
   #教练状态 0休假 1正常使用
   property :status_flag , Enum[0, 1], :default => 1
   
-  #'待审核'=>200, '审核通过'=>201, '审核不通过'=>0, '报名' => 100
-  property :status, Enum[ 200, 201, 0, 100], :default => 200
+  #'待审核'=>1, '审核通过'=>2, '审核不通过'=>3, '报名' => 4
+  property :status, Enum[ 1, 2, 3, 4], :default => 1
   
   #用户区域
   #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :其他 => 0}
@@ -185,7 +185,10 @@ class Teacher
   end
 
   def all_money
-    return orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER).sum(:quantity).to_i * price
+    sum = orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER).sum(:quantity)
+    if sum.present?
+      sum.to_i * price
+    end
   end
 
   def has_hour
@@ -410,16 +413,16 @@ class Teacher
 
 
   def self.exam_type
-    {"未知" => 0, "C1" => 1, "C2" => 2, "C1/C2" => 3}
+    {"未知" => 1, "C1" => 2, "C2" => 3, "C1/C2" => 4}
   end
 
   def exam_type_word 
     case exam_type
-    when 1
-      return 'C1'
     when 2
-      return 'C2'
+      return 'C1'
     when 3
+      return 'C2'
+    when 4
       return 'C1/C2'
     else
       return 'C1'
@@ -472,18 +475,19 @@ class Teacher
   def self.open
     return {'开' => 1, '关' => 0}
   end
+
   def self.tech_type
-    return {'科目二/科目三' => 0, '科目二' => 1, '科目三' => 2}
+    return {'科目二/科目三' => 1, '科目二' => 2, '科目三' => 3}
   end
 
 
   def tech_type_word
     case self.tech_type
-    when 0
-      return '科目二/科目三'
     when 1
-      return '科目二' 
+      return '科目二/科目三'
     when 2
+      return '科目二' 
+    when 3
       return '科目三' 
     end
   end
@@ -491,14 +495,15 @@ class Teacher
 
   def tech_type_name
     case self.tech_type
-    when 0
-      return '科目二/科目三'
     when 1
-      return '科目二' 
+      return '科目二/科目三'
     when 2
+      return '科目二' 
+    when 3
       return '科目三' 
     end
   end
+
   #更新旧数据
   def refresh_tech_hours
     if self.tech_hours != self.has_hour
@@ -593,15 +598,15 @@ class Teacher
   def overdue_undone_orders
     date = Time.now - 1.hour
     # 已支付 + 已确认
-    orders.all(:status=>[102, 104], :book_time.lt => date)
+    orders.all(:status=>[2, 4], :book_time.lt => date)
   end
 
   def done_orders
-    orders.all(:status => [103])
+    orders.all(:status => [3])
   end
 
   def done_or_cancel_orders
-    orders.all(:status => [103, 0])
+    orders.all(:status => [3, 0])
   end
 
   def waiting_count
@@ -611,7 +616,7 @@ class Teacher
 
     order_confirm.each do |oc|
       order = oc.order
-      order_array << order if order && order.book_time > Time.now && order.status == 102
+      order_array << order if order && order.book_time > Time.now && order.status == 2
     end
 
     total = order_array.count
