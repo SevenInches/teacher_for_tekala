@@ -9,8 +9,7 @@ child(@orders => :data){
   attribute :done_at,     :if => lambda { |val| !val.done_at.nil? }
 
   child(:user){
-    attributes :id, :nickname, :mobile, :city, :sex, :score, :avatar_url, :avatar_thumb_url, :exam_type, :has_hour, :exam_type_word, :rate, :status_flag_word, :status_flag, :invite_code, :invite_url
-    node(:name )  { |val| val.is_vip == 1 ?  val.name + '(打包)' : val.name }
+    attributes :id, :name, :nickname, :mobile, :city, :sex, :score, :avatar_url, :avatar_thumb_url, :exam_type, :has_hour, :exam_type_word, :rate, :status_flag_word, :status_flag, :invite_code, :invite_url
   }
 
   child(:train_field => :train_field) {
