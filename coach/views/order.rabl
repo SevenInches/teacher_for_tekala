@@ -9,7 +9,8 @@ child(@order => :data){
   attribute :note,        :if => lambda { |val| !val.note.nil? }
   attribute :subject,     :if => lambda { |val| !val.subject.nil? }
   child(:user){
-    attributes :id, :name, :nickname, :mobile, :city, :sex, :score, :avatar_url, :avatar_thumb_url, :exam_type, :has_hour, :exam_type_word, :rate, :status_flag_word, :status_flag, :invite_code, :invite_url
+    attributes :id, :nickname, :mobile, :city, :sex, :score, :avatar_url, :avatar_thumb_url, :exam_type, :has_hour, :exam_type_word, :rate, :status_flag_word, :status_flag, :invite_code, :invite_url
+    node(:name )  { |val| val.is_vip == 1 ?  val.name + '(打包)' : val.name }
   }
   child(:user_coupon => :coupon){
     attributes :id, :code, :money

@@ -120,6 +120,8 @@ class User
   property :cash_bank_card, String
   property :signup_at, Date
 
+  property :product_id, Integer
+
   has n, :orders
   #进度记录
   #has n, :user_schedule, :model => 'UserSchedule', :child_key =>'user_id' , :constraint => :destroy
@@ -205,7 +207,10 @@ class User
     end
   end
 
-
+  def is_vip
+    p_vip = [13,14,15,16,18,19,23,25,26]
+    p_vip.include?(product_id)? 1 : 0
+  end
 
   #发邮件给用户 params emails[array] template[string] sub[hash]填充参数
   def send_email(emails, template)
