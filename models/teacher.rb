@@ -592,6 +592,10 @@ class Teacher
     end
   end
 
+  def my_train_field
+    train_fields.all(:open => 1)
+  end
+
   # 已结束，但点完成的订单
   def overdue_undone_orders
     date = Time.now - 1.hour
