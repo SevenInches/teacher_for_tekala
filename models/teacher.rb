@@ -187,7 +187,7 @@ class Teacher
   def all_money
     sum = orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER).sum(:quantity)
     if sum.present?
-      sum.to_i * price
+      price.present? ? sum.to_i * price : 0
     end
   end
 
@@ -444,9 +444,7 @@ class Teacher
 
   def self.authenticate(mobile, password)
     teacher = first(:conditions => ["lower(mobile) = lower(?)", mobile]) if mobile.present?
-
     teacher && teacher.has_password?(password) ? teacher : nil
-
   end
 
   def self.find_by_id(id)

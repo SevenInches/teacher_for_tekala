@@ -24,7 +24,6 @@ Szcgs::Coach.controllers :v1 do
 	      session[:teacher_id] = @teacher.id
 	      # 把订单已结束，但未点完成的订单，修改状态
 	      @teacher.check_order
-
 	      render 'teacher'
 	    else
 	      {:status => :failure, :msg => '登陆失败'}.to_json

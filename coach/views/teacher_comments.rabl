@@ -7,7 +7,6 @@ child(@comments => :data){
 	}
 	child(:photos => :photos){
 	    attributes :id, :photo_thumb_url, :photo_url
-
 	}
 
 }
