@@ -20,6 +20,6 @@ end
 
 # Mounts the core application for this project
 
-Padrino.mount('Szcgs::Coach',   	  :app_file => Padrino.root('coach/app.rb')).to('/')
+Padrino.mount('Tekala::Coach',   	  :app_file => Padrino.root('coach/app.rb')).to('/')
 
 
