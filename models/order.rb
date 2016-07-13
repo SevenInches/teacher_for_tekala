@@ -8,14 +8,11 @@ class Order
   PAYTOTEACHER  = 1
   FREETOTEACHER = 2
 
+  STATUS_DONE       = 3   # 已经完成
+  STATUS_PAY        = 2   # 等待接单
   STATUS_CANCEL     = 7   # 取消状态
   STATUS_REFUNDING  = 5   # 退款中
   #补贴
-
-  C2_ALLOWANCE = 10
-
-  #收佣金
-  REBATE       = 0.1
 
   property :id, Serial
   property :user_id, Integer
