@@ -1,4 +1,4 @@
-Szcgs::Coach.controllers  :v1, :comments  do
+Tekala::Coach.controllers  :v1, :comments  do
 	before :except => [] do
 	    
 	    if session[:teacher_id]

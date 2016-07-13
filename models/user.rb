@@ -99,6 +99,7 @@ class User
   property :product_id, Integer, :default => 11
 
   property :school_id, Integer, :default => 0
+
   #用户意见，用于售前跟进
   # 0 = 待跟进
   # 1 = 强烈意向
@@ -234,7 +235,7 @@ class User
 
   #已完成学时
   def has_hour
-    return orders.all(:status => Order::pay_or_done, :type => Order::should_record_hours).sum(:quantity).to_i
+    return orders.all(:status => Order::pay_or_done).sum(:quantity).to_i
   end
 
 

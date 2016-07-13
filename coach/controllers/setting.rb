@@ -1,4 +1,4 @@
-Szcgs::Coach.controllers  :v1, :settings  do
+Tekala::Coach.controllers  :v1, :settings  do
 	before :except => [:validate_sms,:reset_password] do
 	    
     if session[:teacher_id]

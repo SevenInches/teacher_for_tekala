@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-Szcgs::Coach.controllers :v1 do  
+Tekala::Coach.controllers :v1 do
   register WillPaginate::Sinatra
   enable :sessions
   Rabl.register!

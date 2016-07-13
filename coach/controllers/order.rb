@@ -1,4 +1,4 @@
-Szcgs::Coach.controllers  :v1, :orders  do
+Tekala::Coach.controllers  :v1, :orders  do
 	before :except => [] do
 	    if session[:teacher_id]
 	    	@teacher = Teacher.get(session[:teacher_id])
@@ -139,7 +139,6 @@ Szcgs::Coach.controllers  :v1, :orders  do
 
 
   get :new, :provides => [:json] do 
-    # @orders = Order.all(:teacher_id => @teacher.id, :book_time => ((Date.today-5)..(Date.today+1)), :order => :book_time.asc, :status => 102).paginate(:page => params[:page], :per_page => 20)
     @orders = []
     @order_confirm = OrderConfirm.all(:teacher_id => @teacher.id, :status => 0, :order => :created_at.desc )
 
