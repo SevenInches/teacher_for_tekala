@@ -13,6 +13,6 @@ child(@orders => :data){
   }
 
   child(:train_field => :train_field) {
-    attributes :id, :name, :area_word, :address, :longitude, :latitude
+    attributes :id, :name, :area_name, :address, :longitude, :latitude
   }
 }

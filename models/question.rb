@@ -1,30 +1,68 @@
-# -*- encoding : utf-8 -*-
+
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
 class Question
-  include DataMapper::Resource
-
-  # property <name>, <type>
-  property :id, Serial
-  property :title, String, :required => true,
-  		   :messages => {:presence  => "问题不能为空"}
-  property :content, String, :required => true,
-  		   :messages => {:presence  => "答案不能为空"}
-  property :tag, Text, :lazy => false, :required => true,
-  		   :messages => {:presence  => "标签不能为空"}
-
-  #   {:学员 => 0, :教练 => 1}
-  property :type, Enum[0, 1], :default => 0 
-  property :city, String, :default => '0755'
-
+	include DataMapper::Resource
+	# property <name>, <type>
+	property :id, Serial
+	property :title, String, :required => true,
+					 :messages => {:presence  => "问题不能为空"}
+	property :content, Text, :required => true,
+					 :messages => {:presence  => "答案不能为空"}
+	property :tag, Text, :lazy => false, :required => true,
+					 :messages => {:presence  => "标签不能为空"}
+	property :created_at, DateTime
+	#   {:学员 => 1, :教练 => 2, :驾校 =>3}
+	property :type, Integer
+	property :weight, Integer
+	property :show, Boolean, :default =>1
 	def self.get_type
-	return {'学员'=>0, '教练'=>1}
+		return {'学员'=>1, '教练'=>2,'驾校'=>3}
 	end
-
 	def set_type
 		case self.type
-		when 0
-		  return '学员'
-		when 1
-		  return '教练'
+			when 1
+				return '学员'
+			when 2
+				return '教练'
+			when 3
+				return '驾校'
 		end
+	end
+	def show_word
+		show ? '显示' : '隐藏'
 	end
 end

@@ -41,10 +41,8 @@ Szcgs::Coach.controllers  :v1, :settings  do
 
 	end
 
-	get :date_setting, :provides => [:json] do 
-		
-			{:status => :success,:data => JSON.parse(@teacher.date_setting_filter)}.to_json
-
+	get :date_setting, :provides => [:json] do
+    {:status =>:success,:data => @teacher.date_setting_filter}.to_json
 	end
 
 	post :date_setting, :provides => [:json] do 
@@ -55,7 +53,7 @@ Szcgs::Coach.controllers  :v1, :settings  do
 		@teacher.date_setting = content.to_s
 		if @teacher.save
 			{:status => :success,
-			 :date => JSON.parse(@teacher.date_setting_filter)}.to_json
+			 :date => @teacher.date_setting_filter}.to_json
 		else
 			{:status => :failure}.to_json
 		end

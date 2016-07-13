@@ -76,11 +76,11 @@ Szcgs::Coach.controllers :v1 do
 	end
 
 
-	get :questions, :provides => :json do 
-		@questions = Question.all(:type => 1, :city => @teacher.city)
+	get :questions, :provides => :json do
+		@questions = Question.all(:order=>:weight.asc, :show => true)
 		@questions = @questions.paginate(:page => params[:page], :per_page => 20)
-        @total = @questions.count
-        render 'question_student'
+    @total = @questions.count
+    render 'question_student'
 	end
 
 	get :my_train_fields, :provides =>[:json] do 
@@ -92,7 +92,7 @@ Szcgs::Coach.controllers :v1 do
 	end
 
 	get :train_fields, :provides =>[:json] do 
-		@train_fields = TrainField.all(:city => @teacher.city, :open => 1)
+		@train_fields = TrainField.all(:city_id => @teacher.city_id, :open => 1)
 		@train_fields = @train_fields.all(:area => params[:area]) if params[:area]
 		@total = @train_fields.count
 		@train_fields = @train_fields.paginate(:page => params[:page], :per_page => 20)
