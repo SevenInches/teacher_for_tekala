@@ -144,7 +144,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
     @order_confirm.each do |oc|
       order = oc.order
-      @orders << order if order && order.book_time > Time.now && order.status == 102
+      @orders << order if order && order.book_time > Time.now && order.status == 2
     end
 
     @total = @orders.count
@@ -153,7 +153,6 @@ Tekala::Coach.controllers  :v1, :orders  do
     @orders.each do |order|
       if order 
         order.user
-        order.teacher
       end
     end
     #性能优化
