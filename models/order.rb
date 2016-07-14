@@ -82,9 +82,6 @@ class Order
   belongs_to :teacher
   belongs_to :train_field
 
-
-  has 1, :user_coupon
-
   has 1, :teacher_comment
 
   has 1, :user_comment

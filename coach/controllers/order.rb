@@ -56,12 +56,6 @@ Tekala::Coach.controllers  :v1, :orders  do
     @orders = @orders.paginate(:page => params[:page], :per_page => 20)
     
     @total  = @orders.count
-    #性能优化 
-    @orders.each do |orders|
-      orders.user
-      orders.teacher
-    end
-    #性能优化
 
     render 'orders'
   end
