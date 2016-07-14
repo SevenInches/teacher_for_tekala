@@ -54,9 +54,13 @@ Tekala::Coach.controllers  :v1, :orders  do
 
     @orders = @teacher.done_or_cancel_orders.all(:order => :book_time.desc)
     @orders = @orders.paginate(:page => params[:page], :per_page => 20)
-    
+    #性能优化
+    @orders.each do |orders|
+      orders.user
+      orders.teacher
+    end
+    #性能优化
     @total  = @orders.count
-
     render 'orders'
   end
 
@@ -147,10 +151,10 @@ Tekala::Coach.controllers  :v1, :orders  do
     @orders.each do |order|
       if order 
         order.user
+        order.teacher
       end
     end
     #性能优化
-
     render 'orders'
   end
 
