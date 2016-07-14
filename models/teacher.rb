@@ -83,10 +83,10 @@ class Teacher
   property :sort, Integer,:default => 0
 
   #教练状态 0休假 1正常使用
-  property :status_flag , Enum[0, 1], :default => 1
+  property :status_flag , Integer, :default => 1
   
   #'待审核'=>1, '审核通过'=>2, '审核不通过'=>3, '报名' => 4
-  property :status, Enum[ 1, 2, 3, 4], :default => 1
+  property :status, Integer, :default => 1
   
   #用户区域
   #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :其他 => 0}
@@ -608,7 +608,7 @@ class Teacher
   end
 
   def done_or_cancel_orders
-    orders.all(:status => [3, 0])
+    orders.all(:status => [3, 7])
   end
 
   def waiting_count
@@ -622,7 +622,6 @@ class Teacher
     end
 
     total = order_array.count
-
 
   end
 

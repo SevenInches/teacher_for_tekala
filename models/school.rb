@@ -41,10 +41,19 @@ class School
   #has n, :logs  # 操作日志
   has n, :products #产品
   has n, :users
+  has n, :signups
 
-  # def user_num
-  #   users.all(:).count
-  # end
+  def user_num
+    month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
+    this_month = month_beginning  .. Date.tomorrow
+    users.count(:signup_at => this_month)
+  end
+
+  def signup_amount
+    month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
+    this_month = month_beginning  .. Date.tomorrow
+    signups.all(:created_at => this_month, :status => 2).sum(:amount)
+  end
 
   def city_name
     city.nil? ? '--' : city.name

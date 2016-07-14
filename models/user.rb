@@ -32,11 +32,11 @@ class User
   property :birthday, Date, :default => ''
 
   property :daily_limit, Integer, :default => 2
-  #{"未知" => 0, "C1" => 1, "C2" => 2} #mok 2015-08-04
-  property :exam_type, Enum[0, 1, 2], :default => 1 #报名类型
+  #{"未知" => 0, "C1" => 1, "C2" => 2}
+  property :exam_type, Integer, :default => 1                     #报名类型
 
   #{"注册" => 0, "已付费" => 1, "拍照" => 2, "体检" => 3, "录指纹" => 4, "科目一" => 5, "科目二" => 6, "科目三" => 7, "考长途" => 8, "科目四" => 9, "已拿驾照" => 10, "已离开" => 11, "已入网" => 12}
-  property :status_flag, Enum[ 0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], :default => 0
+  property :status_flag, Integer, :default => 0
 
   # property :last_login, DateTime
   property :last_login_at, DateTime
@@ -50,7 +50,7 @@ class User
   property :created_at, DateTime
   property :updated_at, DateTime
   # {:普通班 => 0, :包过班 => 1} 订单交付类型 2015-07-20 mok
-  property :type, Enum[0, 1], :default => 0
+  property :type, Integer, :default => 0
 
   property :address, String
 
@@ -124,14 +124,8 @@ class User
   property :product_id, Integer
 
   has n, :orders
-  #进度记录
-  #has n, :user_schedule, :model => 'UserSchedule', :child_key =>'user_id' , :constraint => :destroy
 
   has n, :comments, :model => 'UserComment', :child_key =>'user_id' , :constraint => :destroy
-  #提现记录
-  #has n, :cash_logs, :model => 'UserWithdrawsCash', :child_key =>'user_id' , :constraint => :destroy
-  #优惠券
-  #has n, :user_coupons
 
   has 1, :promotion_user, :constraint => :destroy
 
@@ -348,7 +342,6 @@ class User
   end
 
   def status_flag_word
-
     case status_flag
       when 1
         "已付费"
@@ -375,7 +368,6 @@ class User
       else
         "注册"
     end
-
   end
 
   def self.exam_type

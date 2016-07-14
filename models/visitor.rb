@@ -4,7 +4,7 @@ class Visitor
   # property <name>, <type>
   property :id, Serial
   property :name, String, :required => true, :messages => {:presence => '请填写姓名'}
-  property :sex, Enum[ 0, 1], :default => 1, :required => true
+  property :sex, Integer, :default => 1, :required => true
   property :age, Integer, :required => true, :messages => {:presence => '请填写年龄'}
   property :mobile, String, :required => true, :unique => true, :messages => {:is_unique => "手机号已经存在",
                           :presence => '请填写联系电话'}
