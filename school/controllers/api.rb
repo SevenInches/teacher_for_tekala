@@ -1,42 +1,36 @@
 # -*- encoding : utf-8 -*-
-Tekala::Manager.controllers :v1 do
+Tekala::School.controllers :v1 do
   register WillPaginate::Sinatra
   enable :sessions
   Rabl.register!
-  before :except => [:login, :unlogin, :logout, :about, :letter, :pay_record, :rank] do 
+  before :except => [:login, :unlogin, :logout] do
 
-	  if session[:teacher_id]
-	    @manager= Teacher.get(session[:teacher_id])
+	  if session[:school_id]
+	    @school= School.get(session[:school_id])
 	  else
 	    redirect_to(url(:v1, :unlogin))  
 	  end
 	end
 
 	post :login, :provides => [:json] do
-	    @teacher = Teacher.authenticate(params[:mobile], params[:password])
-	    if @teacher
-	      #教练设备
-	      @teacher.device = params[:device] || '未知'
-	      @teacher.login_count ||= 0
-	      @teacher.login_count += 1
-	   	  @teacher.save
-
-	      session[:teacher_id] = @teacher.id
+	    @school = School.authenticate(params[:phone], params[:password])
+	    if @school
+	      session[:school_id] = @school.id
 	      # 把订单已结束，但未点完成的订单，修改状态
-	      @teacher.check_order
-	      render 'teacher'
+	      render 'school'
 	    else
 	      {:status => :failure, :msg => '登陆失败'}.to_json
 	    end
 	end
 
 	get :logout, :provides => [:json] do
-		 session[:teacher_id] = nil
+		 session[:school_id] = nil
 		 {:status => :success, :msg => '退出成功'}.to_json
 	end
 
 	get :unlogin, :provides => [:json] do
 	  {:status => :failure, :msg => '未登录'}.to_json
 	end
+
 
 end

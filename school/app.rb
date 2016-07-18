@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Tekala
-  class Manager < Padrino::Application
+  class School < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
 

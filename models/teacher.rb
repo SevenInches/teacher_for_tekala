@@ -104,7 +104,7 @@ class Teacher
   property :weight, Integer, :default => 0
   
   property :open, Integer, :default => 1
-  # property :has_hour, Integer, :default => 0
+
   property :login_count, Integer, :default => 0
 
   property :vip, Integer, :default => 0#收入是否已超3万元
@@ -192,11 +192,7 @@ class Teacher
   end
 
   def has_hour
-    
-    hour = orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER).sum(:quantity).to_i
-    return hour-50 if id == 170
-    return hour-30 if id == 278
-    return hour
+    tech_hours.to_i if tech_hours.present?
   end
 
   def avatar_thumb_url

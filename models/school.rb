@@ -1,6 +1,8 @@
 class School
   include DataMapper::Resource
 
+  attr_accessor :password
+
   # property <name>, <type>
   property :id, Serial
   property :city_id, Integer
@@ -20,7 +22,7 @@ class School
   property :note, String
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :crypted_password, String
+  property :crypted_password, String, :length => 70
 
   #新增字段
   #property :contact_user, String
@@ -42,6 +44,25 @@ class School
   has n, :products #产品
   has n, :users
   has n, :signups
+  has n, :teachers
+  has n, :train_fields
+
+  def self.authenticate(phone, password)
+    school = first(:conditions => ["lower(contact_phone) = lower(?)", phone]) if phone.present?
+    school && school.has_password?(password) ? school : nil
+  end
+
+  def has_password?(password)
+    ::BCrypt::Password.new(crypted_password) == password
+  end
+
+  def password_required
+    crypted_password.blank? || password.present?
+  end
+
+  def encrypt_password
+    self.crypted_password = ::BCrypt::Password.create(password) if password.present?
+  end
 
   def user_num
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
@@ -52,7 +73,7 @@ class School
   def signup_amount
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
     this_month = month_beginning  .. Date.tomorrow
-    signups.all(:created_at => this_month, :status => 2).sum(:amount)
+    signups.all(:created_at => this_month, :status => 2).sum(:amount).round(2)
   end
 
   def city_name
