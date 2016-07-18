@@ -137,13 +137,13 @@ class User
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'user_id', :constraint => :destroy
 
-  belongs_to :product, :model => 'Product'
-  belongs_to :teacher, :model => 'Teacher'
-  belongs_to :train_field, :model => 'TrainField'
+  belongs_to :product
+  belongs_to :teacher
+  belongs_to :train_field
 
-  belongs_to :school, :model => 'School'
+  belongs_to :school
 
-  belongs_to :city,  :model => 'City'
+  belongs_to :city
 
   # Callbacks
   before :save, :encrypt_password
@@ -246,7 +246,7 @@ class User
   end
 
   def city_name
-    city.name
+    city.name if city.present?
   end
 
   def avatar_url
@@ -276,7 +276,6 @@ class User
 
   def self.authenticate_by_mobile(mobile, password)
     user = first(:conditions => ["lower(mobile) = lower(?)", mobile]) if mobile.present?
-    puts user
     if user && user.has_password?(password)
 
       user.last_login_at = Time.now

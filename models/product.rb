@@ -26,7 +26,7 @@ class Product
   belongs_to :city
 
   def city_name
-    city.name
+    city.name if city.present?
   end
 
   def photo_thumb_url
