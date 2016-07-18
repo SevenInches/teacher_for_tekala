@@ -47,6 +47,8 @@ class School
   has n, :teachers
   has n, :train_fields
 
+  before :save, :encrypt_password
+
   def self.authenticate(phone, password)
     school = first(:conditions => ["lower(contact_phone) = lower(?)", phone]) if phone.present?
     school && school.has_password?(password) ? school : nil
@@ -73,7 +75,8 @@ class School
   def signup_amount
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
     this_month = month_beginning  .. Date.tomorrow
-    signups.all(:created_at => this_month, :status => 2).sum(:amount).round(2)
+    amount = signups.all(:created_at => this_month, :status => 2).sum(:amount)
+    amount.present? ? amount.round(2) : 0
   end
 
   def city_name
