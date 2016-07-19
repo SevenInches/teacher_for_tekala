@@ -26,6 +26,10 @@ Tekala::School.controllers :v1 do
 	post :logout, :provides => [:json] do
 		 session[:school_id] = nil
 		 {:status => :success, :msg => '退出成功'}.to_json
+  end
+
+	get :unlogin, :provides => [:json] do
+		{:status => :failure, :msg => '未登录'}.to_json
 	end
 
 end
