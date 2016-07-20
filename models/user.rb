@@ -849,8 +849,17 @@ class User
     return {:status => :failure, :msg => "您当天已学 #{days_current} 个学时，为保证教学质量，防止疲劳学习，建议一天最多学习 #{daily_limit} 小时哦！"} if days_count > daily_limit
     # 限制用户一天只能约4个小时 */
     return {:status => :success}
-
-
   end
 
+  def status_flag_demo
+    '学员状态: 0=>注册, 1=>已付费, 2=>拍照, 3=>体检, 4=>录指纹, 5=>科目一, 6=>科目二, 7=>科目三, 8=>考长途, 9=>科目四, 10=>已拿驾照, 11=>已离开, 12=>已入网'
+  end
+
+  def exam_type_demo
+    '驾校类型: 0=>未知, 1=>C1, 2=>C2'
+  end
+
+  def type_demo
+    '班别类型: 0=>普通班, 1=>包过班'
+  end
 end

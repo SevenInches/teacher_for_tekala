@@ -23,9 +23,15 @@ Tekala::School.controllers :v1, :schools  do
   end
 
   get :fields, :map => '/v1/fields', :provides => [:json] do
-    @fields = @school.train_fields.all(:open => 1)
-    @total  = @fields.count
-    @fields = @fields.paginate(:per_page => 20, :page => params[:page])
+    if params['demo'].present?
+      @demo     = params['demo']
+      @fields = TrainField.first
+      @total    = 1
+    else
+      @fields = @school.train_fields.all(:open => 1)
+      @total  = @fields.count
+      @fields = @fields.paginate(:per_page => 20, :page => params[:page])
+    end
     render 'fields'
   end
 
@@ -43,9 +49,15 @@ Tekala::School.controllers :v1, :schools  do
   end
 
   get :users, :map => '/v1/users', :provides => [:json] do
-    @users = @school.users
-    @total  = @users.count
-    @users = @users.paginate(:per_page => 20, :page => params[:page])
+    if params['demo'].present?
+      @demo     = params['demo']
+      @users    = User.first
+      @total    = 1
+    else
+      @users = @school.users
+      @total = @users.count
+      @users = @users.paginate(:per_page => 20, :page => params[:page])
+    end
     render 'users'
   end
 
