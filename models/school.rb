@@ -79,6 +79,14 @@ class School
     amount.present? ? amount.round(2) : 0
   end
 
+  def signup_amount_demo
+    '本月营收'
+  end
+
+  def user_num_demo
+    '本月招生'
+  end
+
   def city_name
     city.nil? ? '--' : city.name
   end
