@@ -9,7 +9,7 @@ class TrainField
   property :latitude, String, :default => '0.0'
   property :remark, String
   property :count, Integer, :default => 0
-  property :type, Enum[0, 1, 2], :default => 0
+  property :type, Integer, :default => 0
   property :display, Boolean, :default => true
 
   property :area, Integer, :default => 0
@@ -22,8 +22,8 @@ class TrainField
   property :users_count, Integer, :default => 0
   property :orders_count, Integer, :default => 0
 
-  property :good_tags, String, :default => ''
-  property :bad_tags, String, :default => ''
+  property :good_tags, String
+  property :bad_tags, String
   property :subject, Integer, :default => 2
   property :school_id, Integer,:default => 0
   
@@ -71,16 +71,6 @@ class TrainField
     return {'深圳' => '0755', '武汉' => '027', '重庆' => '023'}
   end
 
-  def city_name
-    case self.city
-    when '0755'
-      return '深圳'
-    when '027'
-      return '武汉'
-    when '023'
-      return '重庆'
-    end
-  end
   def self.open
     return {'开' => 1, '关' => 0}
   end
@@ -107,17 +97,8 @@ class TrainField
     {'科目二' => 2, '科目三' => 3}
   end
 
-  def subject_word 
-    case subject 
-    when 2
-      '科目二'
-    when 3
-      '科目三'
-    else 
-      ''
-    end
-
+  def subject_demo
+    '场地科目: 2=>科目二, 3=>科目三'
   end
-
-
+  
 end
