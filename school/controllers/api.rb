@@ -13,14 +13,20 @@ Tekala::School.controllers :v1 do
 	end
 
 	post :login, :provides => [:json] do
-	    @school = School.authenticate(params[:phone], params[:password])
-	    if @school
-	      session[:school_id] = @school.id
-	      # 把订单已结束，但未点完成的订单，修改状态
-	      render 'school'
-	    else
-	      {:status => :failure, :msg => '登陆失败'}.to_json
-	    end
+    	if params[:demo].present?
+        @demo   = params[:demo]
+				@school = School.first
+				render 'school'
+      else
+				@school = School.authenticate(params[:phone], params[:password])
+				if @school
+					session[:school_id] = @school.id
+					# 把订单已结束，但未点完成的订单，修改状态
+					render 'school'
+				else
+					{:status => :failure, :msg => '登陆失败'}.to_json
+				end
+      end
 	end
 
 	post :logout, :provides => [:json] do
