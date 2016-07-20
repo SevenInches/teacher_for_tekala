@@ -58,6 +58,7 @@ class Teacher
 
   #'未知'=>1, 'C1'=>2, 'C2'=>3, 'C1/C2'=>4
   property :exam_type, Integer, :default => 1 #教练教学的车型
+
   # '科目二/科目三 => 1', '科目二 => 2'，'科目三 => 3'
   property :tech_type, Integer, :default => 1 #教练教学的类型
 
@@ -70,9 +71,6 @@ class Teacher
   property :remark,  String, :default => ''
 
   property :referee, String, :default => ''
-
-  #教练教学科目 0 科目二/科目三 2 科目二 3 科目三
-  property :subject, Integer, :default => 0
 
   property :price, Integer, :default => 119, :min => 0
   property :promo_price, Integer, :default => 119, :min => 0
@@ -514,17 +512,6 @@ class Teacher
     vip == 1
   end
 
-  def subject_word
-    case subject 
-    when 2
-      '科目二'
-    when 3
-      '科目三'
-    else
-      '科目二/科目三'
-    end
-  end
-
   def reset_subject
     subject_arr = train_fields.map(&:subject).uniq
     if subject_arr == [2]
@@ -617,8 +604,18 @@ class Teacher
       order_array << order if order && order.book_time > Time.now && order.status == 2
     end
 
-    total = order_array.count
-
+    order_array.count
   end
 
+  def exam_type_demo
+    '驾考类型: 1=>未知, 2=>C1, 3=>C2, 4=>C1/C2'
+  end
+
+  def tech_type_demo
+    '教授科目:  1=>科目二/科目三, 2=>科目二, 3=>科目三'
+  end
+
+  def sex_demo
+    '性别: 0=>女 1=>男'
+  end
 end
