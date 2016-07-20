@@ -19,6 +19,8 @@ class Product
   #"c1"=>1,"c2"=>2
   property :exam_type, Integer, :default => 0
 
+  property :color, String, :default => ''                             #颜色
+
   has n, :users, :model => 'User'
 
   belongs_to :school
@@ -26,7 +28,7 @@ class Product
   belongs_to :city
 
   def city_name
-    city.name if city.present?
+    city.present? ? city.name : '--'
   end
 
   def photo_thumb_url
@@ -56,6 +58,18 @@ class Product
 
   def can_buy 
     show == 1 && deadline > Date.today
+  end
+
+  def exam_type_demo
+    '驾考类型: 1=>C1, 2=>C2'
+  end
+
+  def show_demo
+    '展示: 0=>关闭, 1=>开启'
+  end
+
+  def color_demo
+    '颜色: 紫色=>#967ADC, 橙色=>#EE6439, 蓝色=>#4A89DC, 绿色=> #8CC152'
   end
 
 end

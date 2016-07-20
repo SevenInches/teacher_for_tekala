@@ -1,18 +1,24 @@
 Tekala::School.controllers :v1, :schools  do
-  before :except => [] do
 
+  before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
-    else
+    elsif !params['demo'].present?
       redirect_to(url(:v1, :unlogin))
     end
 
   end
 
   get :teachers, :map => '/v1/teachers', :provides => [:json] do
-    @teachers = @school.teachers.all(:open => 1)
-    @total  = @teachers.count
-    @teachers = @teachers.paginate(:per_page => 20, :page => params[:page])
+    if params['demo'].present?
+      @demo     = params['demo']
+      @teachers = Teacher.first
+      @total    = 1
+    else
+      @teachers = @school.teachers.all(:open => 1)
+      @total    = @teachers.count
+      @teachers = @teachers.paginate(:per_page => 20, :page => params[:page])
+    end
     render 'teachers'
   end
 
@@ -24,9 +30,15 @@ Tekala::School.controllers :v1, :schools  do
   end
 
   get :products, :map => '/v1/products', :provides => [:json] do
-    @products = @school.products.all(:show => 1)
-    @total  = @products.count
-    @products = @products.paginate(:per_page => 20, :page => params[:page])
+    if params['demo'].present?
+      @demo     = params['demo']
+      @products = Product.first(:show => 1)
+      @total    = 1
+    else
+      @products = @school.products.all(:show => 1)
+      @total  = @products.count
+      @products = @products.paginate(:per_page => 20, :page => params[:page])
+    end
     render 'products'
   end
 
