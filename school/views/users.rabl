@@ -7,5 +7,8 @@ child(@users => :data){
 	node(:status_flag ) { |val| @demo.present? ? val.status_flag_demo : val.status_flag}
 	node(:exam_type ) { |val| @demo.present? ? val.exam_type_demo : val.exam_type}
 	node(:type ) { |val| @demo.present? ? val.type_demo : val.type}
+	child(:product) {
+    	attributes :name
+    }
 }
 
