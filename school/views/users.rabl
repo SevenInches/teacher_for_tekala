@@ -8,7 +8,7 @@ child(@users => :data){
 	node(:exam_type ) { |val| @demo.present? ? val.exam_type_demo : val.exam_type}
 	node(:type ) { |val| @demo.present? ? val.type_demo : val.type}
 	child(:product) {
-    	attributes :name
+		node(:name ) { |product| @demo.present? ? '已报名班别' : product.name}
     }
 }
 
