@@ -1,0 +1,10 @@
+---
+:orm: datamapper
+:test: none
+:mock: none
+:script: none
+:renderer: erb
+:stylesheet: none
+:namespace: Tekala
+:migration_format: number
+:admin_renderer: erb
