@@ -4,18 +4,24 @@ class Product
   property :id, Serial
   property :city_id, Integer
   property :name, String
+  property :promotion, String
   property :price, Integer #单位 分
   property :detail, Text
   property :deadline, Date, :default => '2050-01-01' #截止日期
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :show, Integer, :default => 0
+  property :show, Integer, :default => 1
   property :photo, String, :auto_validation => false
 
   property :info_photo, String, :auto_validation => false
   property :exam_two_standard, Integer, :default => 0
   property :exam_three_standard, Integer, :default => 0
   property :total_quantity, Integer, :default => 0
+
+  property :description, String
+
+  property :introduction, String
+
   #"c1"=>1,"c2"=>2
   property :exam_type, Integer, :default => 0
 
