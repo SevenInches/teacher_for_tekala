@@ -52,7 +52,7 @@ Tekala::Shop.controllers :v1, :shops  do
   end
 
   delete :delete_students, :provides => [:json], :map => '/v1/delete_students' do
-    students = Student.all(params[:id])
+    students = Student.all(:id => params[:id])
     if students.destroy
       {:status => :success, :msg => '删除成功'}.to_json
     else
