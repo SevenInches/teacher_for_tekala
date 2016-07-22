@@ -16,7 +16,8 @@ Tekala::Shop.controllers :v1 do
     		@shop = Shop.authenticate(params[:phone], params[:password])
     		if @shop
     			session[:shop_id] = @shop.id
-    			{:status => :success, :msg => '登录成功'}.to_json
+    			#{:status => :success, :msg => '登录成功'}.to_json
+    			render 'shop'
     		else
     			{:status => :failure, :msg => '登录失败'}.to_json
     		end
