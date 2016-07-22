@@ -16,7 +16,14 @@ Tekala::Shop.controllers :v1 do
     		@shop = Shop.authenticate(params[:phone], params[:password])
     		if @shop
     			session[:shop_id] = @shop.id
-    			#{:status => :success, :msg => '登录成功'}.to_json
+    			a = Consultant.count.to_f
+			b = Student.count
+			c = ( a == 0 ? 1.0 : b / a )
+
+			@consultant_count = Consultant.count
+			@student_count = Student.count
+			@consultant_chu_student = c
+
     			render 'shop'
     		else
     			{:status => :failure, :msg => '登录失败'}.to_json
@@ -35,7 +42,7 @@ Tekala::Shop.controllers :v1 do
 	get :index, :provides => [:json], :map => '/v1' do
 		a = Consultant.count.to_f
 		b = Student.count
-		c = ( b == 0 ? 0 : a / b )
+		c = ( a == 0 ? 1.0 : b / a )
 		{:consultant_count => Consultant.count, :student_count => Student.count, :consultant_chu_student => c}.to_json
 	end
 
