@@ -7,7 +7,10 @@ class Shop
   property :id, Serial
   property :name, String
   property :address, String
+  property :rent_amount, Integer
+  property :area, Integer
   property :contact_phone, String
+  property :contact_user, String
   property :profile, Text   #简介
   property :logo, String     #logo
   property :config, Text     #配置
@@ -16,9 +19,14 @@ class Shop
   property :crypted_password, String, :length => 70
   property :student_count, DataMapper::Property::Integer # 招生人数
   property :consultant_count, DataMapper::Property::Integer # 咨询人数
+  property :longtitude, String
+  property :latitude, String
+  property :school_id, Integer
 
   has n, :consultants
   has n, :students
+
+  belongs_to :school
 
   before :save, :encrypt_password
 
@@ -39,25 +47,5 @@ class Shop
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 
-  #def user_num
-   # month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
-    #this_month = month_beginning  .. Date.tomorrow
-    #users.count(:signup_at => this_month)
- # end
-
-  #def signup_amount
-    #month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
-    #this_month = month_beginning  .. Date.tomorrow
-    #amount = signups.all(:created_at => this_month, :status => 2).sum(:amount)
-    #amount.present? ? amount.round(2) : 0
-  #end
-
-  def signup_amount_demo
-    '本月营收'
-  end
-
-  def user_num_demo
-    '本月招生'
-  end
 
 end

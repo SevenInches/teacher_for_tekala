@@ -37,7 +37,8 @@ class School
 
   #has n, :maps  # 训练场数字地图
 
-  #has n, :shops # 门店
+  has n, :shops # 门店
+  has n, :cars  #车辆
   #has n, :finances          # 财务记录
   #has n, :finance_reports   # 财务报告
   #has n, :logs  # 操作日志
@@ -77,14 +78,6 @@ class School
     this_month = month_beginning  .. Date.tomorrow
     amount = signups.all(:created_at => this_month, :status => 2).sum(:amount)
     amount.present? ? amount.round(2) : 0
-  end
-
-  def signup_amount_demo
-    '本月营收'
-  end
-
-  def user_num_demo
-    '本月招生'
   end
 
   def city_name

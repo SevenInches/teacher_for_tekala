@@ -35,19 +35,6 @@ Tekala::School.controllers :v1, :schools  do
     render 'fields'
   end
 
-  get :products, :map => '/v1/products', :provides => [:json] do
-    if params['demo'].present?
-      @demo     = params['demo']
-      @products = Product.first(:show => 1)
-      @total    = 1
-    else
-      @products = @school.products.all(:show => 1)
-      @total  = @products.count
-      @products = @products.paginate(:per_page => 20, :page => params[:page])
-    end
-    render 'products'
-  end
-
   get :users, :map => '/v1/users', :provides => [:json] do
     if params['demo'].present?
       @demo     = params['demo']
