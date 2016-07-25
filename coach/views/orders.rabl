@@ -1,7 +1,8 @@
 node(:status) { 'success' }
 node(:total) { @total }
 child(@orders => :data){
-  attributes :id, :order_no,:train_field_name, :user_id, :status, :status_word, :book_time, :quantity, :teacher_can_comment, :user_has_comment, :is_comment, :book_time, :cancel_by_me, :accept_status, :created_at, :paid, :amount, :theme_word
+  attributes :id, :order_no,:train_field_name, :user_id, :status, :status_word, :quantity, :teacher_can_comment, :user_has_comment, :is_comment, :cancel_by_me, :accept_status, :created_at, :paid, :amount, :theme_word
+  node(:book_time ) { |val| val.book_time.strftime('%FT%T.%L%:z') if val.book_time.present?  }
   attribute :pay_at,      :if => lambda { |val| !val.pay_at.nil? }
   attribute :done_at,     :if => lambda { |val| !val.done_at.nil? }
   child(:user){

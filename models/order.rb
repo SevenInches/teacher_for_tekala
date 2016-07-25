@@ -368,8 +368,4 @@ class Order
 
     word_arr
   end
-
-  def book_time
-    book_time.strftime('%FT%T.%L%:z')
-  end
 end
