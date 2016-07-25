@@ -34,7 +34,7 @@ class Order
   property :cancel_at,  DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :book_time,  DateTime  #预订时间
+  property :book_time,  DateTime
 
   #是否已经买了保单
   property :has_insure, Integer, :default => 0
