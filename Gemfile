@@ -1,4 +1,4 @@
-source 'https://ruby.taobao.org/'
+source 'https://gems.ruby-china.org'
 
 # Distribute your app as a gem
 # gemspec
@@ -39,6 +39,7 @@ gem 'rabl'
 gem 'oj'
 
 gem 'qiniu'
+gem 'qiniu-rs'
 
 # 上传文件
 # gem 'carrierwave'
@@ -53,7 +54,7 @@ gem 'carrierwave-qiniu'
 # Test requirements
 
 # Padrino Stable Gem
-gem 'padrino', '0.12.4'
+gem 'padrino'
 
 #curb curl for curl
 gem 'curb'
