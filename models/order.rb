@@ -368,5 +368,4 @@ class Order
 
     word_arr
   end
-
 end
