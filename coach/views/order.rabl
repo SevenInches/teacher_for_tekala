@@ -1,7 +1,7 @@
 node(:status) { 'success' }
 child(@order => :data){
-  attributes :id, :order_no, :price, :amount, :promotion_amount, :discount, :teacher_id, :user_id, :device, :status, :status_word, :created_at, :book_time, :other_book_time, :has_coupon, :teacher_can_comment, :user_has_comment, :is_comment, :cancel_by_me, :type, :paid, :amount, :theme_word
-  attributes :quantity
+  attributes :id, :order_no, :price, :amount, :promotion_amount, :discount, :teacher_id, :user_id, :device, :status, :status_word, :created_at, :book_time
+  attributes :other_book_time, :has_coupon, :teacher_can_comment, :user_has_comment, :is_comment, :cancel_by_me, :type, :paid, :amount, :theme_word, :quantity
   attribute :pay_at,      :if => lambda { |val| !val.pay_at.nil? }
   attribute :done_at,     :if => lambda { |val| !val.done_at.nil? }
   attribute :cancel_at,   :if => lambda { |val| !val.cancel_at.nil? }

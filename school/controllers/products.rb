@@ -1,5 +1,4 @@
 Tekala::School.controllers :v1, :products  do
-
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
@@ -49,6 +48,8 @@ Tekala::School.controllers :v1, :products  do
       @product.price         = params[:price]     if params[:price].present?
       @product.promotion	   = params[:promotion] if params[:promotion].present?
       @product.show          = params[:show]      if params[:show].present?
+      @product.description   = params[:description]   if params[:description].present?
+      @product.introduction  = params[:introduction]  if params[:introduction].present?
       if @product.save
         render 'product'
       end
