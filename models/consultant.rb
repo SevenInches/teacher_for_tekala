@@ -13,10 +13,10 @@ class Consultant
 
   belongs_to :shop
 
-  def user_num
+  def self.user_num
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
     this_month = month_beginning  .. Date.tomorrow
-    users.count(:signup_at => this_month)
+    Consultant.count(:created_at => this_month)
   end
 
   def signup_amount

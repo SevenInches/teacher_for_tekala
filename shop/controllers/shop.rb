@@ -41,7 +41,7 @@ Tekala::Shop.controllers :v1, :shops  do
   end
 
   post :add_students, :provides => [:json], :map => '/v1/add_students' do 
-    consultant  = Consultant.get(params[:id].to_i)
+    consultant = Consultant.get(params[:id].to_i)
     student = Student.create(:name => consultant.name, :sex => consultant.sex, :age => consultant.age, :mobile => consultant.mobile, :shop_id => @shop.id)
     if student.save
       consultant.destroy
@@ -52,7 +52,7 @@ Tekala::Shop.controllers :v1, :shops  do
   end
 
   delete :delete_students, :provides => [:json], :map => '/v1/delete_students' do
-    students = Student.all(params[:id])
+    students = Student.all(:id => params[:id])
     if students.destroy
       {:status => :success, :msg => '删除成功'}.to_json
     else

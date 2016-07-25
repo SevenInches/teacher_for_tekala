@@ -115,4 +115,6 @@ gem 'roo-xls'
 gem 'spreadsheet'
 
 
-
+group :test do
+  gem 'minitest', "~>2.6.0", :require => "minitest/autorun"
+end
