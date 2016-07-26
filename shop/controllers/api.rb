@@ -43,7 +43,7 @@ Tekala::Shop.controllers :v1 do
 		a = Student.user_num + Consultant.user_num.to_f
 		b = Student.user_num
 		c = ( a == 0 ? 1.0 : b / a )
-		{:status => :success, :consultant_count => a, :student_count => Student.user_num, :consultant_chu_student => c}.to_json
+		{:status => :success, :data => {:consultant_count => a, :student_count => Student.user_num, :consultant_chu_student => c}}.to_json
 	end
 
 end
