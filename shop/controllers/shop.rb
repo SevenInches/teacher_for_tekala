@@ -32,8 +32,10 @@ Tekala::Shop.controllers :v1, :shops  do
   end
 
   delete :delete_consultants, :provides => [:json], :map => '/v1/delete_consultants' do
-    consultant = Consultant.all(:id => params[:id]) # 待测试
-    if consultant.destroy
+    arr = params[:id].chars
+    arr.delete ","
+    consultants = Consultant.all(:id => arr) # 待测试
+    if consultants.destroy
       {:status => :success, :msg => '删除成功'}.to_json
     else
       {:status => :failure, :msg => '删除失败'}.to_json
@@ -52,7 +54,9 @@ Tekala::Shop.controllers :v1, :shops  do
   end
 
   delete :delete_students, :provides => [:json], :map => '/v1/delete_students' do
-    students = Student.all(:id => params[:id])
+    arr = params[:id].chars
+    arr.delete ","
+    students = Student.all(:id => arr)
     if students.destroy
       {:status => :success, :msg => '删除成功'}.to_json
     else

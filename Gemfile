@@ -45,11 +45,7 @@ gem 'qiniu-rs'
 # gem 'carrierwave'
 gem 'carrierwave-datamapper', :require => 'carrierwave/datamapper'
 
-gem 'mini_magick'
-gem 'rmagick'
-
 gem 'carrierwave-qiniu'
-
 
 # Test requirements
 
