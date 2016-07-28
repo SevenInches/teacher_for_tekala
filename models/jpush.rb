@@ -1,58 +1,20 @@
-#  ==================================================
-#  file:    jpush.rb
-#  desc:    极光推送
-#  author:  mok@chamobile.com
-#
-#  Created by 恰恰网络 on 2014-07-15.
-#  Copyright (c) 2014年 歌力思. All rights reserved.
-#  ==================================================      
-    
+
 # 极光推送
 class JPush
   #from app@mmxueche.com 管理版
   #pwd  pVh7tnAViy6F
 
   #学员版本
-  KEY = "3223ea1d02356c749f8f1ab4"
-  SEC = "35767888b32145700282e76b"
+  KEY = "164d07f0e6d086a219295841"
+  SEC = "07850c205a6b60c8ab7a0543"
 
-  #管理版
-  MKEY = "e972c4b8c7f259d8514cd9b9"
-  MSEC = "3aa1f47c652f24adcd0d323f"
-
-  TEACHERKEY = "611e0382f950c821198e38e6"
-  TEACHERSEC = "aeeda231ba8d901b39d70dcc"
+  #教练版
+  TEACHERKEY = "666bfd915856f8db083da084"
+  TEACHERSEC = "db8e69cb1c8a6458d91c6f02"
 
   APNS_PRODUCTION = "true"
 
   URL = URI('https://api.jpush.cn/v3/push')
-
-  #推送给管理app
-  def self.send message="有新教练加入啦!"
-
-    Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
-      @count = Teacher.count
-      req=Net::HTTP::Post.new(URL.path)
-      req.basic_auth MKEY,MSEC
-      jpush =[]
-      jpush << 'platform=all'
-      jpush << 'audience=all'
-
-        jpush << 'notification={
-
-            "ios":{
-                   "alert":"'+message+'",
-                   "content-available":1,
-                   "extras":{"type": "teacher", "msg": "'+message+'", "count": "'+@count.to_s+'" }
-                     }
-                  }'
-        jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
-        req.body = jpush.join("&")
-        resp=http.request(req)
-        p resp.body
-    
-    end
-  end
 
   def self.send_one(account, msg, type, data) 
     Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
@@ -77,9 +39,7 @@ class JPush
         jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
         req.body = jpush.join("&")
         resp=http.request(req)
-        
     end
-
   end  
 
   def self.send_phone(phone, msg)
@@ -122,9 +82,8 @@ class JPush
         jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
         req.body = jpush.join("&")
         resp=http.request(req)
-        
-    end
 
+    end
   end
 
   #新预约通知 您有一个新订单，立即处理
