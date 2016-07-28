@@ -71,7 +71,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
     if order && order.teacher_id == @teacher.id 
       order.done_at = Time.now
-      order.status = 103
+      order.status = 3
       if order.save
         JPush::order_finish order.id
         {:status => :success}.to_json
@@ -84,7 +84,7 @@ Tekala::Coach.controllers  :v1, :orders  do
   end
 
   get :has_accept, :provides =>[:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :order => :book_time.asc, :status => 104, :book_time.gt => Time.now)
+    @orders = Order.all(:teacher_id => @teacher.id, :order => :book_time.asc, :status => 4, :book_time.gt => Time.now)
     
     #性能优化 
     @orders.each do |orders|
@@ -97,7 +97,7 @@ Tekala::Coach.controllers  :v1, :orders  do
   end
 
   get :can_comment, :provides => [:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :order => :done_at.desc, :status => 103)
+    @orders = Order.all(:teacher_id => @teacher.id, :order => :done_at.desc, :status => 3)
     @can_comment = []
     @orders.each do |order|
      @can_comment << order if order.teacher_can_comment
@@ -160,7 +160,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   #今日订单
   get :today, :provides =>[:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :book_time => ((Date.today)..(Date.today+1)), :order => :book_time.asc, :type => Order::NORMALTYPE, :status => 104).paginate(:page => params[:page], :per_page => 20)
+    @orders = Order.all(:teacher_id => @teacher.id, :book_time => ((Date.today)..(Date.today+1)), :order => :book_time.asc, :type => Order::NORMALTYPE, :status => 4).paginate(:page => params[:page], :per_page => 20)
     @total  = @orders.count
     #性能优化 
     @orders.each do |orders|
@@ -174,7 +174,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   #最近七天订单
   get :recent, :provides =>[:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :book_time => ((Date.today)..(Date.today+8)), :order => :book_time.asc, :type => Order::NORMALTYPE, :status => 104).paginate(:page => params[:page], :per_page => 20)
+    @orders = Order.all(:teacher_id => @teacher.id, :book_time => ((Date.today)..(Date.today+8)), :order => :book_time.asc, :type => Order::NORMALTYPE, :status => 4).paginate(:page => params[:page], :per_page => 20)
     @total  = @orders.count
     #性能优化 
     @orders.each do |orders|
@@ -189,7 +189,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   #待教学
   get :waiting, :provides => [:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :status => 104, :order => :book_time.desc, :type => Order::NORMALTYPE)
+    @orders = Order.all(:teacher_id => @teacher.id, :status => 4, :order => :book_time.desc, :type => Order::NORMALTYPE)
 
     @total  = @orders.count
     @orders = @orders.paginate(:page => params[:page], :per_page => 20)
@@ -206,7 +206,7 @@ Tekala::Coach.controllers  :v1, :orders  do
   #未完成订单
   get :uncomplete, :provides => [:json] do 
     @orders = []
-    @order_tmps = Order.all(:teacher_id => @teacher.id, :status => 103, :order => :book_time.desc, :limit => 10, :type => Order::NORMALTYPE)
+    @order_tmps = Order.all(:teacher_id => @teacher.id, :status => 3, :order => :book_time.desc, :limit => 10, :type => Order::NORMALTYPE)
     @order_tmps.each do |o|
      @orders << o if !o.paid || (o.can_comment && !o.user_has_comment)
     end
@@ -216,7 +216,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   #已取消
   get :cancel, :provides => [:json] do 
-    @orders = Order.all(:teacher_id => @teacher.id, :status => [2, 1, 0], :order => :book_time.desc, :type => Order::NORMALTYPE)
+    @orders = Order.all(:teacher_id => @teacher.id, :status => [5, 6, 7], :order => :book_time.desc, :type => Order::NORMALTYPE)
 
     @orders = @orders.paginate(:page => params[:page], :per_page => 20)
     render 'orders'
@@ -240,7 +240,7 @@ Tekala::Coach.controllers  :v1, :orders  do
         
         order_confirm = OrderConfirm.first(:order_id => order_id)
         order.confirm = 1 if order.train_field_id != 5
-        order.status  = 104 #教练已经确定 
+        order.status  = 4 #教练已经确定
         order.save
         
         teacher = order.teacher
