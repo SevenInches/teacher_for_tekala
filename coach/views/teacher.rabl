@@ -18,4 +18,7 @@ child(@teacher => :data){
 	  child(:my_train_field => :my_train_field){
 	  	attributes :id, :name, :address, :longitude, :latitude
 	  }
+      child(:school){
+       	attributes :id, :city_name, :name, :address, :phone, :profile, :is_vip, :master,:logo, :found_at
+      }
 }
