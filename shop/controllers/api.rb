@@ -16,11 +16,11 @@ Tekala::Shop.controllers :v1 do
     		@shop = Shop.authenticate(params[:phone], params[:password])
     		if @shop
     			session[:shop_id] = @shop.id
-    			a = Consultant.user_num.to_f
+    			a = Student.user_num + Consultant.user_num.to_f
 			b = Student.user_num
 			c = ( a == 0 ? 1.0 : b / a )
 
-			@consultant_count = Consultant.user_num
+			@consultant_count = a
 			@student_count = Student.user_num
 			@consultant_chu_student = c
 
@@ -40,10 +40,10 @@ Tekala::Shop.controllers :v1 do
 	end
 
 	get :index, :provides => [:json], :map => '/v1' do
-		a = Consultant.user_num.to_f
+		a = Student.user_num + Consultant.user_num.to_f
 		b = Student.user_num
 		c = ( a == 0 ? 1.0 : b / a )
-		{:consultant_count => Consultant.user_num, :student_count => Student.user_num, :consultant_chu_student => c}.to_json
+		{:status => :success, :data => {:consultant_count => a, :student_count => Student.user_num, :consultant_chu_student => c}}.to_json
 	end
 
 end
