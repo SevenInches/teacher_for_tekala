@@ -22,5 +22,6 @@ end
 
 Padrino.mount('Tekala::School',   	  :app_file => Padrino.root('school/app.rb')).to('/school')
 Padrino.mount('Tekala::Shop',   	  :app_file => Padrino.root('shop/app.rb')).to('/shop')
+Padrino.mount('Tekala::TestForSchool',   	  :app_file => Padrino.root('test_for_school/app.rb')).to('/test_for_school')
 Padrino.mount('Tekala::Coach',   	  :app_file => Padrino.root('coach/app.rb')).to('/')
 
