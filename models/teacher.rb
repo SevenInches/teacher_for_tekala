@@ -164,7 +164,7 @@ class Teacher
   def push_manager
     #创建教练验证
     TeacherAudit.create(:teacher_id => id)
-    #JPush.send
+    JPush.send
   end
 
   def rate 

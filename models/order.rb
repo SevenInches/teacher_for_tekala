@@ -91,26 +91,26 @@ class Order
 
   # after_create :send_sms
 
-  # after :create do |order|
-  #     JPush.send "#{user.name}创建了订单"
-  #     order_confirm = OrderConfirm.first(:teacher_id => teacher_id, :start_at => (book_time..(book_time + quantity.hour)), :end_at => (book_time..(book_time + quantity.hour)), :status.not => 2)
-  #     confirm_status = order_confirm.nil? ? 0 : 2
-  #     current_confirm = OrderConfirm.create(
-  #                                           :order_id   => id,
-  #                                           :user_id    => user_id,
-  #                                           :teacher_id => teacher_id,
-  #                                           :user_id    => user_id,
-  #                                           :start_at   => book_time,
-  #                                           :end_at     => book_time + quantity.hour,
-  #                                           :status     => confirm_status )
+  after :create do |order|
+      JPush.send "#{user.name}创建了订单"
+      order_confirm = OrderConfirm.first(:teacher_id => teacher_id, :start_at => (book_time..(book_time + quantity.hour)), :end_at => (book_time..(book_time + quantity.hour)), :status.not => 2)
+      confirm_status = order_confirm.nil? ? 0 : 2
+      current_confirm = OrderConfirm.create(
+                                            :order_id   => id,
+                                            :user_id    => user_id,
+                                            :teacher_id => teacher_id,
+                                            :user_id    => user_id,
+                                            :start_at   => book_time,
+                                            :end_at     => book_time + quantity.hour,
+                                            :status     => confirm_status )
 
 
-  # end
+  end
 
   after :save do
 
   #推送并创建一个让教练点确定的订单
-  #   JPush.send "#{user.name}创建了订单"
+    JPush.send "#{user.name}创建了订单"
     if status == 2
       order_confirm = OrderConfirm.first(:teacher_id => teacher_id, :start_at => (book_time..(book_time + quantity.hour)), :end_at => (book_time..(book_time + quantity.hour)) )
       confirm_status = order_confirm.nil? ? 0 : 2
@@ -122,7 +122,7 @@ class Order
                                             :start_at   => book_time,
                                             :end_at     => book_time + quantity.hour,
                                             :status     => confirm_status )
-      #JPush::order_confirm(current_confirm.order_id) if current_confirm && current_confirm.status == 0
+      JPush::order_confirm(current_confirm.order_id) if current_confirm && current_confirm.status == 0
     end
 
 
