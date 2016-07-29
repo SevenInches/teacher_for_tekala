@@ -1,0 +1,28 @@
+<h1>特快拉教练版测试</h1>
+
+<!-- 注册尚未写 -->
+<table border=0>
+  <tr>
+    <th>测试内容</th>
+    <th>测试结果</th>
+  </tr>
+  <tr>
+    <td>获取本月招生人数和获取本月营收并选用测试账号登录</td>
+    <td><%= result 1 %></td>
+  </tr>
+  <tr>
+    <td>获取教练列表</td>
+    <td><%= result 2 %></td>
+  </tr>
+  <tr>
+    <td>获取学员列表</td>
+    <td><%= result 3 %></td>
+  </tr>
+  <tr>
+    <td>退出登录</td>
+    <td><%= result 4 %></td>
+  </tr>
+</table>
+
+<p><%= button_to '开始测试', '/test_for_school/get_the_amount_of_students_of_this_month' %></p>
+<p><%= button_to '清除测试结果', '/test_for_school/clear_test' %></p>
