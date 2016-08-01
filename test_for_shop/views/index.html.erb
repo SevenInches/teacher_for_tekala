@@ -1,0 +1,48 @@
+<h1>特快拉门店版测试</h1>
+
+<!-- 注册尚未写 -->
+<table border=0>
+  <tr>
+    <th>测试内容</th>
+    <th>测试结果</th>
+  </tr>
+  <tr>
+    <td>门店登录</td>
+    <td><%= result 1 %></td>
+  </tr>
+  <tr>
+    <td>获取首页信息</td>
+    <td><%= result 2 %></td>
+  </tr>
+  <tr>
+    <td>增加咨询</td>
+    <td><%= result 3 %></td>
+  </tr>
+  <tr>
+    <td>获取咨询学员列表</td>
+    <td><%= result 4 %></td>
+  </tr>
+  <tr>
+    <td>增加招生</td>
+    <td><%= result 5 %></td>
+  </tr>
+  <tr>
+    <td>获取招生学员列表</td>
+    <td><%= result 6 %></td>
+  </tr>
+  <tr>
+    <td>删除咨询学员</td>
+    <td><%= result 7 %></td>
+  </tr>
+  <tr>
+    <td>删除招生学员</td>
+    <td><%= result 8 %></td>
+  </tr>
+  <tr>
+    <td>退出登录</td>
+    <td><%= result 9 %></td>
+  </tr>
+</table>
+
+<p><%= button_to '开始测试', '/test_for_shop/login' %></p>
+<p><%= button_to '清除测试结果', '/test_for_shop/clear_test' %></p>
