@@ -24,6 +24,10 @@ Tekala::Shop.controllers :v1, :shops  do
 
   post :add_consultants, :provides => [:json], :map => '/v1/add_consultants' do 
     consultant  = Consultant.create(:name => params[:name], :sex => params[:sex], :mobile => params[:mobile], :age => params[:age], :shop_id => @shop.id)
+    if consultant.mobile.to_i.size != consultant.mobile.size
+      return {:status => :failure, :msg => '添加失败，手机号错误'}.to_json
+    end
+    
     if consultant.save
       {:status => :success, :msg => '添加成功'}.to_json
     else
