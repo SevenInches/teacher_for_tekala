@@ -1,18 +1,18 @@
-Tekala::Shop.controllers :v1, :shops  do
+Tekala::Channel.controllers :v1, :channels  do
 
   before :except => [] do
-    if session[:shop_id]
-      @shop = Shop.get(session[:shop_id])
+    if session[:channel_id]
+      @channel = Channel.get(session[:channel_id])
     else
       redirect_to(url(:v1, :unlogin))
     end
   end
 
   get :consultants, :map => '/v1/consultants', :provides => [:json] do
-      @consultants = @shop.consultants
-      @total = @consultants.count
-      @consultants = @consultants.paginate(:per_page => 20, :page => params[:page])
-      render 'consutiltants'
+    @consultants = @shop.consultants
+    @total = @consultants.count
+    @consultants = @consultants.paginate(:per_page => 20, :page => params[:page])
+    render 'consutiltants'
   end
 
   get :students, :map => '/v1/students', :provides => [:json] do
