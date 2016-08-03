@@ -12,7 +12,7 @@ Tekala::Shop.controllers :v1, :shops  do
       @consultants = @shop.consultants
       @total = @consultants.count
       @consultants = @consultants.paginate(:per_page => 20, :page => params[:page])
-      render 'consutiltants'
+      render 'consultants'
   end
 
   get :students, :map => '/v1/students', :provides => [:json] do
