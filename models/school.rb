@@ -37,6 +37,7 @@ class School
 
   #has n, :maps  # 训练场数字地图
 
+  has n, :branches  #校区
   has n, :shops # 门店
   has n, :cars  #车辆
   #has n, :finances          # 财务记录
@@ -47,6 +48,7 @@ class School
   has n, :signups
   has n, :teachers
   has n, :train_fields
+  has n, :roles
 
   before :save, :encrypt_password
 

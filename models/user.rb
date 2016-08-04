@@ -60,7 +60,6 @@ class User
   #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :武昌 => 21, :洪山 => 22, :黄陂 => 23, :东西湖 => 24, :蔡甸 => 25, :汉南 => 26, :江夏 => 27, :江岸 => 28, :江汉 => 29, :硚口 => 30, :青山 => 31, :新州 => 32, :汉阳 => 33, :其他 => 0} mok 2015-08-07
   property :work_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
   property :live_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
-  property :local,     Enum[ 0, 1], :default => 0
 
   # {:其他 => 0, :互联网 => 1, :金融 => 2, '公务员'=>3, '医务人员' => 4, '学生'=>5, '自由职业'=>6}
   property :profession, Enum[0, 1, 2, 3, 4, 5, 6], :default => 0
@@ -123,6 +122,17 @@ class User
 
   property :product_id, Integer
 
+  #来源 1=>转介绍, 2=>网络, 3=>门店, 4=>熟人
+  property :origin,  Integer
+  #所在地 1=>本地, 2=>外地
+  property :local, Integer, :default => 1
+
+  property :manager_no, String
+
+  property :operation_no, String
+
+  property :apply_type, Integer
+
   has n, :orders
 
   has n, :comments, :model => 'UserComment', :child_key =>'user_id' , :constraint => :destroy
@@ -132,7 +142,7 @@ class User
   #用户指导
   has 1, :user_guide, :constraint => :destroy
 
-  #用户跟进
+  has 1, :signup
 
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'user_id', :constraint => :destroy
@@ -172,9 +182,7 @@ class User
       self.invite_code = (5000 + id).to_s(16)
       self.save
     end
-
   end
-  after :create, :create_promotion
 
   def create_promotion
     #创建学车计划
@@ -464,15 +472,6 @@ class User
 
   end
 
-  def local_word
-    case self.local
-      when 1
-        '是'
-      else
-        '否'
-    end
-
-  end
 
 
   def rate
@@ -861,5 +860,13 @@ class User
 
   def type_demo
     '班别类型: 0=>普通班, 1=>包过班'
+  end
+
+  def origin_demo
+    '来源: 1=>转介绍 2=>网络 3=>门店 4=>熟人'
+  end
+
+  def local_demo
+    '所在地: 1=>本地 2=>外地'
   end
 end
