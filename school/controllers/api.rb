@@ -4,9 +4,8 @@ Tekala::School.controllers :v1 do
   enable :sessions
   Rabl.register!
   before :except => [:login, :unlogin, :logout] do
-
 	  if session[:school_id]
-	    @school= School.get(session[:school_id])
+	    @school = School.get(session[:school_id])
 	  else
 	    redirect_to(url(:v1, :unlogin))  
 	  end
@@ -37,5 +36,17 @@ Tekala::School.controllers :v1 do
 	get :unlogin, :provides => [:json] do
 		{:status => :failure, :msg => '未登录'}.to_json
 	end
+
+  get :branches, :map => '/v1/all_branches', :provides => [:json] do
+		@branches = @school.branches
+		@total 		= @branches.count
+		render 'all_branches'
+  end
+
+	get :products, :map => '/v1/all_products', :provides => [:json] do
+		@products = @school.products
+    @total 		= @products.count
+		render 'all_products'
+  end
 
 end
