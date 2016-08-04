@@ -6,7 +6,6 @@ class Product
   property :name, String
   property :promotion, String
   property :price, Integer #单位 分
-  property :commission, Integer # 佣金
   property :detail, Text
   property :deadline, Date, :default => '2050-01-01' #截止日期
   property :created_at, DateTime
