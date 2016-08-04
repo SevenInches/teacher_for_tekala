@@ -22,13 +22,8 @@ Tekala::School.controllers :v1, :signups  do
       end
       @users = @users.all(:origin => params[:origin])   if params[:origin].present?
       @users = @users.all(:local => params[:local])     if params[:local].present?
-      if params[:key].present?
-        if params[:key].to_i > 0
-          @users = @users.all(:id => params[:key])
-        else
-          @users = @users.all(:name => params[:key])
-        end
-      end
+      @users = @users.all(:name => params[:name])       if params[:name].present?
+
       @total = @users.count
       @users = @users.paginate(:per_page => 20, :page => params[:page])
     #end
@@ -57,17 +52,17 @@ Tekala::School.controllers :v1, :signups  do
       @user.exam_type    = params[:exam_type]     if params[:exam_type].present?
       @user.status_flag  =  1                     if params[:pay].present?
       @user.password     = '123456'
+      @user.save
 
-      if @user.save
-        signup = Signup.new(:school_id =>session[:school_id], :user_id => @user.id)
-        signup.product_id   = params[:product]
-        signup.amount       = params[:amount].present? ? params[:amount] : Product.get(params[:amount]).price
-        signup.exam_type    = params[:exam_type]     if params[:exam_type].present?
-        signup.status       =  2                     if params[:pay].present?
-        if signup.save
-          render 'signup'
-        end
+      signup = Signup.new(:school_id =>session[:school_id], :user_id => @user.id)
+      signup.product_id   = params[:product]
+      signup.amount       = params[:amount].present? ? params[:amount] : Product.get(params[:amount]).price
+      signup.exam_type    = params[:exam_type]     if params[:exam_type].present?
+      signup.status       =  2                     if params[:pay].present?
+      if signup.save
+        render 'signup'
       end
+
     else
       {:status => :failure, :msg => '参数错误'}.to_json
     end

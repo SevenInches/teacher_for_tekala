@@ -40,15 +40,15 @@ Tekala::School.controllers :v1, :cars  do
       @car.brand       = params[:brand]       if params[:brand].present?
       @car.branch_id   = params[:branch]      if params[:branch].present?
       @car.exam_type	 = params[:exam_type]   if params[:exam_type].present?
-      if @car.save
-        check = Check.new(:car_id => @car.id )
-        check.check_end       = params[:check_end]  if params[:check_end].present?
-        check.year_check_end  = params[:year_check_end]  if params[:year_check_end].present?
-        check.season_check_end  = params[:season_check_end]  if params[:season_check_end].present?
-        check.second_check_end  = params[:second_check_end]  if params[:check_end].present?
-        if check.save
-          render 'car'
-        end
+      @car.save
+
+      check = Check.new(:car_id => @car.id )
+      check.check_end       = params[:check_end]  if params[:check_end].present?
+      check.year_check_end  = params[:year_check_end]  if params[:year_check_end].present?
+      check.season_check_end  = params[:season_check_end]  if params[:season_check_end].present?
+      check.second_check_end  = params[:second_check_end]  if params[:check_end].present?
+      if check.save
+        render 'car'
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json
@@ -58,13 +58,17 @@ Tekala::School.controllers :v1, :cars  do
   put :cars, :map => '/v1/cars', :provides => [:json] do
     if params[:id].present?
       @car = Car.get(params[:id])
-      @car.number     = params[:number]         if params[:number].present?
-      @car.identify   = params[:identify]       if params[:identify].present?
-      @car.brand      = params[:brand]          if params[:brand].present?
-      @car.name       = params[:name]           if params[:name].present?
-      @car.note       = params[:note]           if params[:note].present?
-      @car.produce_year   = params[:produce_year]     if params[:produce_year].present?
-      if @car.save
+      @car.brand       = params[:brand]       if params[:brand].present?
+      @car.branch_id   = params[:branch]      if params[:branch].present?
+      @car.exam_type	 = params[:exam_type]   if params[:exam_type].present?
+      @car.save
+
+      check = @car.check
+      check.check_end       = params[:check_end]  if params[:check_end].present?
+      check.year_check_end  = params[:year_check_end]  if params[:year_check_end].present?
+      check.season_check_end  = params[:season_check_end]  if params[:season_check_end].present?
+      check.second_check_end  = params[:second_check_end]  if params[:check_end].present?
+      if check.save
         render 'car'
       end
     else

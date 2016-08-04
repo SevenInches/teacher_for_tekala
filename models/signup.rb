@@ -2,10 +2,10 @@ class Signup
   include DataMapper::Resource
   # property <name>, <type>
   property :id, Serial
-  property :user_id, Integer, :default => 0
-  property :teacher_id, Integer, :default => 0
-  property :train_field_id, Integer, :default => 0
-  property :school_id, Integer, :default => 0
+  property :user_id, Integer
+  property :teacher_id, Integer
+  property :train_field_id, Integer
+  property :school_id, Integer
   property :order_no, String
   property :amount, Float
   property :discount, Float
@@ -15,8 +15,8 @@ class Signup
   property :created_at, DateTime
   property :updated_at, DateTime
   property :ch_id, String
-  property :city_id, Integer, :default => 0
-  property :product_id, Integer, :default => 0
+  property :city_id, Integer
+  property :product_id, Integer
   property :pay_channel, String
 
   #1=>未付款,2=>已付款,3=>退款中,4=>已退款
