@@ -14,6 +14,12 @@ Tekala::School.controllers :v1, :signups  do
     #   @total    = 1
     # else
       @users = @school.users
+      @user_ids = Signup.all(:status => 1, :school_id => session[:school_id]).aggregate(:user_id)
+      if params[:pay].present?
+        @users  = @users.all(:id.not => @user_ids)
+      else
+        @users  = @users.all(:id => @user_ids)
+      end
       @users = @users.all(:origin => params[:origin])   if params[:origin].present?
       @users = @users.all(:local => params[:local])     if params[:local].present?
       if params[:key].present?
@@ -23,11 +29,6 @@ Tekala::School.controllers :v1, :signups  do
           @users = @users.all(:name => params[:key])
         end
       end
-      if params[:not_pay].present?
-        @user_ids = Signup.all(:status=> 1, :school_id => session[:school_id]).aggregate(:user_id)
-        @users  = @users.all(:id => @user_ids)
-      end
-
       @total = @users.count
       @users = @users.paginate(:per_page => 20, :page => params[:page])
     #end
