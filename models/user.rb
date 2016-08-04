@@ -10,11 +10,11 @@ class User
   validates_presence_of  :password,   :if => :password_required
 
   property :id, Serial
-  property :id_card, String, :default => ''
+  property :id_card, String
 
   property :crypted_password, String, :length => 70
   property :cookie, Text, :lazy => false
-  property :name, String, :default => ''
+  property :name, String
 
   property :mobile, String, :required => true, :unique => true,
            :messages => {
@@ -29,7 +29,7 @@ class User
   property :avatar, String
   property :score, Integer, :default => 0
   property :lavel, Integer, :default => 0
-  property :birthday, Date, :default => ''
+  property :birthday, Date
 
   property :daily_limit, Integer, :default => 2
   #{"未知" => 0, "C1" => 1, "C2" => 2}
@@ -45,7 +45,7 @@ class User
 
   property :timeline, Text, :lazy => false
 
-  property :motto, String, :default => ''
+  property :motto, String
 
   property :created_at, DateTime
   property :updated_at, DateTime
@@ -80,7 +80,7 @@ class User
   #微信open_id
   property :open_id, String
 
-  property :nickname, String, :default => ''
+  property :nickname, String
 
   property :referer, String
 
