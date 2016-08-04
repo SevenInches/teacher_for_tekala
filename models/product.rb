@@ -4,7 +4,6 @@ class Product
   property :id, Serial
   property :city_id, Integer
   property :name, String
-  property :promotion, String
   property :price, Integer #单位 分
   property :detail, Text
   property :deadline, Date, :default => '2050-01-01' #截止日期
