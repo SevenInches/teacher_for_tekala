@@ -40,7 +40,7 @@ Tekala::School.controllers :v1, :roles  do
     end
   end
 
-  put :roles, :map => '/v1/roles', :provides => [:json] do
+  put :roles, :map => '/v1/roles/:id', :provides => [:json] do
     if params[:id].present?
       @role = Role.get(params[:id])
       @role.name     =  params[:name]        if params[:name].present?
@@ -57,7 +57,7 @@ Tekala::School.controllers :v1, :roles  do
       @role = Role.get(params[:id])
       if @role.present?
         @user = RoleUser.new(:role_id => @role.id, :name=> params[:name])
-        @user.mobile     =  params[:mobile]       if params[:mobile]
+        @user.mobile     =  params[:mobile]       if params[:mobile].present?
         @user.password   =  params[:password]     if params[:password].present?
         @user.created_at = @user.last_login_at = Time.now
         if @user.save
