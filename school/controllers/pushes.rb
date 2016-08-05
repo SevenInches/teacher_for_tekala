@@ -1,6 +1,6 @@
 Tekala::School.controllers :v1, :pushes do
 
-  before :except => [:index] do
+  before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
     elsif !params['demo'].present?

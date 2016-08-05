@@ -9,4 +9,8 @@ class Subpart
   property :client, String
   property :route, String
   property :config, Integer, :default => 1
+
+  def config_demo
+    '内容配置: 1 =>APP , 2 => WEB'
+  end
 end
