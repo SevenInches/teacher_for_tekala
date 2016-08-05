@@ -1,5 +1,5 @@
 Tekala::School.controllers :v1, :signups  do
-  before :except => [] do
+  before :except => [:signups] do
     if session[:school_id]
       @school = School.get(session[:school_id])
     elsif !params['demo'].present?
@@ -70,7 +70,7 @@ Tekala::School.controllers :v1, :signups  do
   post :signups, :map => '/v1/signups', :provides => [:json] do
     if params[:name].present? && params[:product].present?
       @user = User.new(:school_id =>session[:school_id])
-      @user.name         =  params[:name]          if params[:name].present?
+      @user.name         =  params[:name]
       @user.mobile       =  params[:mobile]        if params[:mobile].present?
       @user.sex          =  params[:sex]           if params[:sex].present?
       @user.id_card      =  params[:id_card]       if params[:id_card].present?
