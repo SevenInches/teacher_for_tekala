@@ -74,8 +74,8 @@ Tekala::School.controllers :v1, :cars  do
       @car.brand       = params[:brand]       if params[:brand].present?
       @car.branch_id   = params[:branch]      if params[:branch].present?
       @car.exam_type	 = params[:exam_type]   if params[:exam_type].present?
+      @car.number	     = params[:number]      if params[:number].present?
       @car.save
-
       check = @car.check
       check.check_end       = params[:check_end]  if params[:check_end].present?
       check.year_check_end  = params[:year_check_end]  if params[:year_check_end].present?
