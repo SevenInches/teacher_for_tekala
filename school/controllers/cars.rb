@@ -1,5 +1,5 @@
 Tekala::School.controllers :v1, :cars  do
-  before :except => [] do
+  before :except => [:cars] do
     if session[:school_id]
       @school = School.get(session[:school_id])
     elsif !params['demo'].present?
