@@ -7,6 +7,7 @@ migration 104, :create_subparts do
       column :client, DataMapper::Property::String, :length => 255
       column :weight, DataMapper::Property::Integer
       column :route, DataMapper::Property::String, :length => 255
+      column :config, DataMapper::Property::Integer
     end
   end
 
