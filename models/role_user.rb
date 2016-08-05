@@ -8,8 +8,8 @@ class RoleUser
   property :role_id, Integer
   property :mobile, String
   property :crypted_password, String
-  property :last_login_at, Datetime
-  property :created_at, Datetime
+  property :last_login_at, DateTime
+  property :created_at, DateTime
 
   belongs_to :role
 
