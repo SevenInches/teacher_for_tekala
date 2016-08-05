@@ -21,5 +21,8 @@ class Car
   belongs_to :branch
   belongs_to :train_field
 
+  def exam_type_demo
+    '驾考类型: 0=>未知, 1=>C1, 2=>C2'
+  end
 
 end

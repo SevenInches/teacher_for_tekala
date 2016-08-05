@@ -25,32 +25,32 @@ Tekala::School.controllers :v1, :signups  do
       end
 
       if params[:origin].present?
-        origins = params[:origin].split(/,/)
+        origins = params[:origin].split(/-/)
         @users  = @users.all(:origin => origins)
       end
 
       if params[:pay_type].present?
-        types  = params[:pay_type].split(/,/)
+        types  = params[:pay_type].split(/-/)
         @users = @users.all(:pay_type => types)
       end
 
       if params[:product].present?
-        products = params[:product].split(/,/)
+        products = params[:product].split(/-/)
         @users   = @users.all(:product_id => products)
       end
 
       if params[:sex].present?
-        sexes  = params[:sex].split(/,/)
+        sexes  = params[:sex].split(/-/)
         @users = @users.all(:sex => sexes)
       end
 
       if params[:apply_type].present?
-        applys  = params[:apply_type].split(/,/)
+        applys  = params[:apply_type].split(/-/)
         @users = @users.all(:apply_type => applys)
       end
 
       if params[:local].present?
-        locals  = params[:local].split(/,/)
+        locals  = params[:local].split(/-/)
         @users = @users.all(:local => locals)
       end
 
