@@ -6,7 +6,7 @@ Tekala::School.controllers :v1 do
   before :except => [:login, :unlogin, :logout] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
-	  else
+		elsif !params['demo'].present?
 	    redirect_to(url(:v1, :unlogin))  
 	  end
 	end
@@ -56,8 +56,14 @@ Tekala::School.controllers :v1 do
 	end
 
   get :subpart, :map => '/v1/subparts', :provides => [:json] do
-		@subparts = Subpart.all
-		@total 		= @subparts.count
+		if params['demo'].present?
+			@demo     =  params['demo']
+			@subparts =  Subpart.first
+			@total    =  1
+		else
+			@subparts = Subpart.all
+			@total 		= @subparts.count
+    end
 		render 'subparts'
   end
 end

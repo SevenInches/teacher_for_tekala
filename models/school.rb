@@ -49,6 +49,7 @@ class School
   has n, :teachers
   has n, :train_fields
   has n, :roles
+  has n, :pushes
 
   before :save, :encrypt_password
 
