@@ -15,15 +15,15 @@ Tekala::School.controllers :v1, :cars  do
     else
       @cars  = @school.cars
       if params[:branch].present?
-        branches = params[:branch].split(/,/)
+        branches = params[:branch].split(/-/)
         @cars  = @cars.all(:branch => branches)
       end
       if params[:field].present?
-        fields = params[:field].split(/,/)
+        fields = params[:field].split(/-/)
         @cars  = @cars.all(:train_field_id => fields)
       end
       if params[:exam_type].present?
-        types = params[:exam_type].split(/,/)
+        types = params[:exam_type].split(/-/)
         @cars  = @cars.all(:exam_type => types)
       end
 
