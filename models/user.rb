@@ -31,7 +31,7 @@ class User
   property :lavel, Integer, :default => 0
   property :birthday, Date
 
-  property :daily_limit, Integer, :default => 2
+  property :daily_limit, Integer
   #{"未知" => 0, "C1" => 1, "C2" => 2}
   property :exam_type, Integer, :default => 1                     #报名类型
 
@@ -49,6 +49,7 @@ class User
 
   property :created_at, DateTime
   property :updated_at, DateTime
+
   # {:普通班 => 0, :包过班 => 1} 订单交付类型 2015-07-20 mok
   property :type, Integer, :default => 0
 
@@ -71,7 +72,7 @@ class User
   property :longitude, String
 
   #mok 统计学习时长 2015-09-29
-  property :learn_hours, Integer, :default => 0
+  property :learn_hours, Integer
   property :pay_type_id, Integer
 
   # 是否已寄用户协议，1已寄出，0未寄出
@@ -97,7 +98,9 @@ class User
 
   property :product_id, Integer, :default => 11
 
-  property :school_id, Integer, :default => 0
+  property :school_id, Integer
+
+  property :branch_id, Integer
 
   #用户意见，用于售前跟进
   # 0 = 待跟进
@@ -106,7 +109,7 @@ class User
   # 3 = 只是想了解
   # 4 = 不感兴趣
 
-  property :purpose, Integer, :default => 0
+  property :purpose, Integer
 
   #登陆次数
   property :login_count, Integer, :default => 0
@@ -131,7 +134,11 @@ class User
 
   property :operation_no, String
 
+  #申请类型: 1=>初次 2=>增驾
   property :apply_type, Integer
+
+  #支付类型: 1=>微信 2=>支付宝 3=>POS机 4=>现金
+  property :pay_type, Integer
 
   has n, :orders
 
@@ -154,6 +161,8 @@ class User
   belongs_to :school
 
   belongs_to :city
+
+  belongs_to :branch
 
   # Callbacks
   before :save, :encrypt_password
@@ -469,10 +478,7 @@ class User
       else
         return '其他'
     end
-
   end
-
-
 
   def rate
     return 5.0  if comments.size < 1
@@ -868,5 +874,13 @@ class User
 
   def local_demo
     '所在地: 1=>本地 2=>外地'
+  end
+
+  def apply_type_demo
+    '申请类型: 1=>初次 2=>增驾'
+  end
+
+  def pay_type_demo
+    '支付类型: 1=>微信 2=>支付宝 3=>POS机 4=>现金'
   end
 end
