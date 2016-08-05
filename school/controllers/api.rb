@@ -49,4 +49,15 @@ Tekala::School.controllers :v1 do
 		render 'all_products'
   end
 
+	get :fields, :map => '/v1/all_fields', :provides => [:json] do
+		@fields   = @school.train_fields
+		@total 		= @fields.count
+		render 'all_fields'
+	end
+
+  get :subpart, :map => '/v1/subparts', :provides => [:json] do
+		@subparts = Subpart.all
+		@total 		= @subparts.count
+		render 'subparts'
+  end
 end
