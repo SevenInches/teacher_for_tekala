@@ -47,4 +47,5 @@ class Signup
   def product_name
     product.name if product.present?
   end
+
 end

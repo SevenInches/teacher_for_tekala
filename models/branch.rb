@@ -12,4 +12,7 @@ class Branch
   property :found_at, Date
 
   belongs_to :school
+  has n, :user
+  has n, :car
+
 end

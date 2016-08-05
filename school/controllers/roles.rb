@@ -31,6 +31,7 @@ Tekala::School.controllers :v1, :roles  do
   post :roles, :map => '/v1/roles', :provides => [:json] do
     if params[:name].present?
       @role = Role.new(:name => params[:name], :school_id => @school.id)
+      @role.created_at = Time.now
       if @role.save
         {:status => :success, :name => @role.name, :id => @role.id}.to_json
       end
@@ -39,10 +40,10 @@ Tekala::School.controllers :v1, :roles  do
     end
   end
 
-  put :cars, :map => '/v1/cars', :provides => [:json] do
+  put :roles, :map => '/v1/roles', :provides => [:json] do
     if params[:id].present?
       @role = Role.get(params[:id])
-      @role.name  =  params[:name]  if params[:name].present?
+      @role.name     =  params[:name]        if params[:name].present?
       if @role.save
         {:status => :success, :name => @role.name, :id => @role.id}.to_json
       end
@@ -56,6 +57,9 @@ Tekala::School.controllers :v1, :roles  do
       @role = Role.get(params[:id])
       if @role.present?
         @user = RoleUser.new(:role_id => @role.id, :name=> params[:name])
+        @user.mobile     =  params[:mobile]       if params[:mobile]
+        @user.password   =  params[:password]     if params[:password].present?
+        @user.created_at = @user.last_login_at = Time.now
         if @user.save
           {:status => :success, :name => @user.name, :id => @user.id}.to_json
         end
