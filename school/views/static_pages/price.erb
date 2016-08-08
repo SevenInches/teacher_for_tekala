@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;">
+  <%= stylesheet_link_tag '/stylesheets/bootstrap.min' %>
+  <title>定时计价</title>
+  <style media="screen">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .inputText{
+      width: 100%;
+      border: 1px solid #ccc;
+      line-height: 30px;
+      outline: none;
+      text-indent: 5px;
+    }
+    .container{
+      padding: 20px;
+    }
+    .title{
+      margin-bottom: 5px;
+    }
+    .row{
+      margin-bottom: 20px;
+    }
+    .submit{
+      width: 100%;
+      line-height: 36px;
+      border:1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+<form class="container" method="POST" action="<%= url(:v1,:price) %>">
+  <div class="row">
+    <p class="title">手动档价格(元/小时)</p>
+    <input type="text" name="c1_common" value="" class="inputText">
+  </div>
+  <div class="row">
+    <p class="title">自动档价格(元/小时)</p>
+    <input type="text" name="c2_common" value="" class="inputText">
+  </div>
+  <div class="row">
+    <p class="title">手动档高峰时段价格(元/小时)</p>
+    <input type="text" name="c1_hot" value="" class="inputText">
+  </div>
+  <div class="row">
+    <p class="title">自动档高峰时段价格(元/小时)</p>
+    <input type="text" name="c2_hot" value="" class="inputText">
+  </div>
+  <input type="submit" value="保存" class="form-submit submit btn-info">
+</form>
+</body>
+</html>
