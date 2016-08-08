@@ -15,12 +15,12 @@ class Tweet
 
   belongs_to :user
 
-  def photo_thumb_url
-     photo.thumb.url ? CustomConfig::HOST + photo.thumb.url : ''
-  end 
+  has n, :tweet_photos
 
-  def photo_url
-     photo.url ? CustomConfig::HOST + photo.url : ''
-  end 
+  has n, :tweet_comments, :constraint => :destroy
+
+  def photos
+    tweet_photos.map(&:url).map{ |val| val.present? ? CustomConfig::QINIUURL + val : '' };
+  end
 
 end
