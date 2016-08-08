@@ -53,17 +53,23 @@ Tekala::School.controllers :v1 do
 		@fields   = @school.train_fields
 		@total 		= @fields.count
 		render 'all_fields'
+  end
+
+	get :price,  :map => '/v1/price', :provides => [:html] do
+		render 'static_pages/price'
 	end
 
-  get :subpart, :map => '/v1/subparts', :provides => [:json] do
-		if params['demo'].present?
-			@demo     =  params['demo']
-			@subparts =  Subpart.first
-			@total    =  1
+	#定价计时
+	post :price, :provides => [:html] do
+		@price = Price.new(:school_id => @school.id)
+		@price.c1_common = params['c1_common']   if params['c1_common'].present?
+		@price.c2_common = params['c2_common']   if params['c2_common'].present?
+		@price.c1_hot    = params['c1_hot']      if params['c1_hot'].present?
+		@price.c2_hot    = params['c2_hot']      if params['c2_hot'].present?
+		if @price.save
+			render 'static_pages/success'
 		else
-			@subparts = Subpart.all
-			@total 		= @subparts.count
-    end
-		render 'subparts'
-  end
+			redirect(:v1, :price)
+		end
+	end
 end
