@@ -2,12 +2,14 @@ Tekala::School.controllers :v1, :tweets do
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
+      $school_remark  = 'school_' + session[:school_id].to_s
     elsif !params['demo'].present?
       redirect_to(url(:v1, :unlogin))
     end
   end
 
   get :index, :provides =>[:json] do
+    $redis.lrem $school_remark, 0, "学员动态"
     if params['demo'].present?
       @demo     =  params['demo']
       @users    =  Tweet.first

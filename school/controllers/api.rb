@@ -3,6 +3,7 @@ Tekala::School.controllers :v1 do
   register WillPaginate::Sinatra
   enable :sessions
   Rabl.register!
+
   before :except => [:login, :unlogin, :logout] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
