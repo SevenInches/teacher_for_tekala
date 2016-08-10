@@ -10,7 +10,7 @@ module Tekala
           count_hash[key] = 1
         end
       end
-      count_hash.to_json
+      {'data':count_hash}.to_json
     end
 
   end
