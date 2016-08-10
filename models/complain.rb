@@ -1,12 +1,9 @@
-class Feedback
+class Complain
   include DataMapper::Resource
 
   # property <name>, <type>
   property :id, Serial
-  property :content, String, :required => true, :messages => {:presence  => "内容不能为空"}
+  property :content, String
   property :user_id, Integer
   property :created_at, DateTime
-
-  belongs_to :user
-
 end

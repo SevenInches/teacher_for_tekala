@@ -72,5 +72,33 @@ Tekala::School.controllers :v1 do
 		else
 			redirect(:v1, :price)
 		end
+  end
+
+	get :complain,  :map => '/v1/complains', :provides => [:json] do
+		if params['demo'].present?
+			@demo      = params['demo']
+			@complains = Complain.first
+			@total     = 1
+    else
+			@user_ids  = @school.users.aggregate(:id)
+			@complains = Complain.all(:user_id => @user_ids)
+			@total     = @complains.count
+			@complains = @complains.paginate(:per_page => 20, :page => params[:page])
+		end
+		render 'complains'
+  end
+
+	get :feedback,  :map => '/v1/feedbacks', :provides => [:json] do
+		if params['demo'].present?
+			@demo      = params['demo']
+			@feedbacks = Feedback.first
+			@total     = 1
+		else
+			@user_ids  = @school.users.aggregate(:id)
+			@feedbacks = Feedback.all(:user_id => @user_ids)
+			@total     = @feedbacks.count
+			@feedbacks = @feedbacks.paginate(:per_page => 20, :page => params[:page])
+		end
+		render 'feedbacks'
 	end
 end
