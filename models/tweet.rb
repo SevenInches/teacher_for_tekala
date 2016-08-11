@@ -19,6 +19,9 @@ class Tweet
 
   has n, :tweet_comments, :constraint => :destroy
 
+  has n, :tweet_likes
+
+
   def photos
     tweet_photos.map(&:url).map{ |val| val.present? ? CustomConfig::QINIUURL + val : '' };
   end
@@ -26,5 +29,14 @@ class Tweet
   def comment_count
     tweet_comments.count
   end
+
+  def photo_count
+    tweet_photos.count
+  end
+
+  def like_count
+    tweet_likes.count
+  end
+
 
 end
