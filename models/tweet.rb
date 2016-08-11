@@ -23,4 +23,8 @@ class Tweet
     tweet_photos.map(&:url).map{ |val| val.present? ? CustomConfig::QINIUURL + val : '' };
   end
 
+  def comment_count
+    tweet_comments.count
+  end
+
 end

@@ -9,9 +9,10 @@ Tekala::School.controllers :v1, :cars  do
 
   get :cars, :map => '/v1/cars', :provides => [:json] do
     if params['demo'].present?
-      @demo     = params['demo']
-      @cars    = Car.first
-      @total    = 1
+      @demo    =  params['demo']
+      check    =  Check.first
+      @cars    =  Car.get(check.car_id) if check.present?
+      @total   =  1
     else
       @cars  = @school.cars
       if params[:branch].present?
@@ -33,7 +34,7 @@ Tekala::School.controllers :v1, :cars  do
       if params[:not_handle].present?
         @checks  = Check.all(:second_check_end.gte =>  Date.today - 3.month)|Check.all(:season_check_end.gte =>  Date.today - 1.month)|Check.all(:year_check_end.gte =>  Date.today - 3.month)|Check.all(:check_end.gte =>  Date.today - 3.month)
         @car_ids = @checks.aggregate(:car_id)
-        @cars  = @cars.all(:id => @car_ids)
+        @cars    = @cars.all(:id => @car_ids)
       end
       @total = @cars.count
       @cars  = @cars.paginate(:per_page => 20, :page => params[:page])

@@ -6,6 +6,7 @@ class School
   # property <name>, <type>
   property :id, Serial
   property :city_id, Integer
+  property :school_no, String
   property :name, String
   property :address, String
   property :contact_phone, String

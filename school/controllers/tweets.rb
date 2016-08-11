@@ -43,4 +43,20 @@ Tekala::School.controllers :v1, :tweets do
     end
   end
 
+  get :comments, :map => 'v1/tweets/:tweet_id/comments', :provides => [:json] do
+    last_id   = params[:last_id].to_i
+    @comments = TweetComment.all(:tweet_id => params[:tweet_id], :order => :created_at.asc)
+    @comments = @comments.all(:order => :created_at.asc, :id.gt => last_id, :limit =>20) if last_id > 0
+    @total    = TweetComment.count
+    render 'tweet_comments'
+  end
+
+  delete :comment, :map => 'v1/tweets/:tweet_id/comments/:comment_id', :provides => [:json] do
+    @comment = TweetComment.get(params[:comment_id])
+    if @comment
+      { :status => @comment.destroy ? :success : :failure }.to_json
+    else
+      {:status => :failure, :msg => '该评论已经删除' }.to_json
+    end
+  end
 end

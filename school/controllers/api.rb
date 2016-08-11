@@ -18,7 +18,7 @@ Tekala::School.controllers :v1 do
 				@school = School.first
 				render 'school'
       else
-				@school = School.authenticate(params[:phone], params[:password])
+				@school = RoleUser.authenticate(params[:school], params[:phone], params[:password])
 				if @school
 					session[:school_id] = @school.id
 					# 把订单已结束，但未点完成的订单，修改状态
