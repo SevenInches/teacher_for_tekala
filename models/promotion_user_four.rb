@@ -11,7 +11,7 @@ class PromotionUserFour
            }
   property :age, Integer
   property :company_id, Integer
-  property :role, Enum[ 1, 2, 3], :default => 1
+  property :roles, Enum[1, 2, 3], :default => 1
   property :local, Boolean
   property :area, Enum[ 0, 1, 2, 3, 4, 5], :default => 0
   property :wechat_avatar, String

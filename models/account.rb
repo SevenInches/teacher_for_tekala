@@ -10,7 +10,7 @@ class Account
   property :surname,          String
   property :email,            String
   property :crypted_password, String, :length => 70
-  property :role,             String
+  property :roles, String
 
   # Validations
   validates_presence_of      :email, :role

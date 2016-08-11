@@ -21,13 +21,18 @@ class RoleUser
       user_ids  = school.roles.role_users.aggregate(:id)
       role_users = all(:id => user_ids)
       role_user = role_users.first(:conditions => ["lower(mobile) = lower(?)", phone]) if phone.present?
-      if role_user && role_user.has_password?(password) && role_user.role.school
-        role_user.update(:last_login_at => Time.now)
-        role_user.role.school
+      if role_user.present? && role_user.has_password?(password)
+        role_user.last_login_at = Time.now
+        role_user.save
+        role_user
       else
         nil
       end
     end
+  end
+
+  def self.find_by_id(id)
+    get(id) rescue nil
   end
 
   def has_password?(password)

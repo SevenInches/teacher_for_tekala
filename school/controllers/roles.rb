@@ -21,7 +21,7 @@ Tekala::School.controllers :v1, :roles  do
     render 'roles'
   end
 
-  get :role, :map => '/v1/roles/:id', :provides => [:json] do
+  get :roles, :map => '/v1/roles/:id', :provides => [:json] do
     @users  = RoleUser.all(:role_id => params[:id])
     @total  = @users.count
     @users  = @users.paginate(:per_page => 20, :page => params[:page])
@@ -52,7 +52,7 @@ Tekala::School.controllers :v1, :roles  do
     end
   end
 
-  post :role, :map => '/v1/roles/:id', :provides => [:json] do
+  post :roles, :map => '/v1/roles/:id', :provides => [:json] do
     if params[:name].present?
       @role = Role.get(params[:id])
       if @role.present?
