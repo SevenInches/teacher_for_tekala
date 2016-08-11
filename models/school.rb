@@ -23,7 +23,6 @@ class School
   property :note, String
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :crypted_password, String, :length => 70
 
   #新增字段
   #property :contact_user, String
@@ -53,23 +52,6 @@ class School
   has n, :pushes
 
   before :save, :encrypt_password
-
-  def self.authenticate(phone, password)
-    school = first(:conditions => ["lower(contact_phone) = lower(?)", phone]) if phone.present?
-    school && school.has_password?(password) ? school : nil
-  end
-
-  def has_password?(password)
-    ::BCrypt::Password.new(crypted_password) == password
-  end
-
-  def password_required
-    crypted_password.blank? || password.present?
-  end
-
-  def encrypt_password
-    self.crypted_password = ::BCrypt::Password.create(password) if password.present?
-  end
 
   def user_num
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
