@@ -15,11 +15,11 @@ class Tweet
 
   belongs_to :user
 
-  has n, :tweet_photos
+  has n, :tweet_photos, :constraint => :destroy
 
   has n, :tweet_comments, :constraint => :destroy
 
-  has n, :tweet_likes
+  has n, :tweet_likes, :constraint => :destroy
 
 
   def photos
@@ -37,6 +37,5 @@ class Tweet
   def like_count
     tweet_likes.count
   end
-
 
 end

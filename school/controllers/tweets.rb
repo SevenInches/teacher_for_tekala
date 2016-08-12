@@ -20,43 +20,50 @@ Tekala::School.controllers :v1, :tweets do
         user_ids = users.aggregate(:id)
         @tweets   =  Tweet.all(:user_id => user_ids)
         @total    =  @tweets.count
+        @tweets   =  @tweets.paginate(:per_page => 20, :page => params[:page])
         render 'tweets'
       end
     end
   end
 
-  get :show, :map => 'v1/tweets/:id', :provides => [:json] do
-    @tweet = Tweet.get(params[:id])
+  get :show, :map => 'v1/tweets/:tweet_id', :provides => [:json] do
+    @tweet = Tweet.get(params[:tweet_id])
     if @tweet 
       render 'tweet'
     else
-      {:status => :failure, :msg => '未能找到该tweet'}.to_json
+      {:status => :failure, :msg => '未能找到该动态'}.to_json
     end
   end
 
-  delete :index, :map => 'v1/tweets/:id', :provides => [:json] do
-    @tweet = Tweet.first(:id => params[:id])
-    if @tweet.present?
-      { :status => @tweet.destroy ? :success : :failure }.to_json
-    else
-      { :status => :failure, :msg => '该评论已删除' }.to_json
-    end
+  delete :tweets, :map => 'v1/tweets/:tweet_id', :provides => [:json] do
+    tweet = Tweet.get params[:tweet_id]
+    if tweet
+      tweet.tweet_photos.destroy
+      tweet.tweet_comments.destroy
+      tweet.tweet_likes.destroy
+      if tweet.destroy!
+        { :status => :success, :msg => '动态删除成功'}.to_json
+      end
+     else
+      { :status => :failure, :msg => '参数错误' }.to_json
+     end
   end
 
   get :comments, :map => 'v1/tweets/:tweet_id/comments', :provides => [:json] do
     last_id   = params[:last_id].to_i
     @comments = TweetComment.all(:tweet_id => params[:tweet_id], :order => :created_at.asc)
     @comments = @comments.all(:order => :created_at.asc, :id.gt => last_id, :limit =>20) if last_id > 0
-    @total    = TweetComment.count
+    @total    = @comments.count
+    @comments = @comments.paginate(:per_page => 20, :page => params[:page])
     render 'tweet_comments'
   end
 
   delete :comment, :map => 'v1/tweets/:tweet_id/comments/:comment_id', :provides => [:json] do
     @comment = TweetComment.get(params[:comment_id])
-    if @comment
-      { :status => @comment.destroy ? :success : :failure }.to_json
+    if @comment && @comment.destroy
+      {:status => :success, :msg => '评论删除成功' }.to_json
     else
-      {:status => :failure, :msg => '该评论已经删除' }.to_json
+      {:status => :failure, :msg => '参数错误' }.to_json
     end
   end
 end

@@ -10,7 +10,12 @@ module Tekala
           count_hash[key] = 1
         end
       end
-      {'data':count_hash}.to_json
+      json = []
+      count_hash.each do |value|
+        subpart = Subpart.first(:name => value[0])
+        json << {'name': value[0], 'count': value[1], 'weight': subpart.weight}
+      end
+      {'data':json}.to_json
     end
 
   end

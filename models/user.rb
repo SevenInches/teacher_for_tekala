@@ -7,7 +7,6 @@ class User
   VIP    = 1
   NORMAL = 0
   # property <name>, <type>
-  validates_presence_of  :password,   :if => :password_required
 
   property :id, Serial
   property :id_card, String
@@ -102,6 +101,10 @@ class User
 
   property :branch_id, Integer
 
+  property :product_id, Integer
+
+  property :shop_id, Integer
+
   #用户意见，用于售前跟进
   # 0 = 待跟进
   # 1 = 强烈意向
@@ -123,8 +126,6 @@ class User
   property :cash_bank_card, String
   property :signup_at, Date
 
-  property :product_id, Integer
-
   #来源 1=>转介绍, 2=>网络, 3=>门店, 4=>熟人
   property :origin,  Integer
   #所在地 1=>本地, 2=>外地
@@ -140,9 +141,15 @@ class User
   #支付类型: 1=>微信 2=>支付宝 3=>POS机 4=>现金
   property :pay_type, Integer
 
+  #学员禁用状态, 1=>正常,0=>禁用
+  property :pay_type, Integer, :default => 1
   has n, :orders
 
   has n, :comments, :model => 'UserComment', :child_key =>'user_id' , :constraint => :destroy
+
+  has n, :cycles, :model => 'UserCycle', :child_key =>'user_id' , :constraint => :destroy
+
+  has n, :pays, :model => 'UserPay', :child_key =>'user_id' , :constraint => :destroy
 
   has 1, :promotion_user, :constraint => :destroy
 
@@ -150,6 +157,10 @@ class User
   has 1, :user_guide, :constraint => :destroy
 
   has 1, :signup
+
+  has 1, :user_plan, :constraint => :destroy
+
+  has 1, :user_exam, :constraint => :destroy
 
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'user_id', :constraint => :destroy
@@ -164,64 +175,19 @@ class User
 
   belongs_to :branch
 
+  belongs_to :shop
+
   # Callbacks
   before :save, :encrypt_password
 
   after :save do
-    if wechat_avatar
-      promotion = PromotionUser.first_or_create(:user_id => id)
-      promotion.wechat_avatar  = wechat_avatar  if wechat_avatar
-      promotion.wechat_unionid = wechat_unionid if wechat_unionid
-      promotion_channel = PromotionChannel.first(:from => wechat_unionid)
-      if promotion_channel
-        promotion.event_key  = promotion_channel.event_key
-      end
-      promotion.save
-    end
-
-    if self.before_product_id != product_id
-      plan = UserPlan.first_or_create(:user_id => id)
-      plan.exam_two_standard   = product ? product.exam_two_standard : 15
-      plan.exam_three_standard = product ? product.exam_three_standard : 8
-      plan.save
-    end
-
-    #保存邀请码
-    if self.invite_code.nil?
-      self.invite_code = (5000 + id).to_s(16)
-      self.save
-    end
+    UserPlan.first_or_create(:user_id => id)
+    UserExam.first_or_create(:user_id => id)
   end
 
-  def create_promotion
-    #创建学车计划
-    plan = UserPlan.first_or_create(:user_id => id)
-
-    plan.exam_two_standard   = (city == '0755') ? 14 : 12
-    plan.exam_three_standard = (city == '0755') ? 8  : 5
-
-    plan.exam_two_standard     = product.exam_two_standard if product
-    plan.exam_three_standard   = product.exam_three_standard if product
-    plan.save
-
-    promotion = PromotionUser.new
-    promotion.user_id        = id
-    promotion.rank           = rank if rank
-    promotion.phase          = section        if section
-    promotion.wechat_avatar  = wechat_avatar  if wechat_avatar
-    promotion.wechat_unionid = wechat_unionid if wechat_unionid
-
-    #发送 萌萌学车介绍及报考攻略 给新注册的用户
-    if city == "0755"
-      emails = []
-      emails << email if !email.nil?
-      send_email(emails, "signup_email") if !email.nil?
-    end
-  end
-
-  def is_vip
-    p_vip = [13,14,15,16,18,19,23,25,26]
-    p_vip.include?(product_id)? 1 : 0
+  def last_book_at
+    last_order = orders.last
+    last_order.present? ? last_order.book_time : ''
   end
 
   #发邮件给用户 params emails[array] template[string] sub[hash]填充参数
@@ -246,7 +212,7 @@ class User
 
   #已完成学时
   def has_hour
-    return orders.all(:status => Order::pay_or_done).sum(:quantity).to_i
+    user_plan.present? ? (user_plan.exam_two + user_plan.exam_three) : 0
   end
 
 
@@ -395,68 +361,6 @@ class User
     'C1'
   end
 
-  def self.work_area
-    {'龙岗' => 1, '宝安' => 2, '罗湖' => 3, '福田' => 4, '南山' => 5, '盐田' => 6, '其他' => 0}
-  end
-
-  def self.live_area
-
-    {'龙岗' => 1, '宝安' => 2, '罗湖' => 3, '福田' => 4, '南山' => 5, '盐田' => 6, '其他' => 0}
-
-  end
-
-  def self.wh_area
-
-    {'武昌' => 21, '洪山' => 22, '黄陂' => 23, '东西湖' => 24, '蔡甸' => 25, '汉南' => 26, '江夏' => 27, '江岸' => 28, '江汉' => 29, '硚口' => 30, '青山' => 31, '新州' => 32, '汉阳' => 33}
-
-  end
-
-  def work_area_word
-    case self.work_area
-      when 1
-        return '龙岗'
-      when 2
-        return '宝安'
-      when 3
-        return '罗湖'
-      when 4
-        return '福田'
-      when 5
-        return '南山'
-      when 6
-        return '盐田'
-      when 7
-        return '光明新区'
-      when 8
-        return '龙华新区'
-      else
-        return '其他'
-    end
-  end
-
-  def live_area_word
-    case self.work_area
-      when 1
-        return '龙岗'
-      when 2
-        return '宝安'
-      when 3
-        return '罗湖'
-      when 4
-        return '福田'
-      when 5
-        return '南山'
-      when 6
-        return '盐田'
-      when 7
-        return '光明新区'
-      when 8
-        return '龙华新区'
-      else
-        return '其他'
-    end
-  end
-
   def self.profession
     {'互联网' => 1, '金融' => 2, '公务员'=>3, '医务人员' => 4, '学生'=>5, '自由职业' => 6, '其他' => 0}
   end
@@ -578,22 +482,6 @@ class User
     if !from_code.nil? && coop && from_code != 'coop_5999tkb'
       order.discount   = coop.discount.to_f
     end
-
-    #如果是团购 2015年12月16 23:59:59 前付款有效 拿到最小那个
-    # if Time.now <= '2015-12-16 23:59:59'.to_time && [9, 8].include?(order.product_id)
-    #   group_discount = 0
-    #   group_array    = []
-    #   my_user_groups = UserGroup.all(:user_id => id)
-    #   my_user_groups.each do |user_group|
-    #     group_array << user_group.group.discount if user_group.group
-    #   end
-
-    #   if group_array.count > 0
-    #     group_discount = group_array.max + 200.0
-    #     order.discount = group_discount.to_f
-    #   end
-
-    # end
 
     order.save
     order

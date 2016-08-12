@@ -13,6 +13,7 @@ class UserComment
 
   belongs_to :user
   belongs_to :teacher
+  belongs_to :order
 
   def created_format
     created_at.strftime('%Y-%m-%d')

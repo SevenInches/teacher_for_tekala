@@ -35,17 +35,4 @@ Tekala::School.controllers :v1, :schools  do
     render 'fields'
   end
 
-  get :users, :map => '/v1/users', :provides => [:json] do
-    if params['demo'].present?
-      @demo     = params['demo']
-      @users    = User.first
-      @total    = 1
-    else
-      @users = @school.users
-      @total = @users.count
-      @users = @users.paginate(:per_page => 20, :page => params[:page])
-    end
-    render 'users'
-  end
-
 end

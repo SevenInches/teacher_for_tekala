@@ -22,7 +22,6 @@ Tekala::School.controllers :v1, :subparts  do
   end
 
   get :notice, :map => '/v1/notices', :provides => [:json] do
-    puts $school_remark
     array = $redis.lrange $school_remark, 0, -1
     if array.present?
       count_array(array)

@@ -6,7 +6,7 @@ child(@comments => :data){
 		attribute :id, :name, :nickname, :mobile
   }
   child(:teacher){
-		attribute :id, :name, :mobile
+		attribute :id, :name, :mobile, :rate
   }
   child(:order){
 		attribute :id, :order_no
