@@ -145,9 +145,9 @@ class User
 
   has n, :comments, :model => 'UserComment', :child_key =>'user_id'
 
-  has n, :cycles, :model => 'UserCycle', :child_key =>'user_id'
+  has n, :user_cycles
 
-  has n, :pays, :model => 'UserPay', :child_key =>'user_id'
+  has n, :user_pays
 
   has 1, :promotion_user, :constraint => :destroy
 
@@ -240,7 +240,6 @@ class User
         CustomConfig::HOST + '/images/icon180.png'
       end
     end
-
   end
 
 
@@ -272,7 +271,6 @@ class User
   end
 
   def has_password?(password)
-
     ::BCrypt::Password.new(crypted_password) == password
   end
 
