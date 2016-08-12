@@ -145,11 +145,14 @@ class User
 
   has n, :comments, :model => 'UserComment', :child_key =>'user_id'
 
-  has n, :user_cycles
+  has n, :cycles, :model => 'UserCycle', :child_key =>'user_id'
 
-  has n, :user_pays
+  has n, :pays, :model => 'UserPay', :child_key =>'user_id'
 
   has 1, :promotion_user, :constraint => :destroy
+
+  #用户指导
+  has 1, :user_guide, :constraint => :destroy
 
   has 1, :signup
 
