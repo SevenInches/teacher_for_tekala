@@ -141,15 +141,13 @@ class User
   #支付类型: 1=>微信 2=>支付宝 3=>POS机 4=>现金
   property :pay_type, Integer
 
-  #学员禁用状态, 1=>正常,0=>禁用
-  property :pay_type, Integer, :default => 1
   has n, :orders
 
-  has n, :comments, :model => 'UserComment', :child_key =>'user_id' , :constraint => :destroy
+  has n, :comments, :model => 'UserComment', :child_key =>'user_id'
 
-  has n, :cycles, :model => 'UserCycle', :child_key =>'user_id' , :constraint => :destroy
+  has n, :cycles, :model => 'UserCycle', :child_key =>'user_id'
 
-  has n, :pays, :model => 'UserPay', :child_key =>'user_id' , :constraint => :destroy
+  has n, :pays, :model => 'UserPay', :child_key =>'user_id'
 
   has 1, :promotion_user, :constraint => :destroy
 

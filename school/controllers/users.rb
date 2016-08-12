@@ -56,13 +56,6 @@ Tekala::School.controllers :v1, :users  do
     render 'user_orders'
   end
 
-  get :pays, :map => '/v1/users/:id/pays', :provides => [:json] do
-    user    = User.get(params[:id])
-    @pays   = user.pays
-    @total  = @pays.count
-    render 'user_pays'
-  end
-
   get :comments, :map => '/v1/users/:id/comments', :provides => [:json] do
     user        = User.get(params[:id])
     @comments   = user.comments
