@@ -11,7 +11,7 @@ class UserCycle
 
   belongs_to :user
 
-  def level_array
+  def self.level_array
     {
         10=>'科目一',
         11=>'科目一(补考)',
@@ -33,7 +33,7 @@ class UserCycle
 
   def level_word
     if level.present?
-      level_hash = level_array
+      level_hash = UserCycle::level_array
       level_hash[level.to_i]
     end
   end

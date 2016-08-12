@@ -112,16 +112,6 @@ Tekala::School.controllers :v1, :users  do
     end
   end
 
-  get :open, :map => '/v1/users/:id/open', :provides => [:json] do
-    user = User.get params[:id]
-    user.open = !user.open
-    if user.save!
-      {:status => :success, :msg => '修改成功'}.to_json
-    else
-      {:status => :failure, :msg => '参数错误'}.to_json
-    end
-  end
-
   put :edit_status, :map => '/v1/users/:id/status', :provides => [:json] do
     if params[:status]
       user = User.get params[:id]
@@ -232,6 +222,6 @@ Tekala::School.controllers :v1, :users  do
   end
 
   get :level, :map => '/v1/all_levels', :provides => [:json] do
-    {'data':UserCycle.first.level_array}.to_json
+    {'data':UserCycle.level_array}.to_json
   end
 end
