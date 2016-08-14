@@ -5,19 +5,14 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 
 	get :index, :map => '/' do
 		$arr ||= []
-
 		render 'index'
 	end
 
 	post :login, :map => '/login' do
-		arr =  JSON.parse(RestClient.post('t.tekala.cn/v1/login',
-						:mobile => '13094442075',
-						:password => '123456'
-                                                 	  ))
+		login_url = 't.tekala.cn/v1/login'
+		arr =  JSON.parse(RestClient.post(login_url, :mobile => '13094442075', :password => '123456'))
 
-		if arr['status'] == 'success'
-			$arr << 1
-		end
+		$arr << 'login' if arr['status'] == 'success'
 
 		redirect_to '/test_for_teacher/get_the_scheduling'
 	end
@@ -27,9 +22,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		if @teacher
 			@orders = Order.all(:teacher_id => @teacher.id, :status.gt => 1, :order => :id.desc, :type => 1, :order_confirm => OrderConfirm.all(:status => 1))
 
-			if @orders
-				$arr << 2
-			end
+			$arr << 'get_the_scheduling' if @orders
 
 			redirect_to '/test_for_teacher/get_the_waiting_orders'
 		else
@@ -46,9 +39,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	get :get_the_waiting_orders, :map => '/get_the_waiting_orders' do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		@orders = Order.all(:teacher_id => @teacher.id, :status => 4, :order => :book_time.desc, :type => Order::NORMALTYPE)
-		if @orders
-			$arr << 3
-		end
+		$arr << 'get_the_waiting_orders' if @orders
 
 		redirect_to '/test_for_teacher/get_the_accpeting_orders'
 	end
@@ -57,9 +48,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		@orders = Order.all(:teacher_id => @teacher.id, :order => :book_time.asc, :status => 4, :book_time.gt => Time.now)
 
-		if @orders
-			$arr << 4
-		end
+		$arr << 'get_the_accpeting_orders' if @orders
 
 		redirect_to '/test_for_teacher/get_the_finish_orders'
 	end
@@ -69,9 +58,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		@teacher.check_order
 		@orders = @teacher.done_or_cancel_orders.all(:order => :book_time.desc)
 
-		if @orders
-			$arr << 5
-		end
+		$arr << 'get_the_finish_orders' if @orders
 
 		redirect_to '/test_for_teacher/get_the_info'
 	end
@@ -79,9 +66,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	get :get_the_info, :map => '/get_the_info' do
 		 @teacher = Teacher.first(:mobile => '13094442075')
 
-		 if @teacher
-		 	$arr << 6
-		 end
+		 $arr << 'get_the_info' if @teacher
 
 		redirect_to '/test_for_teacher/edit_info'
 	end
@@ -90,9 +75,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		@teacher.tech_type = 3
 
-		if @teacher.save
-			$arr << 7
-		end
+		$arr << 'edit_info' if @teacher.save
 
 		redirect_to '/test_for_teacher/get_the_comment'
 	end
@@ -101,9 +84,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		@comments   = TeacherComment.all(:teacher_id => @teacher.id, :order => :created_at.desc)
 
-		if @comments
-			$arr << 8
-		end
+		$arr << 'get_the_comment' if @comments
 
 		redirect_to '/test_for_teacher/get_questions'
 	end
@@ -111,9 +92,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	get :get_questions, :map => '/get_questions' do
 		@questions = Question.all(:order=>:weight.asc, :show => true)
 
-		if @questions
-			$arr << 9
-		end
+		$arr << 'get_questions' if @questions
 
 		redirect_to '/test_for_teacher/reset_password'
 	end
@@ -122,7 +101,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		@teacher.password = '12345'
 		if @teacher.save
-			$arr << 10
+			$arr << 'reset_password'
 			@teacher.password = '123456'
 			@teacher.save
 		end
@@ -133,16 +112,13 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	get :logout, :map => '/logout' do
 		arr =  JSON.parse(RestClient.get('t.tekala.cn/v1/logout'))
 
-		if arr['status'] == 'success'
-			$arr << 11
-		end
+		$arr << 'logout' if arr['status'] == 'success'
 
 		redirect_to '/test_for_teacher'
 	end
 
 	post :clear_test, :map => '/clear_test' do
 		$arr = []
-
 		redirect_to '/test_for_teacher'
 	end
 
