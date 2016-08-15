@@ -9,10 +9,9 @@ class News
   property :pv, Integer, :default => 0
   property :view_count, Integer, :default => 0
   property :created_at, DateTime
+  property :school_id, Integer
 
   property :photo, String, :auto_validation => false
-
-  property :created_at, DateTime
 
   mount_uploader :photo, NewsPhoto
 
