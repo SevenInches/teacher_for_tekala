@@ -42,6 +42,8 @@ Tekala::TestForSchool.controllers :test_for_school  do
 
 		$arr << 'logout' if arr['status'] == 'success'
 
+		$arr << 'over'
+
 		redirect_to '/test_for_school'
 	end
 
