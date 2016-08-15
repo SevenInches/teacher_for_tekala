@@ -8,6 +8,7 @@ class News
   property :content, Text, :lazy => false
   property :pv, Integer, :default => 0
   property :view_count, Integer, :default => 0
+  property :created_at, DateTime
 
   property :photo, String, :auto_validation => false
 
