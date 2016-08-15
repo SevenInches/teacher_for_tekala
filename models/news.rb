@@ -15,6 +15,8 @@ class News
 
   mount_uploader :photo, NewsPhoto
 
+  belongs_to :school
+
   def photo_thumb_url
     photo.thumb && photo.thumb.url ? CustomConfig::HOST + photo.thumb.url : ''
   end 

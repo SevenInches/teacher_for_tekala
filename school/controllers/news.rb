@@ -10,11 +10,10 @@ Tekala::School.controllers :v1, :news  do
   get :news, :map => '/v1/news', :provides => [:json] do
     if params['demo'].present?
       @demo = params['demo']
-      check = Check.first
-      @cars = Car.get(check.car_id) if check.present?
+      news = New.first
       @total = 1
     else
-      @cars = @school.cars
+      @news = @school.cars
       if params[:branch].present?
         branches = params[:branch].split(/-/)
         @cars = @cars.all(:branch => branches)
