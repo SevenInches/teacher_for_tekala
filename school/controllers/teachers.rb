@@ -50,7 +50,7 @@ Tekala::School.controllers :v1, :teachers  do
     render 'teachers'
   end
 
-  get :teacher, :map => '/v1/teacher/:teacher_id', :provides => [:json] do
+  get :teacher, :map => '/v1/teachers/:teacher_id', :provides => [:json] do
     @teacher  =  Teacher.get(params[:teacher_id])
     render 'teacher'
   end
