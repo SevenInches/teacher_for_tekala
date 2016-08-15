@@ -47,5 +47,17 @@ class Shop
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 
+  def student_count_today
+    today_beginning = Date.strptime(Time.now.beginning_of_day.to_s,'%Y-%m-%d')
+    today = today_beginning  .. Date.tomorrow
+    amount = Student.all(:created_at => today).count
+  end
+
+  def student_count_month
+    month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
+    this_month = month_beginning .. Date.tomorrow
+    amount = Student.all(:created_at => this_month).count
+  end
+
 
 end

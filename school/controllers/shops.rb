@@ -7,17 +7,19 @@ Tekala::School.controllers :v1, :shops  do
     end
   end
 
+  # 使用该接口来返回驾校管理所需要的门店信息
   get :shops, :map => '/v1/shops', :provides => [:json] do
     if params['demo'].present?
-      @demo     = params['demo']
-      @shops    = Shop.first
-      @total    = 1
+      @demo = params['demo']
+      @shops = Shop.first
+      @total = 1
     else
       @shops = @school.shops
-      @shops = shops.all(:name => params[:name])   if params[:name].present?
+      @shops = shops.all(:name => params[:name]) if params[:name].present?
       @total = @shops.count
       @shops = @shops.paginate(:per_page => 20, :page => params[:page])
     end
+    
     render 'shops'
   end
 
