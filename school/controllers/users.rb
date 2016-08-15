@@ -77,6 +77,8 @@ Tekala::School.controllers :v1, :users  do
       @user.name             = params[:name]       if params[:name].present?
       if @user.save
         render 'user'
+      else
+        {:status => :failure, :msg => @user.errors.to_s}.to_json
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json

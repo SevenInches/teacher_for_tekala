@@ -99,6 +99,8 @@ Tekala::School.controllers :v1, :teachers  do
           TeacherTrainField.first(:teacher_id => @teacher.id).update(:train_field_id => params[:field])
         end
         render 'teacher'
+      else
+        {:status => :failure, :msg => @teacher.errors.to_s}.to_json
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json
