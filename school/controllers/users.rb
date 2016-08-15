@@ -14,13 +14,10 @@ Tekala::School.controllers :v1, :users  do
       @total   =  1
     else
       @users  = @school.users
-      puts params[:key]
       if params[:key].present?
         if params[:key].to_i > 0
-          puts params[:key]
           @users  = @users.all(:mobile => params[:key])
         else
-          puts params[:key].to_s + 'ddd'
           @users  = @users.all(:name => params[:key])
         end
       end

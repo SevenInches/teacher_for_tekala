@@ -109,6 +109,9 @@ class Teacher
 
   property :school_id, Integer, :default => 0
 
+  #通过学员数
+  property :success_users, Integer, :default => 0
+
   has n, :comments, :model => 'TeacherComment', :child_key =>'teacher_id' , :constraint => :destroy
 
   has n, :orders

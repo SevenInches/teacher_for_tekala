@@ -9,19 +9,6 @@ Tekala::School.controllers :v1, :schools  do
 
   end
 
-  get :teachers, :map => '/v1/teachers', :provides => [:json] do
-    if params['demo'].present?
-      @demo     = params['demo']
-      @teachers = Teacher.first
-      @total    = 1
-    else
-      @teachers = @school.teachers.all(:open => 1)
-      @total    = @teachers.count
-      @teachers = @teachers.paginate(:per_page => 20, :page => params[:page])
-    end
-    render 'teachers'
-  end
-
   get :fields, :map => '/v1/fields', :provides => [:json] do
     if params['demo'].present?
       @demo     = params['demo']
@@ -35,4 +22,29 @@ Tekala::School.controllers :v1, :schools  do
     render 'fields'
   end
 
+  get :pushes, :map => '/v1/pushes', :provides => [:json] do
+    if params['demo'].present?
+      @demo     = params['demo']
+      @pushes   = Push.first
+      @total    = 1
+    else
+      @pushes = @school.pushes.all
+      @total  = @pushes.count
+      @pushes = @pushes.paginate(:per_page => 20, :page => params[:page])
+    end
+    render 'pushes'
+  end
+
+  get :exams, :map => '/v1/exams', :provides => [:json] do
+    if params['demo'].present?
+      @demo     = params['demo']
+      @exams    = UserCycle.first
+      @total    = 1
+    else
+      @exams  = @school.users.cycles
+      @total  = @exams.count
+      @exams  = @exams.paginate(:per_page => 20, :page => params[:page])
+    end
+    render 'exams'
+  end
 end

@@ -25,6 +25,8 @@ Tekala::School.controllers :v1, :subparts  do
     array = $redis.lrange $school_remark, 0, -1
     if array.present?
       count_array(array)
+    else
+      {'data':[]}.to_json
     end
   end
 
