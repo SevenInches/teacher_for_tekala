@@ -48,16 +48,20 @@ Tekala::School.controllers :v1, :users  do
 
   get :orders, :map => '/v1/users/:id/orders', :provides => [:json] do
     user    = User.get(params[:id])
-    @orders = user.orders
-    @total  = @orders.count
-    render 'user_orders'
+    if user.present?
+      @orders = user.orders
+      @total  = @orders.count
+      render 'orders'
+    end
   end
 
   get :comments, :map => '/v1/users/:id/comments', :provides => [:json] do
     user        = User.get(params[:id])
-    @comments   = user.comments
-    @total      = @comments.count
-    render 'comments'
+    if user.present?
+      @comments   = user.comments
+      @total      = @comments.count
+      render 'comments'
+    end
   end
 
   post :users, :map => '/v1/users', :provides => [:json] do
@@ -146,9 +150,11 @@ Tekala::School.controllers :v1, :users  do
 
   get :exams, :map => '/v1/users/:id/exams', :provides => [:json] do
     user    = User.get(params[:id])
-    @exams  = user.cycles
-    @total  = @exams.count
-    render 'user_exams'
+    if user.present?
+      @exams  = user.cycles
+      @total  = @exams.count
+      render 'user_exams'
+    end
   end
 
   post :exams, :map => '/v1/users/:id/exams', :provides => [:json] do
@@ -184,9 +190,11 @@ Tekala::School.controllers :v1, :users  do
 
   get :pays, :map => '/v1/users/:id/pays', :provides => [:json] do
     user    = User.get(params[:id])
-    @pays   = user.pays
-    @total  = @pays.count
-    render 'user_pays'
+    if user.present?
+      @pays   = user.pays
+      @total  = @pays.count
+      render 'user_pays'
+    end
   end
 
   post :pays, :map => '/v1/users/:id/pays', :provides => [:json] do

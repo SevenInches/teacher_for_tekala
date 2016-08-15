@@ -65,7 +65,7 @@ class Teacher
   property :mobile, String, :unique => true, :required => true,
            :messages => {:is_unique => "手机号已经存在",
                           :presence => '请填写联系电话'}
-  property :wechat, String, :default => ''
+  property :wechart, String, :default => ''
   property :email,  String, :default => ''
   property :address, String, :default => ''
   property :remark,  String, :default => ''
@@ -85,13 +85,7 @@ class Teacher
   
   #'待审核'=>1, '审核通过'=>2, '审核不通过'=>3, '报名' => 4
   property :status, Integer, :default => 1
-  
-  #用户区域
-  #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :其他 => 0}
-  property :area, Integer, :default => 0
 
-  property :training_field, String, :default => ''
-  property :training_address, String, :default => ''
   property :map, String, :auto_validation => false
 
   property :date_setting, String, :default => ''
@@ -107,7 +101,11 @@ class Teacher
 
   property :vip, Integer, :default => 0#收入是否已超3万元
 
-  property :school_id, Integer, :default => 0
+  property :school_id, Integer
+
+  property :branch_id, Integer
+
+  property :car_id, Integer
 
   #通过学员数
   property :success_users, Integer, :default => 0
@@ -123,14 +121,19 @@ class Teacher
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'teacher_id', :constraint => :destroy
 
-
   # 教练钱包
   #has 1, :teacher_wallet, :constraint => :destroy
   has n, :users
 
+  has n, :pay_logs, :model => 'TeacherPayLog', :child_key => 'teacher_id'
+
   belongs_to :school
 
+  belongs_to :branch
+
   belongs_to :city
+
+  belongs_to :car
 
   def city_name
     city.name
@@ -161,13 +164,13 @@ class Teacher
   mount_uploader :map, MapPhoto
 
   after :create, :push_manager
+
   # Callbacks
   before :save, :encrypt_password
 
   def push_manager
     #创建教练验证
     TeacherAudit.create(:teacher_id => id)
-    JPush.send
   end
 
   def rate 

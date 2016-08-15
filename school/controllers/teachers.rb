@@ -24,9 +24,6 @@ Tekala::School.controllers :v1, :teachers  do
         end
       end
 
-      if params[:status].present?
-        @teachers  = @teachers.all(:status_flag => params[:status])
-      end
       if params[:tech_type].present?
         @teachers  = @teachers.all(:exam_type => params[:exam_type])
       end
@@ -36,11 +33,118 @@ Tekala::School.controllers :v1, :teachers  do
       if params[:sex].present?
         @teachers  = @teachers.all(:sex => params[:sex])
       end
+      if params[:field].present?
+        fields = TeacherTrainField.all(:train_field_id => params[:field])
+        if fields.present?
+          teacher_ids  = fields.aggregate(:teacher_id)
+          @teachers  = @teachers.all(:id => teacher_ids)
+        end
+      end
+      if params[:branch].present?
+        @teachers  = @teachers.all(:branch_id => params[:branch])
+      end
 
       @total = @teachers.count
       @teachers  = @teachers.paginate(:per_page => 20, :page => params[:page])
     end
     render 'teachers'
+  end
+
+  get :teacher, :map => '/v1/teacher/:teacher_id', :provides => [:json] do
+    @teacher  =  Teacher.get(params[:teacher_id])
+    render 'teacher'
+  end
+
+  post :teachers, :map => '/v1/teachers', :provides => [:json] do
+    if params[:name].present?
+      @teacher = Teacher.new(:name => params[:name], :school_id => @school.id)
+      @teacher.mobile           = params[:mobile]     if params[:mobile].present?
+      @teacher.branch_id        = params[:branch]     if params[:branch].present?
+      @teacher.tech_type        = params[:tech]       if params[:tech].present?
+      @teacher.exam_type        = params[:exam]       if params[:exam].present?
+      @teacher.id_card          = params[:card]       if params[:card].present?
+      @teacher.sex              = params[:sex]        if params[:sex].present?
+      @teacher.address          = params[:address]    if params[:address].present?
+      @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
+      @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
+      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.password         = '123456'
+      if @teacher.save
+        if params[:field].present?
+          TeacherTrainField.new(:teacher_id => @teacher.id, :train_field_id => params[:field].to_i).save
+        end
+        render 'teacher'
+      end
+    else
+      {:status => :failure, :msg => '参数错误'}.to_json
+    end
+  end
+
+  put :teachers, :map => '/v1/teachers/:teacher_id', :provides => [:json] do
+    if params[:name].present?
+      @teacher = Teacher.get(params[:teacher_id])
+      @teacher.mobile           = params[:mobile]     if params[:mobile].present?
+      @teacher.branch_id        = params[:branch]     if params[:branch].present?
+      @teacher.tech_type        = params[:tech]       if params[:tech].present?
+      @teacher.exam_type        = params[:exam]       if params[:exam].present?
+      @teacher.id_card          = params[:card]       if params[:card].present?
+      @teacher.sex              = params[:sex]        if params[:sex].present?
+      @teacher.address          = params[:address]    if params[:address].present?
+      @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
+      @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
+      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.name             = params[:name]       if params[:name].present?
+      if @teacher.save
+        if params[:field].present?
+          TeacherTrainField.first(:teacher_id => @teacher.id).update(:train_field_id => params[:field])
+        end
+        render 'teacher'
+      end
+    else
+      {:status => :failure, :msg => '参数错误'}.to_json
+    end
+  end
+
+  delete :teachers, :map => '/v1/teachers/:teacher_id', :provides => [:json] do
+    teacher_field  =  TeacherTrainField.first(:teacher_id => params[:teacher_id])
+    if teacher_field.present?
+      teacher_field.destroy
+    end
+    teacher  = Teacher.get(params[:teacher_id])
+    if teacher.present?
+      if teacher.destroy
+        {:status => :success, :msg => "教练(id:#{params[:teacher_id]})删除成功"}.to_json
+      else
+        {:status => :failure, :msg => '删除错误'}.to_json
+      end
+    end
+  end
+
+  get :comments, :map => '/v1/teachers/:teacher_id/comments', :provides => [:json] do
+    teacher     = Teacher.get(params[:teacher_id])
+    if teacher.present?
+      @comments   = teacher.comments
+      @total      = @comments.count
+      render 'comments'
+    end
+  end
+
+  get :orders, :map => '/v1/teachers/:teacher_id/orders', :provides => [:json] do
+    teacher = Teacher.get(params[:teacher_id])
+    if teacher.present?
+      @orders = teacher.orders
+      @total  = @orders.count
+      render 'orders'
+    end
+  end
+
+  get :pays, :map => '/v1/teachers/:teacher_id/pays', :provides => [:json] do
+    teacher = Teacher.get(params[:teacher_id])
+    if teacher.present?
+      @logs = teacher.pay_logs
+      @total  = @logs.count
+      render 'pay_logs'
+    end
   end
 
 end

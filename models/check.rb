@@ -17,16 +17,16 @@ class Check
 
   def handle_status
     status = []
-    if check_end <= (Date.today + 3.month)
+    if check_end.present? && check_end <= (Date.today + 3.month)
       status << 1
     end
-    if year_check_end <= (Date.today + 3.month)
+    if year_check_end.present? && year_check_end <= (Date.today + 3.month)
       status << 2
     end
-    if season_check_end <= (Date.today + 1.month)
+    if season_check_end.present? && season_check_end <= (Date.today + 1.month)
       status << 3
     end
-    if second_check_end <= (Date.today + 3.month)
+    if second_check_end.present? && second_check_end <= (Date.today + 3.month)
       status << 4
     end
     status

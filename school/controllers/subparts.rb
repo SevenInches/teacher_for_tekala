@@ -29,5 +29,4 @@ Tekala::School.controllers :v1, :subparts  do
       {'data':[]}.to_json
     end
   end
-
 end
