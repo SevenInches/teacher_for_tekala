@@ -70,6 +70,7 @@ Tekala::TestForShop.controllers :test_for_shop  do
 
 			redirect_to '/test_for_shop/delete_students'
 		else
+			$arr << 'over'
 			redirect_to '/test_for_shop'
 		end
 	end
@@ -85,6 +86,8 @@ Tekala::TestForShop.controllers :test_for_shop  do
 		arr =  JSON.parse(RestClient::Request.execute(method: :post, url: 'http://t.tekala.cn/shop/v1/logout'))
 
 		$arr << 'logout' if arr['status'] == 'success'
+
+		$arr << 'over'
 
 		redirect_to '/test_for_shop'
 	end
