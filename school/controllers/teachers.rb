@@ -75,7 +75,7 @@ Tekala::School.controllers :v1, :teachers  do
         end
         render 'teacher'
       else
-        {:status => :failure, :msg => @teacher.errors.to_h}.to_json
+        {:status => :failure, :msg => @teacher.errors.first.first }.to_json
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json
