@@ -7,6 +7,7 @@ class News
   property :tagline, Text,  :auto_validation => false, :lazy => false
   property :content, Text, :lazy => false
   property :pv, Integer, :default => 0
+  property :view_count, Integer, :default => 0
 
   property :photo, String, :auto_validation => false
 
