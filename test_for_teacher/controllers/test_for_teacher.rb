@@ -82,7 +82,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 
 	get :get_the_comment, :map => '/get_the_comment' do
 		@teacher = Teacher.first(:mobile => '13094442075')
-		@comments   = TeacherComment.all(:teacher_id => @teacher.id, :order => :created_at.desc)
+		@comments = TeacherComment.all(:teacher_id => @teacher.id, :order => :created_at.desc)
 
 		$arr << 'get_the_comment' if @comments
 
@@ -110,9 +110,10 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	end
 
 	get :logout, :map => '/logout' do
-		arr =  JSON.parse(RestClient.get('t.tekala.cn/v1/logout'))
+		arr = JSON.parse(RestClient.get('t.tekala.cn/v1/logout'))
 
 		$arr << 'logout' if arr['status'] == 'success'
+		$arr << 'over'
 
 		redirect_to '/test_for_teacher'
 	end
