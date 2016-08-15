@@ -78,7 +78,7 @@ Tekala::School.controllers :v1, :users  do
       if @user.save
         render 'user'
       else
-        {:status => :failure, :msg => @user.errors.to_s}.to_json
+        {:status => :failure, :msg => @user.errors.to_h}.to_json
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json
