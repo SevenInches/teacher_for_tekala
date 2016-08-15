@@ -74,6 +74,8 @@ Tekala::School.controllers :v1, :teachers  do
           TeacherTrainField.new(:teacher_id => @teacher.id, :train_field_id => params[:field].to_i).save
         end
         render 'teacher'
+      else
+        {:status => :failure, :msg => @teacher.errors.to_s}.to_json
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json
