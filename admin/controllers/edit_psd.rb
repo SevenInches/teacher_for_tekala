@@ -1,5 +1,5 @@
 Tekala::Admin.controllers :edit_psd do
-  before :except => [:login, :unlogin, :logout] do
+  before do
     if session[:role_user_id]
       @role_user = RoleUser.get session[:role_user_id]
       @school_no = session[:school_no]
@@ -21,7 +21,6 @@ Tekala::Admin.controllers :edit_psd do
     else
 
     end
-
   end
 
   get :unlogin, :provides => [:json] do

@@ -43,6 +43,18 @@ class RoleUser
     end
   end
 
+  def change_other_psd(id, new_password , confirm_password)
+    user = RoleUser.first(:id => id)
+    if user && new_password == confirm_password
+      user.crypted_password = 'modify pwd'
+      user.password = new_password
+      user.save
+      return user
+    else
+      return nil
+    end
+  end
+
   def self.find_by_id(id)
     get(id) rescue nil
   end

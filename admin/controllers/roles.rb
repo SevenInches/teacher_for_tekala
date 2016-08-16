@@ -1,4 +1,14 @@
 Tekala::Admin.controllers :roles do
+  before do
+    if session[:role_user_id]
+      @role_user = RoleUser.get session[:role_user_id]
+      @school_no = session[:school_no]
+      @mobile     = session[:mobile]
+    elsif !params['demo'].present?
+      redirect_to(url(:edit_psd, :unlogin))
+    end
+  end
+
   get :index do
     @title = '人员管理'
     @users = RoleUser.all
@@ -18,7 +28,7 @@ Tekala::Admin.controllers :roles do
     end
   end
 
-  delete :destroy, :with => :id do
+  get :destroy, :with => :id do
     @title = "人员管理"
     push = RoleUser.get(params[:id])
     if push
@@ -31,6 +41,15 @@ Tekala::Admin.controllers :roles do
     else
       flash[:warning] = pat(:delete_warning, :model => 'Push', :id => "#{params[:id]}")
       halt 404
+    end
+  end
+
+  post :change do
+    role_user = @role_user.change_other_psd(params[:id].to_i,params[:new_password], params[:confirm_password])
+    if role_user
+      redirect_to(url(:roles, :index))
+    else
+      p 'change error'
     end
   end
 
