@@ -109,7 +109,7 @@ Tekala::School.controllers :v1, :users  do
 
   delete :users, :map => '/v1/users/:id', :provides => [:json] do
     user = User.get(params[:id])
-    if user.destroy
+    if user.destroy!
       {:status => :success, :msg => "学员(id:#{params[:id]})删除成功"}.to_json
     else
       {:status => :failure, :msg => '删除错误'}.to_json
@@ -120,7 +120,7 @@ Tekala::School.controllers :v1, :users  do
     if params[:status]
       user = User.get params[:id]
       if user.update(:status_flag => params[:status])
-        {:status => :success, :msg => '修改成功', :status => user.status_flag_word }.to_json
+        {:status => :success, :msg => '修改成功'}.to_json
       else
         {:status => :failure, :msg => '参数错误'}.to_json
       end
@@ -229,7 +229,7 @@ Tekala::School.controllers :v1, :users  do
     end
   end
 
-  # get :level, :map => '/v1/all_levels', :provides => [:json] do
-  #   {'data'=>UserCycle.level_array}.to_json
-  # end
+  get :level, :map => '/v1/all_levels', :provides => [:json] do
+    {'data'=>UserCycle.level_array}.to_json
+  end
 end
