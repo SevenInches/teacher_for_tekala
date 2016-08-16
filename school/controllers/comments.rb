@@ -40,5 +40,4 @@ Tekala::School.controllers :v1, :comments do
       { :status => :failure, :msg => '该评论已删除' }.to_json
     end
   end
-
 end

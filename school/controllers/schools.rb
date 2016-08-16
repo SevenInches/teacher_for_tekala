@@ -34,17 +34,4 @@ Tekala::School.controllers :v1, :schools  do
     end
     render 'exams'
   end
-
-  post :exams, :map => '/v1/exams', :provides => [:json] do
-    if params['demo'].present?
-      @demo     = params['demo']
-      @exams    = UserCycle.first
-      @total    = 1
-    else
-      @exams  = @school.users.cycles
-      @total  = @exams.count
-      @exams  = @exams.paginate(:per_page => 20, :page => params[:page])
-    end
-    render 'exams'
-  end
 end
