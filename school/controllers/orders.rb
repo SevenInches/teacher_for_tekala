@@ -45,13 +45,14 @@ Tekala::School.controllers :v1, :orders  do
 
   put :orders, :map => '/v1/orders/:order_id/edit_time', :provides => [:json] do
     if params[:book_time].present?
+      order = Order.get(params[:order_id])
 
       #/*预订的日期
       book_time_first = Time.parse(params[:book_time]).strftime('%Y-%m-%d %k:00')
       book_time_second = Time.parse(params[:book_time] + 1.hours).strftime('%Y-%m-%d %k:00') if params[:quantity] == 2
 
       tmp1 = []
-      Order.all(:teacher_id => teacher.id, :status => Order::pay_or_done, :book_time => ((Date.today+1)..(Date.today+8.day))).each do |order|
+      Order.all(:teacher_id => order.teacher_id, :status => Order::pay_or_done, :book_time => ((Date.today+1)..(Date.today+8.day))).each do |order|
         tmp1 << order.book_time.strftime('%Y-%m-%d %k:00')
         tmp1 << (order.book_time+1.hour).strftime('%Y-%m-%d %k:00') if order.quantity == 2
       end
@@ -63,9 +64,13 @@ Tekala::School.controllers :v1, :orders  do
       elsif  tmp1.include?(book_time_second)
         {:status => :failure, :msg => '第二个时段已被预约'}.to_json
       else
-        order = Order.get(params[:order_id])
         order.book_time = params[:book_time]
         order.quantity  = params[:quantity]
+        if order.save
+          {:status => :failure, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
+        else
+          {:status => :failure, :msg => order.errors.first.first}.to_json
+        end
       end
       #如果该时段被预约 返回failure */
     end

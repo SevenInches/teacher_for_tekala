@@ -72,7 +72,7 @@ class Order
   #结算时间
   property :sum_time, DateTime
 
-  property :pay_channel, String
+  property :pay_channel, String, :default => ''
 
   belongs_to :user
   belongs_to :teacher

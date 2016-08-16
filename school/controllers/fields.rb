@@ -45,6 +45,7 @@ Tekala::School.controllers :v1, :fields  do
     field  =  TrainField.get(params[:id])
     if field.present?
       @teachers  =  field.teachers
+      @total  =  @teachers.count
     end
     render 'teachers'
   end
@@ -53,6 +54,7 @@ Tekala::School.controllers :v1, :fields  do
     field  =  TrainField.get(params[:id])
     if field.present?
       @cars  =  field.cars
+      @total  =  @cars.count
     end
     render 'cars'
   end
@@ -61,6 +63,7 @@ Tekala::School.controllers :v1, :fields  do
     field  =  TrainField.get(params[:id])
     if field.present?
       @users  =  field.users
+      @total  =  @users.count
     end
     render 'users'
   end
