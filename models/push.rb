@@ -11,6 +11,7 @@ class Push
   property :school_id, Integer
   property :user_status, Boolean
   property :editions, String
+  property :created_at, DateTime
 
   belongs_to :channel
   belongs_to :school
@@ -55,6 +56,21 @@ class Push
       words[key]
     else
       words
+    end
+  end
+
+  def push_word
+    case channel_id
+      when 1
+        "学员版"
+      when 2
+        "教练版"
+      when 3
+        "驾校版"
+      when 4
+        "门店版"
+      else
+        "代理渠道版"
     end
   end
 

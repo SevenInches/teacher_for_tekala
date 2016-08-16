@@ -1,0 +1,96 @@
+<body class="horizontal-menu-page">
+<section>
+  <%= partial 'layouts/nav' %>
+
+  <div class="wrapper">
+  <div class="container-fluid" style="margin-bottom:20px">
+    <div class="row">
+      <div class="col-lg-2">
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModal">增加推送</button>
+      </div>
+    </div>
+  </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="panel">
+        <table class="table table-condensed table-striped table-hover">
+          <thead>
+            <tr style="padding:0">
+              <th>ID</th>
+              <th>推送内容</th>
+              <th>渠道</th>
+              <th>条件</th>
+              <th>触达数</th>
+              <th>添加时间</th>
+              <th>推送时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @pushs.each do |item| %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.message %></td>
+              <td><%= item.editions_name if item.editions.present? %></td>
+              <td><%=  %></td>
+              <td></td>
+              <td><%= item.created_at %></td>
+              <td></td>
+              <td><a href="/web/push/send/<%= item.id %>">重新发送</a></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <p style="padding:10px">每页20条</p>
+      </section>
+    </div>
+  </div>
+  <div class="row">
+    <%= will_paginate @pushs,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
+  </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close"
+                data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+          添加推送
+        </h4>
+      </div>
+      <div class="modal-body">
+        <% form_for :push, url(:push, :create), :class => 'form-horizontal', :style => 'margin:auto;' do |f| %>
+            <%= partial 'push/form', :locals => { :f => f } %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-dismiss="modal">关闭
+        </button>
+        <button type="button" class="btn btn-success">
+          提交更改
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+  </div>
+  <%= partial 'layouts/footer' %>
+</section>
+
+<script type="text/javascript">
+  $(function(){
+    var $form = $('form')
+    $(document).on('click','.modal-footer .btn-success',function(){
+      $form.submit();
+    });
+  })
+</script>
+</body>

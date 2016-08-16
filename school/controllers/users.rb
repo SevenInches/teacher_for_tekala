@@ -221,7 +221,7 @@ Tekala::School.controllers :v1, :users  do
     end
   end
 
-  get :level, :map => '/v1/all_levels', :provides => [:json] do
-    {'data':UserCycle.level_array}.to_json
-  end
+  # get :level, :map => '/v1/all_levels', :provides => [:json] do
+  #   {'data'=>UserCycle.level_array}.to_json
+  # end
 end

@@ -1,4 +1,3 @@
-<script src="../javascripts/jquery-1.11.0.min.js"></script>
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -10,32 +9,21 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="index.html">
-        <img src="images/logo.png" alt="">
+        <%=image_tag '../../images/tekala_logo.png', :class => 'photo' ,:style => "width: 90px;margin-top: 6px;"%>
       </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="index.html">首页</a></li>
+        <li><a href="/web/">首页</a></li>
         <li><a href="#">财务管理</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">新闻管理</a>
-          <!-- <ul class="dropdown-menu">
-              <li><a href="#">General</a></li>
-              <li><a href="#">Buttons</a></li>
-              <li><a href="#">Widget</a></li>
-              <li><a href="#">Slider</a></li>
-              <li><a href="#">Many More</a></li>
-          </ul> -->
-        </li>
-        <li><a href="#">推送管理</a></li>
-        <li class="active">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">人员管理</a>
-        </li>
+        <li><a href="/web/news_management" >新闻管理</a></li>
+        <li><a href="/web/push">推送管理</a></li>
+        <li><a href="/web/roles">人员管理</a></li>
         <li><a href="#">导入功能</a></li>
         <li><a href="#">使用帮助</a></li>
-        <li><a href="#">修改密码</a></li>
+        <li><a href="/web/edit_psd">修改密码</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -44,7 +32,7 @@
           <ul class="dropdown-menu">
             <li><a href="#">Profile</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="<%= url(:logins, :destroy)%>">登出</a></li>
+            <li><a href="<%= url(:logins, :logout)%>">登出</a></li>
           </ul>
         </li>
       </ul>

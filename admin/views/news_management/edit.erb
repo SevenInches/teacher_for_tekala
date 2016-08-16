@@ -1,0 +1,24 @@
+<body class="horizontal-menu-page">
+<section>
+  <%= partial 'layouts/nav' %>
+  <!--body wrapper start-->
+  <div class="wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <% form_for :news, url(:news_management, :edit_deal,:id => @news.id), :class => 'form-horizontal panel', :style => 'padding:20px 0;' do |f| %>
+              <%= partial 'news_management/form', :locals => { :f => f } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!--body wrapper end-->
+  <!--footer section start-->
+  <%= partial 'layouts/footer' %>
+  <!--footer section end-->
+</section>
+<!-- Placed js at the end of the document so the pages load faster -->
+</body>

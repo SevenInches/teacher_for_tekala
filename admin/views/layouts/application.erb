@@ -6,12 +6,9 @@
   <meta name="description" content="">
   <meta name="author" content="ThemeBucket">
   <link rel="shortcut icon" href="#" type="image/png">
-
-  <title>Login</title>
-
-  <link href="../stylesheets/admin/style.css" rel="stylesheet">
-  <link href="../stylesheets/admin/style-responsive.css" rel="stylesheet">
-
+  <title><%= @title %></title>
+  <%= stylesheet_link_tag '../../stylesheets/admin/style', '../../stylesheets/admin/style-responsive' %>
+  <%= javascript_include_tag '../../javascripts/jquery-1.11.0.min' %>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="../javascripts/bootstrap.min.js"></script>
@@ -19,13 +16,23 @@
   <script src="../javascripts/admin/respond.min.js"></script>
   <![endif]-->
 </head>
-
 <%=yield%>
-
 <!-- Placed js at the end of the document so the pages load faster -->
-
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="../javascripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="../javascripts/modernizr.min.js"></script>
+<%= javascript_include_tag '../../javascripts/jquery-migrate-1.2.1.min',
+                           '../../javascripts/modernizr.min','../../javascripts/bootstrap.min','../../javascripts/jquery-ui-1.9.2.custom.min'%>
+<script>
+$(function(){
+  var _toggle = false;
+  $(document).on('click','.dropdown',function(){
+    if(!_toggle){
+      $(this).addClass('open');
+    }else{
+      $(this).removeClass('open');
+    }
+    _toggle = !_toggle;
+  })
+})
+</script>
 
 </html>

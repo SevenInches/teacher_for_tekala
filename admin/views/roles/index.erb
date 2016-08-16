@@ -7,21 +7,23 @@
   <div class="wrapper">
     <div class="container-fluid" style="margin-bottom:20px">
       <div class="row">
-        <div class="col-lg-1">
-          <select class="form-control ">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+        <div class="col-lg-2">
+          <select class="form-control select-role">
+            <option>请选择角色</option>
+            <option value="1">管理员</option>
+            <option value="2">校长</option>
+            <option value="3">财务</option>
+            <option value="4">客户主任</option>
+            <option value="5">门店经理</option>
+            <option value="6">所有角色</option>
           </select>
         </div>
       </div>
 
     </div>
-    <div class="col-lg-6" >
-      <section class="panel" style="height:320px">
-        <table class="table table-condensed" style="height:280px">
+    <div class="col-lg-7">
+      <section class="panel">
+        <table class="table table-condensed table-striped table-hover">
           <thead>
           <tr style="padding:0">
             <th>角色</th>
@@ -33,88 +35,84 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>管理员</td>
-            <td>sam</td>
-            <td>13800138000</td>
-            <td>2016-08-05 20:20</td>
-            <td>修改密码</td>
-            <td>删除</td>
-          </tr>
-          <tr>
-            <td>管理员</td>
-            <td>sam</td>
-            <td>13800138000</td>
-            <td>2016-08-05 20:20</td>
-            <td>修改密码</td>
-            <td>删除</td>
-          </tr>
-          <tr>
-            <td>管理员</td>
-            <td>sam</td>
-            <td>13800138000</td>
-            <td>2016-08-05 20:20</td>
-            <td>修改密码</td>
-            <td>删除</td>
-          </tr>
-          <tr>
-            <td>管理员</td>
-            <td>sam</td>
-            <td>13800138000</td>
-            <td>2016-08-05 20:20</td>
-            <td>修改密码</td>
-            <td>删除</td>
-          </tr>
-          <tr>
-            <td>管理员</td>
-            <td>sam</td>
-            <td>13800138000</td>
-            <td>2016-08-05 20:20</td>
-            <td>修改密码</td>
-            <td>删除</td>
-          </tr>
+          <% @users.each do |user|%>
+            <tr>
+              <td><%= user.role_word%></td>
+              <td><%= user.name%></td>
+              <td><%= user.mobile%></td>
+              <td><%= user.last_login_at%></td>
+              <td><button class="btn btn-primary" data-role="<%= user.role_id %>" data-mobile="<%= user.mobile %>"
+                     data-toggle="modal" data-target="#myModal">修改密码</button></td>
+              <td>
+                <div class='list-row-action-wrapper'>
+                  <%- form_tag url(:roles, :destroy, :id => user.id), :method => :delete do %>
+                      <%= submit_tag pat(:delete), :class =>'btn btn-danger btn-small' %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
         <p style="padding:10px">每页5条</p>
       </section>
+      <div class="row">
+        <%= will_paginate @users,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
+      </div>
     </div>
     <div class="col-lg-4">
       <section class="panel">
         <div class="panel-heading">添加用户</div>
         <div class="panel-body">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">姓名</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder="请输入姓名">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">手机</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder="请输入手机号码">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">角色</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder="请输入角色权限">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"></label>
-              <div class="col-sm-10">说明:默认密码是123456</div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"></label>
-              <div class="col-sm-10">
-                <input type="submit" value="保存" class="btn btn-success">
-              </div>
-            </div>
-          </form>
+          <% form_for :user, url(:roles, :create), :class => 'form-horizontal', :style => 'margin:auto;' do |f| %>
+              <%= partial 'roles/form', :locals => { :f => f } %>
+          <% end %>
         </div>
       </section>
     </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+              修改密码
+            </h4>
+          </div>
+          <div class="modal-body">
+            <form action="/web/" class="form-horizontal">
+              <div class="form-group ">
+                <label class="col-sm-2 control-label">新密码</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="new_psd" required placeholder="请输入新密码" >
+                </div>
+              </div>
+              <div class="form-group ">
+                <label class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="confirm_psd" required placeholder="请确认新密码">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+                    data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary">
+              提交更改
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+    </div>
+
   </div>
   <!--body wrapper end-->
 
@@ -123,7 +121,6 @@
     2016(C) www.tekala.cn
   </footer>
   <!--footer section end-->
-
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
@@ -132,5 +129,17 @@
 
 <!--common scripts for all pages-->
 <script src="../javascripts/admin/scripts.js"></script>
+<script>
+  $(function(){
+    $(document).on('change','.select-role',function(){
+      var _val = $(event.target).val();
+      if(_val == 6){
+        location.href = '/web/roles';
+        return
+      }
+      location.href = '?role_id=' + _val;
+    })
+  })
+</script>
 
 </body>

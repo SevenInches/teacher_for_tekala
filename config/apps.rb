@@ -21,7 +21,7 @@ end
 # Mounts the core application for this project
 
 Padrino.mount('Tekala::School',   	  :app_file => Padrino.root('school/app.rb')).to('/school')
-Padrino.mount('Tekala::Admin',   	:app_file => Padrino.root('admin/app.rb')).to('/tekala_school_admin')
+Padrino.mount('Tekala::Admin',   	:app_file => Padrino.root('admin/app.rb')).to('/web')
 Padrino.mount('Tekala::Shop',   	  :app_file => Padrino.root('shop/app.rb')).to('/shop')
 Padrino.mount('Tekala::TestForSchool',   	  :app_file => Padrino.root('test_for_school/app.rb')).to('/test_for_school')
 Padrino.mount('Tekala::TestForTeacher',   	  :app_file => Padrino.root('test_for_teacher/app.rb')).to('/test_for_teacher')

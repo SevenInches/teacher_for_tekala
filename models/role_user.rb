@@ -31,6 +31,18 @@ class RoleUser
     end
   end
 
+  def change_psd(school_no, mobile,old_password, new_password , confirm_password)
+    role_user = self.class.authenticate(school_no, mobile, old_password)
+    if role_user && new_password == confirm_password
+      role_user.crypted_password = 'modify pwd'
+      role_user.password = new_password
+      role_user.save
+      return role_user
+    else
+      return nil
+    end
+  end
+
   def self.find_by_id(id)
     get(id) rescue nil
   end
@@ -45,6 +57,36 @@ class RoleUser
 
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
+  end
+
+  def self.get_role(key=nil)
+    words = {
+        1 => '管理员',
+        2 => '校长',
+        3 => '财务',
+        4 => '客户主任',
+        5 => '门店经理',
+    }
+    if key.present?
+      words[key]
+    else
+      words
+    end
+  end
+
+  def role_word
+    case role_id
+      when 1
+        "管理员"
+      when 2
+        "校长"
+      when 3
+        "财务"
+      when 4
+        "客户主任"
+      else
+        "门店经理"
+    end
   end
 
 end

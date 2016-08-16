@@ -1,0 +1,29 @@
+<div class="form-group ">
+  <label class="col-sm-2 control-label">姓名</label>
+  <div class="col-sm-10">
+    <%= f.text_field :name, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true ,:placeholder => '请输入姓名',:required => 'required'%>
+  </div>
+</div>
+
+<div class="form-group ">
+  <label class="col-sm-2 control-label">手机</label>
+  <div class="col-sm-10">
+    <%= f.text_field :mobile, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true ,:placeholder => '请输入11位手机号码' ,:required => 'required',:pattern => "[0-9]{11}" %>
+  </div>
+</div>
+
+<div class="form-group ">
+  <label class="col-sm-2 control-label">角色</label>
+  <div class="col-sm-10">
+    <%= f.select :role_id, :options => RoleUser.get_role.invert, :class => 'form-control' %>
+  </div>
+</div>
+
+<div class="form-actions">
+  <label class="col-sm-2 control-label"></label>
+  <div class="col-sm-8">
+    <%= f.submit pat(:save), :class => 'btn btn-success' %>
+    &nbsp;
+    <%= link_to pat(:cancel), url(:roles, :index), :class => 'btn btn-default' %>
+  </div>
+</div>
