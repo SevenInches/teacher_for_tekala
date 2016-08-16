@@ -28,6 +28,32 @@ class JPush
 
   URL = URI('https://api.jpush.cn/v3/push')
 
+  #推送给管理app
+  def self.send message="有新教练加入啦!"
+
+    Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
+      @count = Teacher.count
+      req=Net::HTTP::Post.new(URL.path)
+      req.basic_auth KEY,SEC
+      jpush =[]
+      jpush << 'platform=all'
+      jpush << 'audience=all'
+
+      jpush << 'notification={
+
+            "ios":{
+                   "alert":"'+message+'",
+                   "content-available":1,
+                   "extras":{"type": "teacher", "msg": "'+message+'", "count": "'+@count.to_s+'" }
+                     }
+                  }'
+      jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
+      req.body = jpush.join("&")
+      resp=http.request(req)
+      p resp.body
+    end
+  end
+
   def self.send_one(account, msg, type, data) 
     Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
         req=Net::HTTP::Post.new(URL.path)
@@ -211,7 +237,6 @@ class JPush
   #订单被学员取消了
   def self.order_cancel order_id 
     order = Order.get order_id
-    if order.order_confirm && order.order_confirm.status == 2
 
       current_alias = "user_"+order.user_id.to_s
       #如果是教练取消了订单 推送给学员
@@ -242,7 +267,6 @@ class JPush
           
       end
 
-    else
       current_alias = "teacher_"+order.teacher_id.to_s
       #学员取消预订 则推送给教练
       Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
@@ -269,9 +293,6 @@ class JPush
           req.body = jpush.join("&")
           resp=http.request(req)
           puts resp
-          
-      end
-
 
     end
 

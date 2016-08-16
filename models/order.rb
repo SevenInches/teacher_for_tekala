@@ -3,16 +3,12 @@ class Order
   attr_accessor :no_jpush
   attr_accessor :before_status
 
-  VIPTYPE       = 1
-  NORMALTYPE    = [1,2]
-  PAYTOTEACHER  = 1
-  FREETOTEACHER = 2
-
-  STATUS_DONE       = 3   # 已经完成
-  STATUS_PAY        = 2   # 等待接单
-  STATUS_CANCEL     = 7   # 取消状态
-  STATUS_REFUNDING  = 5   # 退款中
-  #补贴
+  STATUS_PAY        = 1   # 待接单
+  STATUS_RECEIVE    = 2   # 已接单
+  STATUS_COMMENT    = 3   # 待评价
+  STATUS_DONE       = 4   # 已完成
+  STATUS_REFUSE     = 5   # 已拒单
+  STATUS_CANCEL     = 5   # 已拒单
 
   property :id, Serial
   property :user_id, Integer
@@ -44,7 +40,7 @@ class Order
   property :ch_id, String #ping++ ch_id
 
 
-  #'未支付'=>1, '已预约'=>2, '已完成'=>3, '已确定'=>4, '退款中' => 5, '已退款' => 6, '取消'=>7
+  #'待接单'=>1, '已接单'=>2, '待评价'=>3, '已完成' =>4, '已拒单' => 5, '已取消'=>6
   property :status, Integer, :default => 1
 
   #'练车预约订单' => 1, '打包订单' => 2, '活动预付款' => 3
@@ -111,7 +107,7 @@ class Order
 
   #推送并创建一个让教练点确定的订单
     JPush.send "#{user.name}创建了订单"
-    if status == 2
+    if status == STATUS_PAY
       order_confirm = OrderConfirm.first(:teacher_id => teacher_id, :start_at => (book_time..(book_time + quantity.hour)), :end_at => (book_time..(book_time + quantity.hour)) )
       confirm_status = order_confirm.nil? ? 0 : 2
       current_confirm = OrderConfirm.create(
@@ -125,75 +121,14 @@ class Order
       JPush::order_confirm(current_confirm.order_id) if current_confirm && current_confirm.status == 0
     end
 
-
-    #支付后购买保险
-    # if status == 2  && has_insure == 1
-    #   if insure.nil?
-    #
-    #     data = '{
-    #               "REQUEST_CODE": "V2",
-    #               "REQUEST_TYPE":"Request",
-    #               "USER": "07",
-    #               "PASSWORD": "123456",
-    #               "PROD_ID":"2703",
-    #               "DEPT_ID":"8000",
-    #               "BASE_PART" :{
-    #               "CERT_TYPE":"01",
-    #               "CERT_ID":"'+user.id_card+'",
-    #               "CLEINT_NAME":"'+user.name+'",
-    #               "SEX":"'+(user.sex == 1 ? "M" : "F")+'",
-    #               "EFFECTIVE_TM": "'+book_time.strftime('%Y%m%d%H%M%S')+'",
-    #               "HOURS": "'+quantity.to_s+'",
-    #               "ORDER_ID": "'+order_no+'",
-    #               "INPUT_TM":"'+book_time.strftime('%Y%m%d')+'"
-    #             }
-    #           }
-    #         '
-    #     # puts data
-    #     request = Curl::Easy.http_post(CustomConfig::INSURE, data ) do |curl|
-    #                 curl.headers['Accept'] = 'application/json'
-    #                 curl.headers['Content-Type'] = 'application/json'
-    #               end
-    #
-    #     if request.body
-    #
-    #         begin
-    #
-    #           insure_info = JSON.parse(request.body)
-    #           insure = Insure.new
-    #           insure.request      = data
-    #           insure.effective_tm = insure_info["EFFECTIVE_TM"] if insure_info["EFFECTIVE_TM"]
-    #           insure.order_id     = id
-    #           insure.order_no     = insure_info["ORDER_ID"]     if insure_info["ORDER_ID"]
-    #           insure.expire_tm    = insure_info["EXPIRE_TM"]    if insure_info["EXPIRE_TM"]
-    #           insure.pol_no       = insure_info["POL_NO"]       if  insure_info["POL_NO"]
-    #           insure.amount       = insure_info["AMOUNT"]       if insure_info["AMOUNT"]
-    #           insure.error_desc   = insure_info["error_desc"]   if insure_info["error_desc"]
-    #           insure.premium      = insure_info["PREMIUM"]      if insure_info["PREMIUM"]
-    #           insure.error_code   = insure_info["ERROR_CODE"]   if insure_info["ERROR_CODE"]
-    #           insure.response     = request.body
-    #           insure.save
-    #
-    #           puts "#{insure.errors.to_hash}==insure.errors.to_hash=="
-    #       rescue => err
-    #       ensure
-    #       end
-    #
-    #    end
-    #
-    #   end
-    # end
-
-    if status == 3
+    if status == STATUS_RECEIVE || status == STATUS_DONE
       self.update(:done_at => Time.now)
     end
-
-
   end
 
 
   def cancel_by_me
-    (status == 0 && order_confirm && order_confirm.status == 2) ? true : false
+    (status == STATUS_REFUSE && order_confirm && order_confirm.status == 2) ? true : false
   end
 
 
@@ -218,28 +153,26 @@ class Order
     sec     = "%02d" % Time.now.sec
     user_id = self.user_id
     rands   = rand(9999)
-    return "#{year}#{month}#{day}#{hour}#{min}#{sec}#{rands}".to_s
+    return "#{year}#{month}#{day}#{hour}#{min}#{sec}#{rands}#{user_id}".to_s
   end
 
   def self.get_status
-    return {'未支付'=>'1', '等待接单'=>'2', '已确定'=>'4', '已完成'=>'3', '退款中'=>'5', '退款'=>'6', '取消'=>'7'}
+    return {'待接单'=>1, '已接单'=>2, '待评价'=>3, '已完成' =>4, '已拒单' => 5, '已取消'=>6}
   end
 
   def set_status
     case self.status
       when 1
-        return '未支付'
+        return '待接单'
       when 2
-        return '等待接单'
+        return '已接单'
       when 3
-        return '已完成'
+        return '待评价'
       when 4
-        return '已确定'
+        return '已完成'
       when 5
-        return '退款中'
+        return '已拒单'
       when 6
-        return '已退款'
-      when 7
         return '已取消'
     end
   end
@@ -247,22 +180,16 @@ class Order
   def status_word
     case self.status
       when 1
-        return '待支付'
+        return '待接单'
       when 2
-        return '等待接单'
-      when 3
-        if can_comment && !user_has_comment
-          return '待评价'
-        else
-          return '已完成'
-        end
-      when 4
         return '已接单'
+      when 3
+        return '待评价'
+      when 4
+        return '已完成'
       when 5
-        return '退款中'
+        return '已拒单'
       when 6
-        return '已退款'
-      when 7
         if accept_status == 2
           return '教练繁忙'
         else
@@ -293,11 +220,11 @@ class Order
 
 
   def can_comment
-    return  status == 3 && teacher_comment.nil? ? true : false
+    return  status == STATUS_COMMENT && teacher_comment.nil? ? true : false
   end
 
   def teacher_can_comment
-    return  status == 3 && user_comment.nil? ? true : false
+    return  status == STATUS_COMMENT && user_comment.nil? ? true : false
   end
 
   def user_has_comment
@@ -313,7 +240,7 @@ class Order
   end
 
   def self.accept
-    [4]
+    [2]
   end
 
   #教练是否已经接单
@@ -323,7 +250,11 @@ class Order
   end
 
   def self.pay_or_done
-    [2,3,4]
+    [1,2,3,4]
+  end
+
+  def self.cancel
+    [5,6]
   end
 
   def self.theme

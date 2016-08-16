@@ -1,7 +1,7 @@
 node(:status) { 'success' }
 node(:total) { @total }
 child(@orders => :data){
-  attributes :id, :order_no, :note, :status, :status_word, :created_at, :book_time, :quantity, :book_time
+  attributes :id, :order_no, :note, :status, :status_word, :created_at, :book_time, :quantity, :book_time, :progress
   attribute :pay_at,      :if => lambda { |val| val.pay_at.present? }
   attribute :done_at,     :if => lambda { |val| val.done_at.present? }
   attribute :cancel_at,   :if => lambda { |val| val.cancel_at.present? }

@@ -9,19 +9,6 @@ Tekala::School.controllers :v1, :schools  do
 
   end
 
-  get :fields, :map => '/v1/fields', :provides => [:json] do
-    if params['demo'].present?
-      @demo     = params['demo']
-      @fields = TrainField.first
-      @total    = 1
-    else
-      @fields = @school.train_fields.all(:open => 1)
-      @total  = @fields.count
-      @fields = @fields.paginate(:per_page => 20, :page => params[:page])
-    end
-    render 'fields'
-  end
-
   get :pushes, :map => '/v1/pushes', :provides => [:json] do
     if params['demo'].present?
       @demo     = params['demo']

@@ -1,0 +1,89 @@
+Tekala::School.controllers :v1, :orders  do
+  before :except => [] do
+    if session[:school_id]
+      @school = School.get(session[:school_id])
+    elsif !params['demo'].present?
+      redirect_to(url(:v1, :unlogin))
+    end
+  end
+
+  get :orders, :map => '/v1/orders', :provides => [:json] do
+    if params['demo'].present?
+      @demo     = params['demo']
+      @orders = Order.first(:show => 1)
+      @total    = 1
+    else
+      @orders = @school.users.orders.all
+
+      if params[:user_key].present?
+        if params[:user_key].to_i > 0
+          users = @school.users.all(:mobile => params[:user_key])
+        else
+          users = @school.users.all(:name => params[:user_key])
+        end
+        if users.present?
+          @orders  = Order.all(:id => users.aggregate(:id))
+        end
+      end
+
+      if params[:teacher_key].present?
+        if params[:teacher_key].to_i > 0
+          teachers = @school.teachers.all(:mobile => params[:teacher_key])
+        else
+          teachers = @school.teachers.all(:name => params[:teacher_key])
+        end
+        if teachers.present?
+          @orders  = Order.all(:id => teachers.aggregate(:id))
+        end
+      end
+
+      @total  = @orders.count
+      @orders = @orders.paginate(:per_page => 20, :page => params[:page])
+    end
+    render 'orders'
+  end
+
+  put :orders, :map => '/v1/orders/:order_id/edit_time', :provides => [:json] do
+    if params[:book_time].present?
+
+      #/*预订的日期
+      book_time_first = Time.parse(params[:book_time]).strftime('%Y-%m-%d %k:00')
+      book_time_second = Time.parse(params[:book_time] + 1.hours).strftime('%Y-%m-%d %k:00') if params[:quantity] == 2
+
+      tmp1 = []
+      Order.all(:teacher_id => teacher.id, :status => Order::pay_or_done, :book_time => ((Date.today+1)..(Date.today+8.day))).each do |order|
+        tmp1 << order.book_time.strftime('%Y-%m-%d %k:00')
+        tmp1 << (order.book_time+1.hour).strftime('%Y-%m-%d %k:00') if order.quantity == 2
+      end
+      # 预订的日期 */
+
+      #/*如果该时段被预约 返回failure
+      if tmp1.include?(book_time_first)
+        {:status => :failure, :msg => '第一个时段已被预约'}.to_json
+      elsif  tmp1.include?(book_time_second)
+        {:status => :failure, :msg => '第二个时段已被预约'}.to_json
+      else
+        order = Order.get(params[:order_id])
+        order.book_time = params[:book_time]
+        order.quantity  = params[:quantity]
+      end
+      #如果该时段被预约 返回failure */
+    end
+  end
+
+  put :orders, :map => '/v1/orders/:order_id/cancel', :provides => [:json] do
+    order = Order.get(params[:order_id])
+    if order.present?
+      if order.status == Order::STATUS_PAY || order.status == Order::STATUS_RECEIVE
+        if order.update(:status => Order::STATUS_CANCEL)
+          {:status => :success, :msg => "订单(id:#{params[:order_id]})已经取消"}.to_json
+        end
+      else
+        {:status => :failure, :msg => "参数错误"}.to_json
+      end
+    else
+      {:status => :failure, :msg => "订单不存在"}.to_json
+    end
+  end
+
+end
