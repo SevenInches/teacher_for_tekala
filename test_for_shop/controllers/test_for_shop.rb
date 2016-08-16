@@ -5,19 +5,14 @@ Tekala::TestForShop.controllers :test_for_shop  do
 
 	get :index, :map => '/' do
 		$arr ||= []
-
 		render 'index'
 	end
 
 	post :login, :map => '/login' do
-		arr =  JSON.parse(RestClient.post('t.tekala.cn/shop/v1/login',
-						:phone => '13094442070',
-						:password => '123456'
-                                                 	  ))
+		login_url = 't.tekala.cn/shop/v1/login'
+		arr =  JSON.parse(RestClient.post(login_url, :phone => '13094442070', :password => '123456'))
 
-		if arr['status'] == 'success'
-			$arr << 1
-		end
+		$arr << 'login' if arr['status'] == 'success'
 
 		redirect_to '/test_for_shop/get_index_data'
 	end
@@ -27,18 +22,14 @@ Tekala::TestForShop.controllers :test_for_shop  do
 		b = Student.user_num
 		c = ( a == 0 ? 1.0 : b / a )
 		
-		if a && b && c
-			$arr << 2
-		end
+		$arr << 'get_index_data' if a && b && c
 
 		redirect_to '/test_for_shop/add_consultants'
 	end
 
 	get :add_consultants, :map => '/add_consultants' do
 		consultant  = Consultant.create(:name => '周杰伦', :sex => 1, :mobile => '13094442075', :age => 38, :shop_id => Shop.first.id)
-		if consultant.save
-			$arr << 3
-		end
+		$arr << 'add_consultants' if consultant.save
 
 		redirect_to '/test_for_shop/consultants'
 	end
@@ -47,9 +38,7 @@ Tekala::TestForShop.controllers :test_for_shop  do
 		@shop = Shop.first
 		@consultants = @shop.consultants
 
-		if @consultants
-			$arr << 4
-		end
+		$arr << 'get_consultants' if @consultants
 
 		redirect_to '/test_for_shop/add_students'
 	end
@@ -57,9 +46,7 @@ Tekala::TestForShop.controllers :test_for_shop  do
 	get :add_students, :map => 'add_students' do
 		consultant = Consultant.first(:name => '周杰伦')
 		student = Student.create(:name => consultant.name, :sex => consultant.sex, :age => consultant.age, :mobile => consultant.mobile, :shop_id => Shop.first.id)
-		if student.save
-			$arr << 5
-		end
+		$arr << 'add_students' if student.save
 
 		redirect_to '/test_for_shop/students'
 	end
@@ -68,9 +55,7 @@ Tekala::TestForShop.controllers :test_for_shop  do
 		@shop = Shop.first
 		@students = @shop.students
 
-		if @students
-			$arr << 6
-		end
+		$arr << 'students' if @students
 
 		redirect_to '/test_for_shop/delete_consultants'
 	end
@@ -81,21 +66,18 @@ Tekala::TestForShop.controllers :test_for_shop  do
 
 		if consultant.save
 			consultant = Consultant.first(:name => '周杰伦')
-			if consultant.destroy
-				$arr << 7
-			end
+			$arr << 'delete_consultants' if consultant.destroy
 
 			redirect_to '/test_for_shop/delete_students'
 		else
+			$arr << 'over'
 			redirect_to '/test_for_shop'
 		end
 	end
 
 	get :delete_students, :map => '/delete_students' do
 		student = Student.first(:name => '周杰伦')
-		if student.destroy
-			$arr << 8
-		end
+		$arr << 'delete_students' if student.destroy
 
 		redirect_to '/test_for_shop/logout'
 	end
@@ -103,16 +85,15 @@ Tekala::TestForShop.controllers :test_for_shop  do
 	get :logout, :map => '/logout' do
 		arr =  JSON.parse(RestClient::Request.execute(method: :post, url: 'http://t.tekala.cn/shop/v1/logout'))
 
-		if arr['status'] == 'success'
-			$arr << 9
-		end
+		$arr << 'logout' if arr['status'] == 'success'
+
+		$arr << 'over'
 
 		redirect_to '/test_for_shop'
 	end
 
 	post :clear_test, :map => '/clear_test' do
 		$arr = []
-
 		redirect_to '/test_for_shop'
 	end
 

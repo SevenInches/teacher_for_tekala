@@ -1,7 +1,7 @@
 node(:status) { 'success' }
 node(:total) { @total }
 child(@products => :data){
-  attributes :id, :city_name, :name, :price, :description, :introduction, :can_buy, :created_at
+  attributes :id, :city_name, :name, :price, :description, :introduction, :can_buy, :created_at, :signup_num
   attributes :photos
   node(:color ) { |val| @demo.present? ? val.color_demo : val.color }
   node(:show ) { |val| @demo.present? ? val.show_demo : val.show }

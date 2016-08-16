@@ -45,6 +45,12 @@ Tekala::School.controllers :v1 do
 		render 'all_branches'
   end
 
+	get :shops, :map => '/v1/all_shops', :provides => [:json] do
+		@shops = @school.shops
+		@total = @shops.count
+		render 'all_shops'
+	end
+
 	get :products, :map => '/v1/all_products', :provides => [:json] do
 		@products = @school.products
     @total 		= @products.count

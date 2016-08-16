@@ -14,7 +14,7 @@ Tekala::School.controllers :v1, :products  do
       @total    = 1
     else
       @products = @school.products.all(:show => 1)
-      @total  = @products.count
+      @total    = @products.count
       @products = @products.paginate(:per_page => 20, :page => params[:page])
     end
     render 'products'

@@ -7,7 +7,7 @@ class Shop
   property :id, Serial
   property :name, String
   property :address, String
-  property :rent_amount, Integer
+  property :rent_amount, Integer, :default => 0
   property :area, Integer
   property :contact_phone, String
   property :contact_user, String
@@ -17,8 +17,8 @@ class Shop
   property :created_at, DateTime
   property :updated_at, DateTime
   property :crypted_password, String, :length => 70
-  property :student_count, DataMapper::Property::Integer # 招生人数
-  property :consultant_count, DataMapper::Property::Integer # 咨询人数
+  property :student_count, DataMapper::Property::Integer, :default => 0 # 招生人数
+  property :consultant_count, DataMapper::Property::Integer, :default => 0 # 咨询人数
   property :longtitude, String
   property :latitude, String
   property :school_id, Integer
@@ -45,6 +45,18 @@ class Shop
 
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
+  end
+
+  def student_count_today
+    today_beginning = Date.strptime(Time.now.beginning_of_day.to_s,'%Y-%m-%d')
+    today = today_beginning  .. Date.tomorrow
+    amount = Student.all(:created_at => today).count
+  end
+
+  def student_count_month
+    month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
+    this_month = month_beginning .. Date.tomorrow
+    amount = Student.all(:created_at => this_month).count
   end
 
 

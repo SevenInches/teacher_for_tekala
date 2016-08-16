@@ -28,6 +28,8 @@ class Product
 
   has n, :users, :model => 'User'
 
+  has n, :signups
+
   belongs_to :school
 
   belongs_to :city
@@ -75,6 +77,10 @@ class Product
 
   def color_demo
     '颜色: 紫色=>#967ADC, 橙色=>#EE6439, 蓝色=>#4A89DC, 绿色=> #8CC152'
+  end
+
+  def signup_num
+    signups.present? ? signups.count : 0
   end
 
 end

@@ -11,7 +11,10 @@ class Push
   property :school_id, Integer
   property :user_status, Boolean
   property :editions, String
+
+  property :arrive, Integer, :default => 0
   property :created_at, DateTime
+  property :update_at, DateTime
 
   belongs_to :channel
   belongs_to :school
