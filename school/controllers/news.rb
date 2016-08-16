@@ -24,7 +24,7 @@ Tekala::School.controllers :v1, :news  do
   post :news, :map => '/v1/news', :provides => [:json] do
     if params[:title].present? && params[:content].present?
       @new = News.new
-      @new.title = params[:name]
+      @new.title = params[:title]
       @new.content = params[:content]
       @new.view_count = params[:view_count] if params[:view_count].present?
       @new.school_id = @school.id
