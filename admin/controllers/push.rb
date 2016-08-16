@@ -7,12 +7,8 @@ Tekala::Admin.controllers :push do
     render "push/index"
   end
 
-  get :new do
-    @title = '新建推送'
-    render "push/new"
-  end
-
   post :create do
+    p params[:push]
     @push = Push.new(params[:push])
     if @push.save
       flash[:success] = pat(:create_success, :model => 'Push')
