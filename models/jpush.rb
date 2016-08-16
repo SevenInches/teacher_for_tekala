@@ -12,6 +12,18 @@ class JPush
   TEACHERKEY = "666bfd915856f8db083da084"
   TEACHERSEC = "db8e69cb1c8a6458d91c6f02"
 
+  #驾校版
+  SCHOOLKEY = "53b5400b0cddd0a1082b4c7c"
+  SCHOOLSEC = "ece89cbac8c32d2e7697737f"
+
+  #门店版
+  SHOPKEY = "9a33f3b03cdd83373b357414"
+  SHOPSEC = "9af36422b37bc459adc6fe2c"
+
+  #代理版
+  CHANNELKEY = "56c1a0a82735f9baea8bb629"
+  CHANNELSEC = "25d896b5d83189aea9c3d042"
+
   APNS_PRODUCTION = "true"
 
   URL = URI('https://api.jpush.cn/v3/push')
@@ -410,6 +422,38 @@ class JPush
       end
 
     end 
+  end
+
+  def self.send_message(tags, msg, edition)
+    key, sec= convert_edition(edition)
+    Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
+      req=Net::HTTP::Post.new(URL.path)
+      req.basic_auth key, sec
+      jpush =[]
+      jpush << 'platform=all'
+      jpush << 'audience={"tag_and" : '+tags.to_s+'}'
+      jpush << 'notification={
+            "alert":"'+msg+'",
+            "ios":{
+                 "content-available":1,
+                 "extras":{"type": "message", "msg": "'+msg+'" }
+                   }
+                }'
+      jpush << 'message={ "msg_content" : "'+msg+'", "content_type": "text", "title": "消息推送" }'
+      jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
+      req.body = jpush.join("&")
+      resp=http.request(req)
+    end
+  end
+
+  def self.convert_edition(key)
+    case key.to_i
+      when 1 then return KEY,SEC
+      when 2 then return TEACHERKEY,TEACHERSEC
+      when 3 then return SCHOOLKEY,SCHOOLSEC
+      when 4 then return SHOPKEY,SHOPSEC
+      when 5 then return CHANNELKEY,CHANNELSEC
+    end
   end
 
 end
