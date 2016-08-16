@@ -21,4 +21,24 @@ Tekala::School.controllers :v1, :news  do
     render 'news'
   end
 
+  post :news, :map => '/v1/news', :provides => [:json] do
+    if params[:title].present? && params[:content].present?
+      @new = News.new
+      @new.title = params[:name]
+      @new.content = params[:content]
+      @new.view_count = params[:view_count] if params[:view_count].present?
+      @new.school_id = @school.id
+      if @new.save
+        render 'new'
+      end
+    else
+      {:status => :failure, :msg => '参数错误'}.to_json
+    end
+  end
+
+  get :new, :map => '/v1/news/:id', :provides => [:json] do
+    @new = News.get(params[:id])
+    render 'new'
+  end
+
 end

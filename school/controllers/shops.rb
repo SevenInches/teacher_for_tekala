@@ -23,19 +23,20 @@ Tekala::School.controllers :v1, :shops  do
     render 'shops'
   end
 
+  # 使用该接口来添加驾校管理所需要的门店信息
   post :shops, :map => '/v1/shops', :provides => [:json] do
     if params[:name].present? && params[:address].present?
       @shop = Shop.new
-      @shop.name       = params[:name]
-      @shop.address    = params[:address]
-      @shop.latitude   = params[:latitude]      if params[:latitude].present?
-      @shop.longtitude = params[:longtitude]    if params[:longtitude].present?
-      @shop.area       = params[:area]    if params[:area].present?
-      @shop.rent_amount   = params[:rent_amount]    if params[:rent_amount].present?
-      @shop.contact_user  = params[:contact_user]   if params[:contact_user].present?
-      @shop.contact_phone = params[:contact_phone]  if params[:contact_phone].present?
-      @shop.profile       = params[:profile]  if params[:profile].present?
-      @shop.school_id  = @school.id
+      @shop.name = params[:name]
+      @shop.address = params[:address]
+      @shop.latitude = params[:latitude] if params[:latitude].present?
+      @shop.longtitude = params[:longtitude] if params[:longtitude].present?
+      @shop.area = params[:area] if params[:area].present?
+      @shop.rent_amount = params[:rent_amount] if params[:rent_amount].present?
+      @shop.contact_user = params[:contact_user] if params[:contact_user].present?
+      @shop.contact_phone = params[:contact_phone] if params[:contact_phone].present?
+      @shop.profile = params[:profile] if params[:profile].present?
+      @shop.school_id = @school.id
       if @shop.save
         render 'shop'
       end
