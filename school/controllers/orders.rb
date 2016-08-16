@@ -17,9 +17,9 @@ Tekala::School.controllers :v1, :orders  do
 
       if params[:user_key].present?
         if params[:user_key].to_i > 0
-          users = @school.users.all(:mobile => params[:user_key])
+          users = @school.users.all(:mobile.like => "%#{params[:user_key]}%")
         else
-          users = @school.users.all(:name => params[:user_key])
+          users = @school.users.all(:name.like => "%#{params[:user_key]}%")
         end
         if users.present?
           @orders  = Order.all(:id => users.aggregate(:id))
@@ -28,9 +28,9 @@ Tekala::School.controllers :v1, :orders  do
 
       if params[:teacher_key].present?
         if params[:teacher_key].to_i > 0
-          teachers = @school.teachers.all(:mobile => params[:teacher_key])
+          teachers = @school.teachers.all(:mobile.like => "%#{params[:teacher_key]}%")
         else
-          teachers = @school.teachers.all(:name => params[:teacher_key])
+          teachers = @school.teachers.all(:name.like => "%#{params[:teacher_key]}%")
         end
         if teachers.present?
           @orders  = Order.all(:id => teachers.aggregate(:id))

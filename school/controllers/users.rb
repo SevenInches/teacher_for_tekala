@@ -16,9 +16,9 @@ Tekala::School.controllers :v1, :users  do
       @users  = @school.users
       if params[:key].present?
         if params[:key].to_i > 0
-          @users  = @users.all(:mobile => params[:key])
+          @users  = @users.all(:mobile.like => "%#{params[:key]}%")
         else
-          @users  = @users.all(:name => params[:key])
+          @users  = @users.all(:name.like => "%#{params[:key]}%")
         end
       end
 
