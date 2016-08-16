@@ -151,9 +151,6 @@ class User
 
   has 1, :promotion_user, :constraint => :destroy
 
-  #用户指导
-  has 1, :user_guide, :constraint => :destroy
-
   has 1, :signup
 
   has 1, :user_plan, :constraint => :destroy
