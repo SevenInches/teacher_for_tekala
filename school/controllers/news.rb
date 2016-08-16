@@ -38,7 +38,11 @@ Tekala::School.controllers :v1, :news  do
 
   get :new, :map => '/v1/news/:id', :provides => [:json] do
     @new = News.get(params[:id])
-    render 'new'
+    if @new
+      render 'new'
+    else
+      {:status => :failure, :msg => '此新闻id不存在'}.to_json
+    end
   end
 
 end

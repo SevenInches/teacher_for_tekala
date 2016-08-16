@@ -30,13 +30,13 @@ Tekala::School.controllers :v1, :pushes do
   end
 
   post :push, :map => 'v1/pushes', :provides => [:json] do
-    @push = Push.new(:school_id =>session[:school_id])
-    @push.message      =  params[:message]       if params[:message].present?
-    @push.type         =  params[:type]          if params[:type].present?
-    @push.channel_id   =  params[:channel]       if params[:channel].present?
-    @push.version      =  params[:version]       if params[:version].present?
-    @push.user_status  =  params[:user_status]   if params[:user_status].present?
-    @push.editions     =  params[:editions]      if params[:editions].present?
+    @push = Push.new(:school_id => session[:school_id])
+    @push.message = params[:message] if params[:message].present?
+    @push.type = params[:type] if params[:type].present?
+    @push.channel_id = params[:channel] if params[:channel].present?
+    @push.version = params[:version] if params[:version].present?
+    @push.user_status = params[:user_status] if params[:user_status].present?
+    @push.editions = params[:editions] if params[:editions].present?
     if @push.save
       render 'push'
     end
