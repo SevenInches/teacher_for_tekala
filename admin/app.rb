@@ -21,14 +21,14 @@ module Tekala
     #
 
     set :admin_model, 'RoleUser'
-    set :login_page,  '/logins'
+    set :login_page,  '/login'
 
     enable  :sessions
     disable :store_location
 
     access_control.roles_for :any do |role|
       role.protect '/'
-      role.allow   '/logins'
+      role.allow   '/login'
     end
 
     # Custom error management

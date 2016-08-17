@@ -28,7 +28,7 @@
                     <td><%= new.id %></td>
                     <td><a href="/web/news_management/detail/<%= new.id %>"><%= new.title %></a></td>
                     <td><%= new.view_count %></td>
-                    <td><%= new.created_at%></td>
+                    <td><%= new.created_at.to_s[0..9]%></td>
                     <td><a href="/web/news_management/edit/<%= new.id %>">编辑</a>|<a href="/web/news_management/destroy/<%= new.id %>">删除</a></td>
                   </tr>
                 <% end %>
