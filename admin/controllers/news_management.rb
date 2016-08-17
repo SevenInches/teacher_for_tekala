@@ -74,4 +74,9 @@ Tekala::Admin.controllers :news_management do
     end
   end
 
+  get :detail_mobile ,:with => :id do
+    @news = News.first(:id => params[:id])
+    render 'news_management/detail_mobile', :layout => false
+  end
+
 end
