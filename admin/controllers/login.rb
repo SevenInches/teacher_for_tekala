@@ -8,6 +8,7 @@ Tekala::Admin.controllers :login do
     role_user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
     if role_user.present?
       set_current_account(role_user)
+      session[:role_id] = role_user.role_id
       session[:role_user_id] = role_user.id
       session[:school_no] = params[:school]
       session[:mobile]    = params[:phone].to_i

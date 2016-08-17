@@ -17,6 +17,11 @@ Tekala::Admin.controllers :news_management do
     end
   end
 
+  get :detail ,:with => :id do
+    @news = News.first(:id => params[:id])
+    render '/news_management/detail'
+  end
+
   get :destroy, :with => :id do
     @title = "删除新闻"
     news = News.get(params[:id])
