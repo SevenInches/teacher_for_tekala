@@ -11,6 +11,7 @@ Tekala::Admin.controllers :login do
       session[:role_user_id] = role_user.id
       session[:school_no] = params[:school]
       session[:mobile]    = params[:phone].to_i
+      session[:school_id] = School.first(:school_no => params[:school]).id
       redirect url(:base, :index)
     else
       params[:school] = h(params[:school])
