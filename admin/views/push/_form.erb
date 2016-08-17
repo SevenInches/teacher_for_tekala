@@ -6,15 +6,8 @@
 </div>
 
 <div class="form-group ">
-  <!--<label class="col-sm-2 control-label">推送渠道</label>-->
-  <!--<div class="col-sm-10">-->
-    <!--<%= f.select :channel_id, :options => Push.get_editions.invert, :class => 'form-control input-xlarge input-with-feedback', :include_blank => true %>-->
-  <!--</div>-->
   <label class="col-sm-2 control-label">推送渠道</label>
   <div class="col-sm-10">
-    <!--<label class="checkbox-inline">-->
-      <!--<input type="checkbox" id="" name="" class="edtions"> 全部-->
-    <!--</label>-->
     <label class="checkbox-inline">
       <input type="checkbox" id="" value="1" name="" class="edtions"> 学员版
     </label>
@@ -37,14 +30,14 @@
 <div class="form-group ">
   <label class="col-sm-2 control-label">推送条件</label>
   <div class="col-sm-10">
-    <!--<%= f.text_field :condition, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true%>-->
+    <%#= f.text_field :condition, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true%>
   </div>
 </div>
 
 <div class="form-group ">
   <label class="col-sm-2 control-label">推送时间</label>
   <div class="col-sm-10">
-    <!--<%= f.date_field :push_at, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true ,:placeholder => '请输入11位手机号码' ,:required => 'required',:pattern => "[0-9]{11}" %>-->
+    <%#= f.date_field :push_at, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true ,:placeholder => '请输入11位手机号码' ,:required => 'required',:pattern => "[0-9]{11}" %>
   </div>
 </div>
 <script>
