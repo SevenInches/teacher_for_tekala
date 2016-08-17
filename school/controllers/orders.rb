@@ -37,6 +37,22 @@ Tekala::School.controllers :v1, :orders  do
         end
       end
 
+      if params[:exam_type].present?
+        @orders  = @orders.all(:exam_type => params[:exam_type])
+      end
+
+      if params[:field].present?
+        @orders  = @orders.all(:train_field_id=> params[:field])
+      end
+
+      if params[:progress].present?
+        @orders  = @orders.all(:progress=> params[:progress])
+      end
+
+      if params[:start_time].present? && params[:end_time].present?
+        @orders  = @orders.all(:book_time.gte => params[:start_time], :book_time.lte => params[:end_time])
+      end
+
       @total  = @orders.count
       @orders = @orders.paginate(:per_page => 20, :page => params[:page])
     end

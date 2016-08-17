@@ -4,7 +4,7 @@ Tekala::School.controllers :v1 do
   enable :sessions
   Rabl.register!
 
-  before :except => [:login, :unlogin, :logout] do
+  before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
 		elsif !params['demo'].present?
