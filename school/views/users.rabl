@@ -15,5 +15,8 @@ child(@users => :data){
 	child(:user_plan){
 		attributes :exam_two, :exam_three
 	}
+	child(:user_exam){
+		attributes :exam_one, :exam_four
+	}
 }
 
