@@ -4,7 +4,7 @@ Tekala::School.controllers :v1 do
   enable :sessions
   Rabl.register!
 
-  before :except => [:login, :unlogin, :logout] do
+  before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
 		elsif !params['demo'].present?
@@ -64,7 +64,14 @@ Tekala::School.controllers :v1 do
   end
 
 	get :price,  :map => '/v1/price', :provides => [:html] do
-		render 'static_pages/price'
+		key      = "20150607mm"
+		token    = Digest::MD5.hexdigest("#{params[:user_id]}#{key}")
+		if params[:token] != token
+			'token 不正确'
+    else
+			@price = Price.first(:school_id => @school.id)
+			render 'static_pages/price'
+    end
 	end
 
 	#定价计时

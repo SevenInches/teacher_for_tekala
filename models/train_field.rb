@@ -27,9 +27,11 @@ class TrainField
   property :subject, Integer, :default => 2
   property :school_id, Integer,:default => 0
   
-  has n, :teachers, 'Teacher', :through => :teacher_field, :via => :teachers
+  has n, :teachers, 'Teacher', :through => :teacher_field, :via => :teacher
 
   has n, :users
+
+  has n, :cars
 
   belongs_to :school
 
@@ -40,12 +42,8 @@ class TrainField
     city.name
   end
 
-  def area_name
-    City.get(area).name if area.present?
-  end
-
   def teacher_count
-    count
+    teachers.count
   end
 
   def exam_type_count(type = 'c1')

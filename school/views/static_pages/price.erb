@@ -39,19 +39,19 @@
 <form class="container" method="POST" action="<%= url(:v1,:price) %>">
   <div class="row">
     <p class="title">手动档价格(元/小时)</p>
-    <input type="text" name="c1_common" value="" class="inputText">
+    <input type="text" name="c1_common" value="<%= @price.c1_common if @price.present? %>" class="inputText">
   </div>
   <div class="row">
     <p class="title">自动档价格(元/小时)</p>
-    <input type="text" name="c2_common" value="" class="inputText">
+    <input type="text" name="c2_common" value="<%= @price.c2_common if @price.present? %>" class="inputText">
   </div>
   <div class="row">
     <p class="title">手动档高峰时段价格(元/小时)</p>
-    <input type="text" name="c1_hot" value="" class="inputText">
+    <input type="text" name="c1_hot" value="<%= @price.c1_hot if @price.present? %>" class="inputText">
   </div>
   <div class="row">
     <p class="title">自动档高峰时段价格(元/小时)</p>
-    <input type="text" name="c2_hot" value="" class="inputText">
+    <input type="text" name="c2_hot" value="<%= @price.c2_hot if @price.present? %>" class="inputText">
   </div>
   <input type="submit" value="保存" class="form-submit submit btn-info">
 </form>

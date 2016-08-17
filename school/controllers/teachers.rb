@@ -18,9 +18,9 @@ Tekala::School.controllers :v1, :teachers  do
       @teachers  = @school.teachers
       if params[:key].present?
         if params[:key].to_i > 0
-          @teachers  = @teachers.all(:mobile => params[:key])
+          @teachers  = @teachers.all(:mobile.like => "%#{params[:key]}%")
         else
-          @teachers  = @teachers.all(:name => params[:key])
+          @teachers  = @teachers.all(:name.like => "%#{params[:key]}%")
         end
       end
 
@@ -130,6 +130,24 @@ Tekala::School.controllers :v1, :teachers  do
       @comments   = teacher.comments
       @total      = @comments.count
       render 'comments'
+    end
+  end
+
+  get :show, :map => 'v1/teachers/:teacher_id/comments/:id', :provides => [:json] do
+    @comment = TeacherComment.get(params[:id])
+    if @comment
+      render 'comment'
+    else
+      {:status => :failure, :msg => '未能找到该评论'}.to_json
+    end
+  end
+
+  delete :comments, :map => 'v1/comments/:teacher_id/comments/:id', :provides => [:json] do
+    @comment = TeacherComment.first(:id => params[:id])
+    if @comment.present?
+      { :status => @comment.destroy ? :success : :failure }.to_json
+    else
+      { :status => :failure, :msg => '该评论已删除' }.to_json
     end
   end
 

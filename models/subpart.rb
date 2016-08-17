@@ -1,6 +1,8 @@
 class Subpart
   include DataMapper::Resource
 
+  attr_accessor :count
+
   # property <name>, <type>
   property :id, Serial
   property :pic, String

@@ -185,7 +185,7 @@ class Teacher
   end
 
   def week_money
-    return orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER, :created_at => ((Date.today-6.day)..(Date.today+1.day)) ).sum(:quantity).to_i * price
+     orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER, :created_at => ((Date.today-6.day)..(Date.today+1.day)) ).sum(:quantity).to_i * price
   end
 
   def all_money
@@ -589,25 +589,24 @@ class Teacher
   def overdue_undone_orders
     date = Time.now - 1.hour
     # 已支付 + 已确认
-    orders.all(:status=>[2, 4], :book_time.lt => date)
+    orders.all(:status=>[1, 2], :book_time.lt => date)
   end
 
   def done_orders
-    orders.all(:status => [3])
+    orders.all(:status => [3, 4])
   end
 
   def done_or_cancel_orders
-    orders.all(:status => [3, 7])
+    orders.all(:status => [3, 4, 5, 6])
   end
 
   def waiting_count
-
     order_array = []
     order_confirm = OrderConfirm.all(:teacher_id => id, :status => 0, :order => :created_at.desc )
 
     order_confirm.each do |oc|
       order = oc.order
-      order_array << order if order && order.book_time > Time.now && order.status == 2
+      order_array << order if order && order.book_time > Time.now && order.status == Order::STATUS_PAY
     end
 
     order_array.count

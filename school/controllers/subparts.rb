@@ -24,9 +24,19 @@ Tekala::School.controllers :v1, :subparts  do
   get :notice, :map => '/v1/notices', :provides => [:json] do
     array = $redis.lrange $school_remark, 0, -1
     if array.present?
-      count_array(array)
-    else
-      {'data':[]}.to_json
+      @notices = []
+      count_hash = count_array(array)
+      parts = Subpart.all
+      parts.each do |part|
+        part.count = 0
+        count_hash.each do |value|
+          if value[0].to_s == part.name
+            part.count = value[1]
+          end
+        end
+        @notices  << part
+      end
     end
+    render 'subnotices'
   end
 end
