@@ -1,6 +1,6 @@
-Tekala::Admin.controllers :logins do
+Tekala::Admin.controllers :login do
   get :index do
-    @title = '登录'
+    @title  = '登录'
     render "/login/index"
   end
 
@@ -25,7 +25,7 @@ Tekala::Admin.controllers :logins do
 
   delete :destroy do
     set_current_account(nil)
-    redirect url(:logins, :index)
+    redirect url(:login, :index)
   end
 
   get :logout do
@@ -33,7 +33,7 @@ Tekala::Admin.controllers :logins do
     session[:school_no] = nil
     session[:mobile] = nil
     {:status => :success, :msg => '退出成功'}.to_json
-    redirect_to(url(:logins, :index))
+    redirect_to(url(:login, :index))
   end
 
 end

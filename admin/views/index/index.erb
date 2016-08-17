@@ -4,7 +4,15 @@
 
   <!--body wrapper start-->
   <div class="wrapper">
-    <p>驾校后台首页</p>
+    <div class="panel col-lg-6">
+      <h3><%= @user.name %>，欢迎您登录 <%= @school.name %> 驾校的后台管理系统</h3>
+
+      <h3>现总共有<%= @student.count %>学员，xxx教练，xxx车辆，xx门店</h3>
+
+      <h3>本月报名人数xx人，营业收入xx元</h3>
+
+      <h3>今天约车人数xx人，考试人数xx人</h3>
+    </div>
   </div>
   <!--body wrapper end-->
   <!--footer section start-->
@@ -13,13 +21,4 @@
   </footer>
   <!--footer section end-->
 </section>
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="../javascripts/jquery-1.11.0.min.js"></script>
-<script src="../javascripts/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="../javascripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="../javascripts/bootstrap.min.js"></script>
-<script src="../javascripts/modernizr.min.js"></script>
-<script src="../javascripts/jquery.nicescroll.js"></script>
-<!--common scripts for all pages-->
-<script src="../javascripts/scripts.js"></script>
 </body>
