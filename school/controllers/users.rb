@@ -86,9 +86,9 @@ Tekala::School.controllers :v1, :users  do
     end
   end
 
-  put :users, :map => '/v1/users/:id', :provides => [:json] do
-    if params[:id].present?
-      @user = User.get(params[:id])
+  put :users, :map => '/v1/users/:user_id', :provides => [:json] do
+    if params[:user_id].present?
+      @user = User.get(params[:user_id])
       @user.mobile           = params[:mobile]     if params[:mobile].present?
       @user.product_id       = params[:product]    if params[:product].present?
       @user.shop_id          = params[:shop]       if params[:shop].present?
@@ -107,8 +107,8 @@ Tekala::School.controllers :v1, :users  do
     end
   end
 
-  delete :users, :map => '/v1/users/:id', :provides => [:json] do
-    user = User.get(params[:id])
+  delete :users, :map => '/v1/users/:user_id', :provides => [:json] do
+    user = User.get(params[:user_id])
     if user.destroy!
       {:status => :success, :msg => "学员(id:#{params[:id]})删除成功"}.to_json
     else
@@ -128,14 +128,14 @@ Tekala::School.controllers :v1, :users  do
   end
 
   put :edit_score, :map => '/v1/users/:id/score', :provides => [:json] do
-    user =User.get(params[:id])
+    user = User.get(params[:id])
     if user.user_exam.present?
       user_exam = user.user_exam
       user_exam.update(:exam_one => params[:exam_one])    if params[:exam_one].present?
       user_exam.update(:exam_four => params[:exam_four])  if params[:exam_four].present?
       {:status => :success, :msg => '修改成功'}.to_json
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => 'user_exam不存在'}.to_json
     end
   end
 
@@ -147,7 +147,7 @@ Tekala::School.controllers :v1, :users  do
       user_plan.update(:exam_three => params[:exam_three])  if params[:exam_three].present?
       {:status => :success, :msg => '修改成功'}.to_json
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => 'user_plan不存在'}.to_json
     end
   end
 
@@ -171,8 +171,10 @@ Tekala::School.controllers :v1, :users  do
       if cycle.save
         {:status => :success, :msg => '新增成功'}.to_json
       else
-        {:status => :failure, :msg => '参数错误'}.to_json
+        {:status => :failure, :msg => cycle.errors.first.first}.to_json
       end
+    else
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
@@ -186,7 +188,7 @@ Tekala::School.controllers :v1, :users  do
       if cycle.save
         {:status => :success, :msg => '修改成功'}.to_json
       else
-        {:status => :failure, :msg => '参数错误'}.to_json
+        {:status => :failure, :msg => cycle.errors.first.first}.to_json
       end
     end
   end
@@ -210,8 +212,10 @@ Tekala::School.controllers :v1, :users  do
       if pay.save
         {:status => :success, :msg => '新增成功'}.to_json
       else
-        {:status => :failure, :msg => '参数错误'}.to_json
+        {:status => :failure, :msg => pay.errors.first.first}.to_json
       end
+    else
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
@@ -224,12 +228,17 @@ Tekala::School.controllers :v1, :users  do
       if pay.save
         {:status => :success, :msg => '修改成功'}.to_json
       else
-        {:status => :failure, :msg => '参数错误'}.to_json
+        {:status => :failure, :msg => pay.errors.first.first}.to_json
       end
     end
   end
 
   get :level, :map => '/v1/all_levels', :provides => [:json] do
-    {'data'=>UserCycle.level_array}.to_json
+    data = []
+    hash = UserCycle.level_array
+    hash.each do |h|
+      data << {'id':h[0], 'name':h[1]}
+    end
+    {'data' => data}.to_json
   end
 end

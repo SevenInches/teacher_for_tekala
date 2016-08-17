@@ -83,8 +83,8 @@ Tekala::School.controllers :v1, :teachers  do
   end
 
   put :teachers, :map => '/v1/teachers/:teacher_id', :provides => [:json] do
-    if params[:name].present?
-      @teacher = Teacher.get(params[:teacher_id])
+    @teacher = Teacher.get(params[:teacher_id])
+    if @teacher.present?
       @teacher.mobile           = params[:mobile]     if params[:mobile].present?
       @teacher.branch_id        = params[:branch]     if params[:branch].present?
       @teacher.tech_type        = params[:tech]       if params[:tech].present?
@@ -142,7 +142,7 @@ Tekala::School.controllers :v1, :teachers  do
     end
   end
 
-  delete :comments, :map => 'v1/comments/:teacher_id/comments/:id', :provides => [:json] do
+  delete :comments, :map => 'v1/teachers/:teacher_id/comments/:id', :provides => [:json] do
     @comment = TeacherComment.first(:id => params[:id])
     if @comment.present?
       { :status => @comment.destroy ? :success : :failure }.to_json
