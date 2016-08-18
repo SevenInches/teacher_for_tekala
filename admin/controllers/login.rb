@@ -1,6 +1,6 @@
-Tekala::Admin.controllers :logins do
+Tekala::Admin.controllers :login do
   get :index do
-    @title = '登录'
+    @title  = '登录'
     render "/login/index"
   end
 
@@ -8,9 +8,11 @@ Tekala::Admin.controllers :logins do
     role_user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
     if role_user.present?
       set_current_account(role_user)
+      session[:role_id] = role_user.role_id
       session[:role_user_id] = role_user.id
       session[:school_no] = params[:school]
       session[:mobile]    = params[:phone].to_i
+      session[:school_id] = School.first(:school_no => params[:school]).id
       redirect url(:base, :index)
     else
       params[:school] = h(params[:school])
@@ -25,7 +27,7 @@ Tekala::Admin.controllers :logins do
 
   delete :destroy do
     set_current_account(nil)
-    redirect url(:logins, :index)
+    redirect url(:login, :index)
   end
 
   get :logout do
@@ -33,7 +35,7 @@ Tekala::Admin.controllers :logins do
     session[:school_no] = nil
     session[:mobile] = nil
     {:status => :success, :msg => '退出成功'}.to_json
-    redirect_to(url(:logins, :index))
+    redirect_to(url(:login, :index))
   end
 
 end

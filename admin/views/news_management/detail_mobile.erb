@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag '../../stylesheets/bootstrap.min' %>
+
+<body style="background-color: #EFF0F4;padding-top: 20px">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel" style="padding: 10px">
+          <h1 class="text-center"><%= @news.title %></h1>
+          <h5 class="text-right" style="margin-bottom: 20px;color: #ccc">阅读数:<%= @news.view_count %></h5>
+          <div class="news-content">
+            <%= @news.content.html_safe %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
