@@ -2,7 +2,7 @@ Tekala::School.controllers :v1, :users  do
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
-      $school_remark = 'school_' + @user.school_id.to_s
+      $school_remark = 'school_' + @school.id.to_s
     elsif !params['demo'].present?
       redirect_to(url(:v1, :unlogin))
     end
