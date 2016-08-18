@@ -15,4 +15,15 @@ class Subpart
   def config_demo
     '内容配置: 1 =>APP , 2 => WEB'
   end
+
+  def config_word
+    case config
+      when 1
+        "APP"
+      when 2
+        "WEB"
+      else
+        "空"
+    end
+  end
 end

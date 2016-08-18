@@ -17,10 +17,12 @@
           </form>
           <!--批量上传 */-->
         </div>
-        <a href="import/export?<%= params_string(params) %>" class="btn btn-info">导出Excel</a>
+        <div class="col-lg-1">
+          <a href="import/export?<%= params_string(params) %>" class="btn btn-info">导出Excel</a>
+        </div>
       </div>
       <div class="row" style="margin-bottom: 10px">
-        <div class="col-lg-6 ">
+        <div class="col-lg-4 ">
           <form action="/web/import" class="form panel">
             <div class="row" style="margin-bottom: 10px">
               <div class="col-lg-10">
@@ -41,7 +43,7 @@
             <div class="row" style="margin-bottom: 10px">
               <div class="col-lg-10">
                 <div class="input-group">
-                  <div class="input-group-addon">状态</div>
+                  <div class="input-group-addon">阶段</div>
                   <%=select_tag 'status_flag', :options => User.status_flag, :include_blank => true, :class => 'form-control', :selected => params[:status_flag] %>
                 </div>
               </div>
@@ -67,30 +69,36 @@
                 <th>ID</th>
                 <th>学员姓名</th>
                 <th>手机号</th>
-                <th>状态</th>
-                <th>班别</th>
+                <th>阶段</th>
                 <th>驾考类型</th>
+                <th>班别</th>
                 <th>报名时间</th>
               </tr>
               </thead>
               <tbody>
-              <% @user.each do |item|%>
+              <% if @users.present? %>
+              <% @users.each do |item| %>
                   <tr>
                     <td><%= item.id %></td>
                     <td><%= item.name %></td>
                     <td><%= item.mobile %></td>
                     <td><%= item.status_flag_word %></td>
-                    <td><%= item.signup.product.name if item.signup.present? && item.signup.product.present? %></td>
                     <td><%= item.exam_type_word %></td>
+                    <td><%= item.signup.product.name if item.signup.present? && item.signup.product.present? %></td>
                     <td><%= item.created_at.to_s[0..9] %></td>
                   </tr>
+              <% end %>
+              <% else %>
+              <tr>
+                <td>暂无记录</td>
+              </tr>
               <% end %>
               </tbody>
             </table>
             <p style="padding: 10px 10px;">每页20条</p>
           </section>
           <div class="row">
-            <%= will_paginate @user,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
+            <%= will_paginate @users,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
           </div>
         </div>
       </div>
