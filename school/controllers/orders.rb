@@ -10,11 +10,10 @@ Tekala::School.controllers :v1, :orders  do
   get :orders, :map => '/v1/orders', :provides => [:json] do
     if params['demo'].present?
       @demo     = params['demo']
-      @orders = Order.first(:show => 1)
+      @orders = Order.first
       @total    = 1
     else
       @orders = @school.users.orders.all
-
       if params[:user_key].present?
         if params[:user_key].to_i > 0
           users = @school.users.all(:mobile.like => "%#{params[:user_key]}%")
