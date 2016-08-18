@@ -32,7 +32,7 @@ Tekala::School.controllers :v1, :users  do
       if params[:exam_type].present?
         @users  = @users.all(:exam_type => params[:exam_type])
       end
-      if params[:sex].presen
+      if params[:sex].present?
         @users  = @users.all(:sex => params[:sex])
       end
 
