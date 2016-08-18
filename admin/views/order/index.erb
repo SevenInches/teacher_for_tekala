@@ -24,9 +24,9 @@
                 <% @order.each do |item|%>
                   <tr>
                     <td><%= item.id %></td>
-                    <td><%= item.user.name %></td>
-                    <td><%= item.user.mobile %></td>
-                    <td><%= item.teacher.name %></td>
+                    <td><%= item.user.name if item.user.present? %></td>
+                    <td><%= item.user.mobile if item.user.present? %></td>
+                    <td><%= item.teacher.name if item.teacher.present? %></td>
                     <td><%= item.train_field_name %></td>
                     <td><%= item.book_time %></td>
                     <td><%= item.status_word %></td>
