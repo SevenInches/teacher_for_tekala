@@ -37,7 +37,7 @@ Tekala::School.controllers :v1, :cars  do
         @cars    = @cars.all(:id => @car_ids)
       end
       @total = @cars.count
-      @cars  = @cars.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
+      @cars  = @cars.paginate(:per_page => 20, :page => params[:page])
     end
     render 'cars'
   end

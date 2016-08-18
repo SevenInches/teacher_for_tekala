@@ -10,7 +10,7 @@ Tekala::School.controllers :v1, :news  do
   get :news, :map => '/v1/news', :provides => [:json] do
     if params['demo'].present?
       @demo = params['demo']
-      news = New.first
+      @news = New.first
       @total = 1
     else
       @news = @school.news
