@@ -129,8 +129,8 @@ Tekala::School.controllers :v1 do
 		render 'exams'
   end
 
-	put :exams, :map => '/v1/exams/:id/pass', :provides => [:json] do
-		exam = UserCycle.get params[:id]
+	put :exams, :map => '/v1/exams/:exam_id/pass', :provides => [:json] do
+		exam = UserCycle.get params[:exam_id]
     if exam.present?
 			exam.result = !exam.result
 			if exam.save
