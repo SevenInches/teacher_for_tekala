@@ -149,7 +149,6 @@ Tekala::Coach.controllers :v1 do
 	    @orders     = @teacher.orders
 	                  .all(:book_time => (start_date..end_date), 
 	                       :order => :book_time.asc,
-	                       :type => Order::PAYTOTEACHER,
 	                       :status=>Order.pay_or_done)
 
 	    
