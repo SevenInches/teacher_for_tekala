@@ -16,6 +16,7 @@ Tekala::School.controllers :v1, :pushes do
     else
       @pushes  =  @school.pushes
       @total   =  @pushes.count
+      @pushes = @pushes.paginate(:per_page => 20, :page => params[:page])
     end
     render 'pushes'
   end

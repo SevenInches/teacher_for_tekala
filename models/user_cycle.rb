@@ -24,7 +24,6 @@ class UserCycle
         50=>'长训',
         51=>'长训(补考)'
     }
-
   end
 
   def result_word
