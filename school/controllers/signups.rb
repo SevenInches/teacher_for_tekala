@@ -63,7 +63,7 @@ Tekala::School.controllers :v1, :signups  do
       @data  = @data.all(:mobile => params[:mobile])     if params[:mobile].present?
       @data  = @data.all(:name => params[:name])         if params[:name].present?
       @total = @data.count
-      @data  = @data.paginate(:per_page => 20, :page => params[:page])
+      @data  = @data.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
     render 'signups'
   end

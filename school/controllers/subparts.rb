@@ -12,10 +12,10 @@ Tekala::School.controllers :v1, :subparts  do
   get :index, :map => '/v1/subparts', :provides => [:json] do
     if params['demo'].present?
       @demo     =  params['demo']
-      @subparts =  Subpart.first
+      @subparts =  Subpart.first(:weight.not => 0)
       @total    =  1
     else
-      @subparts = Subpart.all
+      @subparts = Subpart.all(:weight.gt => 0)
       @total 		= @subparts.count
     end
     render 'subparts'
@@ -26,7 +26,7 @@ Tekala::School.controllers :v1, :subparts  do
     if array.present?
       @notices = []
       count_hash = count_array(array)
-      parts = Subpart.all
+      parts = Subpart.all.all(:weight.gt => 0)
       parts.each do |part|
         part.count = 0
         count_hash.each do |value|

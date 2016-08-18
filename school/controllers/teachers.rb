@@ -45,7 +45,7 @@ Tekala::School.controllers :v1, :teachers  do
       end
 
       @total = @teachers.count
-      @teachers  = @teachers.paginate(:per_page => 20, :page => params[:page])
+      @teachers  = @teachers.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
     render 'teachers'
   end
@@ -154,7 +154,7 @@ Tekala::School.controllers :v1, :teachers  do
   get :orders, :map => '/v1/teachers/:teacher_id/orders', :provides => [:json] do
     teacher = Teacher.get(params[:teacher_id])
     if teacher.present?
-      @orders = teacher.orders
+      @orders = teacher.orders.all(:order => :book_time.desc)
       @total  = @orders.count
       render 'orders'
     end
@@ -163,10 +163,9 @@ Tekala::School.controllers :v1, :teachers  do
   get :pays, :map => '/v1/teachers/:teacher_id/pays', :provides => [:json] do
     teacher = Teacher.get(params[:teacher_id])
     if teacher.present?
-      @logs = teacher.pay_logs
+      @logs = teacher.pay_logs.all(:order => :pay_date.desc)
       @total  = @logs.count
       render 'pay_logs'
     end
   end
-
 end

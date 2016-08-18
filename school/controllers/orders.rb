@@ -53,7 +53,7 @@ Tekala::School.controllers :v1, :orders  do
       end
 
       @total  = @orders.count
-      @orders = @orders.paginate(:per_page => 20, :page => params[:page])
+      @orders = @orders.all(:order => :book_time.desc).paginate(:per_page => 20, :page => params[:page])
     end
     render 'orders'
   end

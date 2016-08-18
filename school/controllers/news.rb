@@ -10,12 +10,12 @@ Tekala::School.controllers :v1, :news  do
   get :news, :map => '/v1/news', :provides => [:json] do
     if params['demo'].present?
       @demo = params['demo']
-      news = New.first
+      @news = New.first
       @total = 1
     else
       @news = @school.news
       @total = @news.count
-      @news  = @news.paginate(:per_page => 20, :page => params[:page])
+      @news  = @news.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
 
     render 'news'

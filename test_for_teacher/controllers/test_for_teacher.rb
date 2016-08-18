@@ -20,7 +20,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 	get :get_the_scheduling, :map => '/get_the_scheduling' do
 		@teacher = Teacher.first(:mobile => '13094442075')
 		if @teacher
-			@orders = Order.all(:teacher_id => @teacher.id, :status.gt => 1, :order => :id.desc, :type => 1, :order_confirm => OrderConfirm.all(:status => 1))
+			@orders = Order.all(:teacher_id => @teacher.id, :status.gt => 1, :order => :id.desc, :order_confirm => OrderConfirm.all(:status => 1))
 
 			$arr << 'get_the_scheduling' if @orders
 
@@ -38,7 +38,7 @@ Tekala::TestForTeacher.controllers :test_for_teacher  do
 
 	get :get_the_waiting_orders, :map => '/get_the_waiting_orders' do
 		@teacher = Teacher.first(:mobile => '13094442075')
-		@orders = Order.all(:teacher_id => @teacher.id, :status => 4, :order => :book_time.desc, :type => Order::NORMALTYPE)
+		@orders = Order.all(:teacher_id => @teacher.id, :status => 4, :order => :book_time.desc)
 		$arr << 'get_the_waiting_orders' if @orders
 
 		redirect_to '/test_for_teacher/get_the_accpeting_orders'

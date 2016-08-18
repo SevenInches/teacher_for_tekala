@@ -17,7 +17,7 @@ Tekala::School.controllers :v1, :shops  do
       @shops = @school.shops
       @shops = shops.all(:name => params[:name]) if params[:name].present?
       @total = @shops.count
-      @shops = @shops.paginate(:per_page => 20, :page => params[:page])
+      @shops = @shops.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
     
     render 'shops'

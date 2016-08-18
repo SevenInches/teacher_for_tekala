@@ -73,7 +73,7 @@ class TrainField
     return {'开' => 1, '关' => 0}
   end
   def update_users_and_orders
-    orders = Order.all(:status => Order::pay_or_done, :train_field_id => id, :type => 0)
+    orders = Order.all(:status => Order::pay_or_done, :train_field_id => id)
     users = orders.all(:fields => [:user_id], :unique => true).to_a
     self.users_count = users.count
     self.orders_count = orders.count

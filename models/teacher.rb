@@ -185,11 +185,11 @@ class Teacher
   end
 
   def week_money
-     orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER, :created_at => ((Date.today-6.day)..(Date.today+1.day)) ).sum(:quantity).to_i * price
+     orders.all(:status => Order::pay_or_done, :created_at => ((Date.today-6.day)..(Date.today+1.day)) ).sum(:quantity).to_i * price
   end
 
   def all_money
-    sum = orders.all(:status => Order::pay_or_done, :type => Order::PAYTOTEACHER).sum(:quantity)
+    sum = orders.all(:status => Order::pay_or_done).sum(:quantity)
     if sum.present?
       price.present? ? sum.to_i * price : 0
     end
