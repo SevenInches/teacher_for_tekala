@@ -28,7 +28,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= Role.get(session[:role_id]).school.name %> <%= current_account.name %><b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= $school.name %> <%= current_account.name %><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/web/edit_psd">修改密码</a></li>
             <li><a href="<%= url(:login, :logout)%>">登出</a></li>
