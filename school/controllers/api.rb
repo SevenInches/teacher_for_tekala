@@ -143,8 +143,8 @@ Tekala::School.controllers :v1 do
     end
   end
 
-	delete :exams, :map => '/v1/exams/:id', :provides => [:json] do
-		exam = UserCycle.get params[:id]
+	delete :exams, :map => '/v1/exams/:exam_id', :provides => [:json] do
+		exam = UserCycle.get params[:exam_id]
 		if exam.present?
 			if exam.destroy
 				{:status => :success, :msg => '修改成功'}.to_json
