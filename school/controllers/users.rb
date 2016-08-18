@@ -79,11 +79,10 @@ Tekala::School.controllers :v1, :users  do
       if @user.save
         render 'user'
       else
-        puts @user.errors.to_json
         {:status => :failure, :msg => @user.errors.first.first }.to_json
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
@@ -234,6 +233,19 @@ Tekala::School.controllers :v1, :users  do
       else
         {:status => :failure, :msg => pay.errors.first.first}.to_json
       end
+    end
+  end
+
+  delete :pays, :map => '/v1/user_pays/:pay_id', :provides => [:json] do
+    pay = UserPay.get(params[:pay_id])
+    if pay.present?
+      if pay.destroy
+        {:status => :success, :msg => '删除成功'}.to_json
+      else
+        {:status => :failure, :msg => pay.errors.first.first}.to_json
+      end
+    else
+      {:status => :success, :msg => '缴费记录不存在'}.to_json
     end
   end
 
