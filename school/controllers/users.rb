@@ -2,6 +2,7 @@ Tekala::School.controllers :v1, :users  do
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
+      $school_remark = 'school_' + @school.id.to_s
     elsif !params['demo'].present?
       redirect_to(url(:v1, :unlogin))
     end
@@ -78,17 +79,16 @@ Tekala::School.controllers :v1, :users  do
       if @user.save
         render 'user'
       else
-        puts @user.errors.to_json
         {:status => :failure, :msg => @user.errors.first.first }.to_json
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
   put :users, :map => '/v1/users/:user_id', :provides => [:json] do
-    if params[:user_id].present?
-      @user = User.get(params[:user_id])
+    @user = User.get(params[:user_id])
+    if @user.present?
       @user.mobile           = params[:mobile]     if params[:mobile].present?
       @user.product_id       = params[:product]    if params[:product].present?
       @user.shop_id          = params[:shop]       if params[:shop].present?
@@ -101,9 +101,11 @@ Tekala::School.controllers :v1, :users  do
       @user.name             = params[:name]       if params[:name].present?
       if @user.save
         render 'user'
+      else
+        {:status => :failure, :msg => @user.errors.first.first}.to_json
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
@@ -169,6 +171,7 @@ Tekala::School.controllers :v1, :users  do
       cycle.result  = params[:result]   if !params[:result].nil?
       cycle.note    = params[:note]     if params[:note].present?
       if cycle.save
+        $redis.lpush $school_remark, '考试管理'
         {:status => :success, :msg => '新增成功'}.to_json
       else
         {:status => :failure, :msg => cycle.errors.first.first}.to_json
@@ -230,6 +233,19 @@ Tekala::School.controllers :v1, :users  do
       else
         {:status => :failure, :msg => pay.errors.first.first}.to_json
       end
+    end
+  end
+
+  delete :pays, :map => '/v1/user_pays/:pay_id', :provides => [:json] do
+    pay = UserPay.get(params[:pay_id])
+    if pay.present?
+      if pay.destroy
+        {:status => :success, :msg => '删除成功'}.to_json
+      else
+        {:status => :failure, :msg => pay.errors.first.first}.to_json
+      end
+    else
+      {:status => :success, :msg => '缴费记录不存在'}.to_json
     end
   end
 

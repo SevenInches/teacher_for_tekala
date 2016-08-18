@@ -114,5 +114,45 @@ Tekala::School.controllers :v1 do
 			@feedbacks = @feedbacks.paginate(:per_page => 20, :page => params[:page])
 		end
 		render 'feedbacks'
-	end
+  end
+
+	get :exams, :map => '/v1/exams', :provides => [:json] do
+		if params['demo'].present?
+			@demo     = params['demo']
+			@exams    = UserCycle.first
+			@total    = 1
+		else
+			@exams  = @school.users.cycles
+			@total  = @exams.count
+			@exams  = @exams.paginate(:per_page => 20, :page => params[:page])
+		end
+		render 'exams'
+  end
+
+	put :exams, :map => '/v1/exams/:exam_id/pass', :provides => [:json] do
+		exam = UserCycle.get params[:exam_id]
+    if exam.present?
+			exam.result = !exam.result
+			if exam.save
+				{:status => :success, :msg => '修改成功'}.to_json
+			else
+				{:status => :failure, :msg => exam.errors.first.first}.to_json
+      end
+    else
+			{:status => :failure, :msg => '此考试记录不存在'}.to_json
+    end
+  end
+
+	delete :exams, :map => '/v1/exams/:exam_id', :provides => [:json] do
+		exam = UserCycle.get params[:exam_id]
+		if exam.present?
+			if exam.destroy
+				{:status => :success, :msg => '修改成功'}.to_json
+      else
+				{:status => :success, :msg => exam.errors.first.first}.to_json
+      end
+		else
+			{:status => :failure, :msg => '此考试记录不存在'}.to_json
+		end
+  end
 end

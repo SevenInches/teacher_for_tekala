@@ -10,7 +10,7 @@ child(@orders => :data){
     attributes :id, :mobile, :name, :avatar_url, :avatar_thumb_url, :rate
   }
   child(:user) {
-    attributes :id, :mobile, :name
+    attributes :id, :mobile, :name, :exam_type, :exam_type_word, :status_flag, :status_flag_word
   }
   child(:train_field) {
     attributes :id, :name

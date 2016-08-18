@@ -190,11 +190,7 @@ class Order
       when 5
         return '已拒单'
       when 6
-        if accept_status == 2
-          return '教练繁忙'
-        else
-          return '已取消'
-        end
+        return '已取消'
     end
   end
 
@@ -296,7 +292,11 @@ class Order
     theme_arr.each do |t|
       word_arr << theme_name(t.to_i) if !t.empty?
     end
-
     word_arr
   end
+
+  def status_demo
+    '订单状态: 待接单=>1, 已接单=>2, 待评价=>3, 已完成=>4, 已拒单=>5, 已取消=>6'
+  end
+
 end

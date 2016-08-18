@@ -40,9 +40,9 @@ Tekala::School.controllers :v1, :products  do
     end
   end
 
-  put :products, :map => '/v1/products', :provides => [:json] do
-    if params[:id].present?
-      @product = Product.get(params[:id])
+  put :products, :map => '/v1/products/:product_id', :provides => [:json] do
+    @product = Product.get(params[:id])
+    if @product.present?
       @product.name          = params[:name]      if params[:name].present?
       @product.detail        = params[:detail]    if params[:detail].present?
       @product.price         = params[:price]     if params[:price].present?
@@ -54,19 +54,19 @@ Tekala::School.controllers :v1, :products  do
         render 'product'
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '班别不存在'}.to_json
     end
   end
 
-  delete :products, :map => '/v1/products', :provides => [:json] do
-    if params[:product_id].present?
-      product      = Product.get(params[:product_id])
+  delete :products, :map => '/v1/products/:product_id', :provides => [:json] do
+    product = Product.get(params[:product_id])
+    if product.present?
       product_name = product.name
       if product.destroy
         {:status => :success, :msg => "#{product_name}已经被删除"}.to_json
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '班别不存在'}.to_json
     end
   end
 end
