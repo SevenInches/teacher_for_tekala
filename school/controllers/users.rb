@@ -156,7 +156,7 @@ Tekala::School.controllers :v1, :users  do
   get :exams, :map => '/v1/users/:id/exams', :provides => [:json] do
     user    = User.get(params[:id])
     if user.present?
-      @exams  = user.cycles
+      @exams  = user.cycles.all(:order => :date.desc)
       @total  = @exams.count
       render 'user_exams'
     end
@@ -199,7 +199,7 @@ Tekala::School.controllers :v1, :users  do
   get :pays, :map => '/v1/users/:id/pays', :provides => [:json] do
     user    = User.get(params[:id])
     if user.present?
-      @pays   = user.pays
+      @pays   = user.pays.all(:order => :pay_at.desc)
       @total  = @pays.count
       render 'user_pays'
     end

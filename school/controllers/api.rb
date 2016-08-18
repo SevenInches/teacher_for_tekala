@@ -13,21 +13,21 @@ Tekala::School.controllers :v1 do
 	end
 
 	post :login, :provides => [:json] do
-    	if params[:demo].present?
-        @demo   = params[:demo]
-				@school = School.first
+		if params[:demo].present?
+			@demo   = params[:demo]
+			@school = School.first
+			render 'school'
+		else
+			user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
+			if user
+				@school = user.role.school
+				session[:school_id] = @school.id
+				# 把订单已结束，但未点完成的订单，修改状态
 				render 'school'
-      else
-				user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
-				if user
-					@school = user.role.school
-					session[:school_id] = @school.id
-					# 把订单已结束，但未点完成的订单，修改状态
-					render 'school'
-				else
-					{:status => :failure, :msg => '登陆失败'}.to_json
-				end
-      end
+			else
+				{:status => :failure, :msg => '登陆失败'}.to_json
+			end
+		end
 	end
 
 	post :logout, :provides => [:json] do
@@ -95,7 +95,7 @@ Tekala::School.controllers :v1 do
 			@total     = 1
     else
 			@user_ids  = @school.users.aggregate(:id)
-			@complains = Complain.all(:user_id => @user_ids)
+			@complains = Complain.all(:order => :created_at.desc, :user_id => @user_ids)
 			@total     = @complains.count
 			@complains = @complains.paginate(:per_page => 20, :page => params[:page])
 		end
@@ -109,7 +109,7 @@ Tekala::School.controllers :v1 do
 			@total     = 1
 		else
 			@user_ids  = @school.users.aggregate(:id)
-			@feedbacks = Feedback.all(:user_id => @user_ids)
+			@feedbacks = Feedback.all(:order => :created_at.desc, :user_id => @user_ids)
 			@total     = @feedbacks.count
 			@feedbacks = @feedbacks.paginate(:per_page => 20, :page => params[:page])
 		end
@@ -122,7 +122,7 @@ Tekala::School.controllers :v1 do
 			@exams    = UserCycle.first
 			@total    = 1
 		else
-			@exams  = @school.users.cycles
+			@exams  = @school.users.cycles.all(:order => :date.desc)
 			@total  = @exams.count
 			@exams  = @exams.paginate(:per_page => 20, :page => params[:page])
 		end

@@ -20,7 +20,7 @@ Tekala::School.controllers :v1, :tweets do
         user_ids = users.aggregate(:id)
         @tweets   =  Tweet.all(:user_id => user_ids)
         @total    =  @tweets.count
-        @tweets   =  @tweets.paginate(:per_page => 20, :page => params[:page])
+        @tweets   =  @tweets.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
         render 'tweets'
       end
     end
@@ -54,7 +54,7 @@ Tekala::School.controllers :v1, :tweets do
     @comments = TweetComment.all(:tweet_id => params[:tweet_id], :order => :created_at.asc)
     @comments = @comments.all(:order => :created_at.asc, :id.gt => last_id, :limit =>20) if last_id > 0
     @total    = @comments.count
-    @comments = @comments.paginate(:per_page => 20, :page => params[:page])
+    @comments = @comments.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     render 'tweet_comments'
   end
 

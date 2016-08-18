@@ -16,7 +16,7 @@ Tekala::School.controllers :v1, :comments do
       users  =  @school.users
       if users.present?
         user_ids    = users.aggregate(:id)
-        @comments   =  UserComment.all(:user_id => user_ids)
+        @comments   =  UserComment.all(:order => :created_at.desc, :user_id => user_ids)
         @total      =  @comments.count
         render 'comments'
       end

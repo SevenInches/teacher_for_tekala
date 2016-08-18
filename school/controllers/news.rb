@@ -15,7 +15,7 @@ Tekala::School.controllers :v1, :news  do
     else
       @news = @school.news
       @total = @news.count
-      @news  = @news.paginate(:per_page => 20, :page => params[:page])
+      @news  = @news.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
 
     render 'news'
