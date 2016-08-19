@@ -135,4 +135,17 @@ Tekala::School.controllers :v1, :signups  do
       {:status => :failure, :msg => '参数错误'}.to_json
     end
   end
+
+  delete :signup, :map => '/v1/signups/:signup_id', :provides => [:json] do
+    signup = Signup.get(params[:signup_id])
+    if signup.present?
+      if signup.destroy
+        {:status => :success, :msg => '报名订单删除成功'}.to_json
+      else
+        {:status => :success, :msg => signup.errors.first.first }.to_json
+      end
+    else
+      {:status => :failure, :msg => '报名订单不存在'}.to_json
+    end
+  end
 end
