@@ -12,7 +12,6 @@ Tekala::Admin.controllers :push do
     @push.school_id = session[:school_id]
     if @push.save
       flash[:success] = pat(:create_success, :model => 'Push')
-      Push.jpush_message(@push)
       redirect(url(:push, :index))
     else
       render 'roles/index'
@@ -22,7 +21,7 @@ Tekala::Admin.controllers :push do
   get :send, :with => :id do
     @title = pat(:send_title, :model => "Push #{params[:id]}")
     push = Push.get(params[:id])
-    Push.jpush_message(push)
+    push.jpush
     redirect(url(:push, :index))
   end
 end

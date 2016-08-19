@@ -1,6 +1,6 @@
 Tekala::Admin.controllers :base do
 
-  before do
+  before :except => [:news_management] do
     if session[:role_user_id]
       $role_user = RoleUser.get session[:role_user_id]
       $school_no = session[:school_no]
