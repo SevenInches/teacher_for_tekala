@@ -81,12 +81,10 @@ Tekala::School.controllers :v1, :orders  do
       elsif  tmp1.include?(book_time_second)
         {:status => :failure, :msg => '第二个时段已被预约'}.to_json
       else
-        order.book_time = params[:book_time]
-        order.quantity  = params[:quantity]
-        if order.save
+        if order.update(:book_time => params[:book_time], :quantity => params[:quantity])
           {:status => :failure, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
         else
-          {:status => :failure, :msg => order.errors.first.first}.to_json
+          {:status => :failure, :msg => order.errors.first.first}.to_json  if order.errors
         end
       end
       #如果该时段被预约 返回failure */
