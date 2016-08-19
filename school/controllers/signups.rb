@@ -68,8 +68,8 @@ Tekala::School.controllers :v1, :signups  do
     render 'signups'
   end
 
-  get :signup, :map => '/v1/signups/:id', :provides => [:json] do
-    @user = User.get(params[:id])
+  get :signup, :map => '/v1/signups/:user_id', :provides => [:json] do
+    @user = User.get(params[:user_id])
     render 'signup'
   end
 
@@ -107,9 +107,9 @@ Tekala::School.controllers :v1, :signups  do
     end
   end
 
-  put :signups, :map => '/v1/signups', :provides => [:json] do
-    if params[:id].present?
-      @data = User.get(params[:id])
+  put :signups, :map => '/v1/signups/:user_id', :provides => [:json] do
+    @data = User.get(params[:user_id])
+    if @data.present?
       @data.name         =  params[:name]          if params[:name].present?
       @data.mobile       =  params[:mobile]        if params[:mobile].present?
       @data.sex          =  params[:sex]           if params[:sex].present?
@@ -132,7 +132,7 @@ Tekala::School.controllers :v1, :signups  do
         end
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '用户不存在'}.to_json
     end
   end
 
