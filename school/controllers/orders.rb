@@ -84,7 +84,7 @@ Tekala::School.controllers :v1, :orders  do
         order.book_time = params[:book_time]
         order.quantity  = params[:quantity]
         if order.save!
-          {:status => :failure, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
+          {:status => :success, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
         else
           {:status => :failure, :msg => order.errors.first.first}.to_json
         end
