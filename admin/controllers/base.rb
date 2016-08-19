@@ -1,11 +1,11 @@
 Tekala::Admin.controllers :base do
 
-  before :except => [:news_management] do
+  before do
     if session[:role_user_id]
       $role_user = RoleUser.get session[:role_user_id]
       $school_no = session[:school_no]
-      $mobile     = session[:mobile]
-      $school = School.first(:school_no => @school_no)
+      $mobile    = session[:mobile]
+      $school    = School.first(:school_no => @school_no)
     elsif !params['demo'].present?
       redirect_to(url(:edit_psd, :unlogin))
     end

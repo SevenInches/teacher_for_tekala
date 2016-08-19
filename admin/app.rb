@@ -29,6 +29,7 @@ module Tekala
     access_control.roles_for :any do |role|
       role.protect '/'
       role.allow   '/login'
+      role.allow   '/news_management'
     end
 
     # Custom error management
