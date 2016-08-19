@@ -1,6 +1,11 @@
 Tekala::Admin.controllers :import do
   get :index do
-    @user = User.all(:school_id => session[:school_id])
+    @title = '导入功能'
+    @users  = User.all(:school_id => session[:school_id])
+    @users = @users.all(:name.like => "%#{params[:name]}%")    if params[:name].present?
+    @users = @users.all(:mobile => params[:mobile])            if params[:mobile].present?
+    @users = @users.all(:status_flag => params[:status_flag])  if params[:status_flag].present?
+    @users = @users.all(:exam_type => params[:exam_type])      if params[:exam_type].present?
     render "import/index"
   end
 
@@ -22,7 +27,6 @@ Tekala::Admin.controllers :import do
         mobile        = sheet.cell("C", row).to_i
         status_flag   = sheet.cell("D", row)
         exam_type     = sheet.cell("E", row)
-        school        = sheet.cell("F", row)
 
         #创建一个学员
         user = User.first(:mobile => mobile)

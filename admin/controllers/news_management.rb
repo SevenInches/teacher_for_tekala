@@ -8,7 +8,8 @@ Tekala::Admin.controllers :news_management do
   end
 
   post :create do
-    @news = News.new(params[:news])
+    @news           = News.new(params[:news])
+    @news.school_id = session[:school_id]
     if @news.save
       flash[:success] = pat(:create_success, :model => 'News')
       redirect(url(:news_management, :index))
@@ -38,8 +39,8 @@ Tekala::Admin.controllers :news_management do
     end
   end
 
-  get :new do
-    @title = '新闻管理'
+  get :news do
+    @title  = '新闻管理'
     render "/news_management/new"
   end
 

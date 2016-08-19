@@ -19,6 +19,8 @@ class Push
   belongs_to :channel
   belongs_to :school
 
+  after :save, :jpush
+
   def self.get_type(key=nil)
     words = {
         1 => '版本更新',
@@ -95,4 +97,18 @@ class Push
   def editions_demo
     '客户端类型: 1 => 学员版, 2 => 教练版, 3 => 驾校版, 4 => 门店版, 5 => 代理渠道版'
   end
+
+  def jpush
+    tags = []
+    if editions.present?
+      editions.split(':').each do |edition|
+        tags << 'channel_' + channel_id.to_s if channel_id.present?
+        tags << 'version_' + version if version.present?
+        tags << 'school_'  + school_id.to_s if school_id.present?
+        tags << 'status_'  + user_status.to_s if !user_status.nil?
+        JPush.send_message(tags, message, edition)
+      end
+    end
+  end
+
 end
