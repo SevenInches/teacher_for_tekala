@@ -78,8 +78,6 @@ class Order
   belongs_to :teacher
   belongs_to :train_field
 
-  has 1, :teacher_comment
-
   has 1, :user_comment
 
   #教练接单

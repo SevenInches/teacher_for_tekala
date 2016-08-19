@@ -122,12 +122,11 @@ Tekala::School.controllers :v1, :signups  do
       @data.apply_type   =  params[:apply_type]    if params[:apply_type].present?
       @data.local        =  params[:local]         if params[:local].present?
       @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
-
       if @data.save
         signup  =  @data.signup
-        signup.product_id   = params[:product]
-        signup.amount       = params[:amount]        if params[:amount].present?
-        signup.status       = 2                      if params[:status].present?
+        signup.product_id   = params[:product]     if params[:amount].present?
+        signup.amount       = params[:amount]      if params[:amount].present?
+        signup.status       = params[:status]      if params[:status].present?
         if signup.save
           render 'signup'
         end
