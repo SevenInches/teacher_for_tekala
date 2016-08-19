@@ -6,6 +6,7 @@ Tekala::Admin.controllers :login do
 
   post :create do
     role_user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
+    p role_user
     if role_user.present?
       set_current_account(role_user)
       session[:role_id] = role_user.role_id
