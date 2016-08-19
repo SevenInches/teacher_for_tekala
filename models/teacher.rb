@@ -105,8 +105,6 @@ class Teacher
 
   property :branch_id, Integer
 
-  property :car_id, Integer
-
   #通过学员数
   property :success_users, Integer, :default => 0
 
@@ -117,6 +115,8 @@ class Teacher
   has n, :train_fields, 'TrainField', :through => :teacher_field, :via => :train_field
 
   has 1, :teacher_audit, 'TeacherAudit', :child_key => 'teacher_id', :constraint => :destroy
+
+  has 1, :car, 'Car', :child_key => 'teacher_id', :constraint => :destroy
 
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'teacher_id', :constraint => :destroy
@@ -132,8 +132,6 @@ class Teacher
   belongs_to :branch
 
   belongs_to :city
-
-  belongs_to :car
 
   def city_name
     city.name

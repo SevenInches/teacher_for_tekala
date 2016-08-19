@@ -9,12 +9,12 @@ Tekala::School.controllers :v1, :tweets do
   end
 
   get :index, :provides =>[:json] do
-    $redis.lrem $school_remark, 0, "学员动态"
     if params['demo'].present?
       @demo     =  params['demo']
       @users    =  Tweet.first
       @total    =  1
     else
+      $redis.lrem $school_remark, 0, '学员动态'
       users  =  @school.users
       if users.present?
         user_ids = users.aggregate(:id)

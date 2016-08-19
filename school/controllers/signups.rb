@@ -68,8 +68,8 @@ Tekala::School.controllers :v1, :signups  do
     render 'signups'
   end
 
-  get :signup, :map => '/v1/signups/:id', :provides => [:json] do
-    @user = User.get(params[:id])
+  get :signup, :map => '/v1/signups/:user_id', :provides => [:json] do
+    @user = User.get(params[:user_id])
     render 'signup'
   end
 
@@ -107,33 +107,31 @@ Tekala::School.controllers :v1, :signups  do
     end
   end
 
-  put :signups, :map => '/v1/signups', :provides => [:json] do
-    if params[:id].present?
-      @data = User.get(params[:id])
-      @data.name         =  params[:name]          if params[:name].present?
-      @data.mobile       =  params[:mobile]        if params[:mobile].present?
-      @data.sex          =  params[:sex]           if params[:sex].present?
-      @data.id_card      =  params[:id_card]       if params[:id_card].present?
-      @data.address      =  params[:address]       if params[:address].present?
-      @data.origin       =  params[:origin]        if params[:origin].present?
-      @data.branch_id    =  params[:branch]        if params[:branch].present?
-      @data.manager_no   =  params[:manager_no]    if params[:manager_no].present?
-      @data.operation_no =  params[:operation_no]  if params[:operation_no].present?
-      @data.apply_type   =  params[:apply_type]    if params[:apply_type].present?
-      @data.local        =  params[:local]         if params[:local].present?
-      @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
-
-      if @data.save
-        signup  =  @data.signup
-        signup.product_id   = params[:product]
-        signup.amount       = params[:amount]        if params[:amount].present?
-        signup.status       = 2                      if params[:status].present?
-        if signup.save
-          render 'signup'
-        end
+  put :signups, :map => '/v1/signups/:user_id', :provides => [:json] do
+    @data = User.get(params[:user_id])
+    if @data.present?
+      signup  =  @data.signup
+      signup.product_id   = params[:product]     if params[:product].present?
+      signup.amount       = params[:amount]      if params[:amount].present?
+      signup.status       = params[:status]      if params[:status].present?
+      if signup.save
+        render 'signup'
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '用户不存在'}.to_json
+    end
+  end
+
+  delete :signup, :map => '/v1/signups/:signup_id', :provides => [:json] do
+    signup = Signup.get(params[:signup_id])
+    if signup.present?
+      if signup.destroy
+        {:status => :success, :msg => '报名订单删除成功'}.to_json
+      else
+        {:status => :success, :msg => signup.errors.first.first }.to_json
+      end
+    else
+      {:status => :failure, :msg => '报名订单不存在'}.to_json
     end
   end
 end

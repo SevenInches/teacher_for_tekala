@@ -14,10 +14,12 @@ class Car
   property :name, String
   property :exam_type, Integer
   property :open, Boolean
+  property :teacher_id, Integer
 
   has 1, :check
 
   belongs_to :school
+  belongs_to :teacher
   belongs_to :branch
   belongs_to :train_field
 

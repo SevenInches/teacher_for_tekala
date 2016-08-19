@@ -33,6 +33,7 @@ class TrainField
 
   has n, :cars
 
+
   belongs_to :school
 
   belongs_to :city
@@ -43,7 +44,7 @@ class TrainField
   end
 
   def teacher_count
-    teachers.count
+    teachers.count>0 ? teachers.count : 0
   end
 
   def exam_type_count(type = 'c1')

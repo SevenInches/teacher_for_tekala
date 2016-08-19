@@ -171,7 +171,7 @@ Tekala::School.controllers :v1, :users  do
       cycle.result  = params[:result]   if !params[:result].nil?
       cycle.note    = params[:note]     if params[:note].present?
       if cycle.save
-        $redis.lpush $school_remark, '考试管理'
+        $redis.lpush $school_remark, '考试'
         {:status => :success, :msg => '新增成功'}.to_json
       else
         {:status => :failure, :msg => cycle.errors.first.first}.to_json

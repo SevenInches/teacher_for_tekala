@@ -25,7 +25,6 @@ class Channel
   property :pay_count, Integer, :default => 0
   property :sales_this_month, Integer, :default => 0
 
-  has n, :orders
   has n, :pushes
 
   before :save, :encrypt_password

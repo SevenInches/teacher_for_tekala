@@ -2,6 +2,7 @@ Tekala::School.controllers :v1, :orders  do
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
+      $school_remark  = 'school_' + session[:school_id].to_s
     elsif !params['demo'].present?
       redirect_to(url(:v1, :unlogin))
     end
@@ -13,15 +14,16 @@ Tekala::School.controllers :v1, :orders  do
       @orders = Order.first
       @total    = 1
     else
+      $redis.lrem $school_remark, 0, '约车订单'
       @orders = @school.users.orders.all
       if params[:user_key].present?
         if params[:user_key].to_i > 0
-          users = @school.users.all(:mobile.like => "%#{params[:user_key]}%")
+          users = @school.users.all(:mobile => "%#{params[:user_key]}%")
         else
           users = @school.users.all(:name.like => "%#{params[:user_key]}%")
         end
         if users.present?
-          @orders  = Order.all(:id => users.aggregate(:id))
+          @orders  = Order.all(:user_id => users.aggregate(:id))
         end
       end
 
@@ -32,7 +34,7 @@ Tekala::School.controllers :v1, :orders  do
           teachers = @school.teachers.all(:name.like => "%#{params[:teacher_key]}%")
         end
         if teachers.present?
-          @orders  = Order.all(:id => teachers.aggregate(:id))
+          @orders  = Order.all(:teacher_id => teachers.aggregate(:id))
         end
       end
 
@@ -81,8 +83,8 @@ Tekala::School.controllers :v1, :orders  do
       else
         order.book_time = params[:book_time]
         order.quantity  = params[:quantity]
-        if order.save
-          {:status => :failure, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
+        if order.save!
+          {:status => :success, :msg => "订单(id:#{params[:order_id]})时间已经修改为#{params[:book_time]}"}.to_json
         else
           {:status => :failure, :msg => order.errors.first.first}.to_json
         end
