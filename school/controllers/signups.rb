@@ -110,26 +110,12 @@ Tekala::School.controllers :v1, :signups  do
   put :signups, :map => '/v1/signups/:user_id', :provides => [:json] do
     @data = User.get(params[:user_id])
     if @data.present?
-      @data.name         =  params[:name]          if params[:name].present?
-      @data.mobile       =  params[:mobile]        if params[:mobile].present?
-      @data.sex          =  params[:sex]           if params[:sex].present?
-      @data.id_card      =  params[:id_card]       if params[:id_card].present?
-      @data.address      =  params[:address]       if params[:address].present?
-      @data.origin       =  params[:origin]        if params[:origin].present?
-      @data.branch_id    =  params[:branch]        if params[:branch].present?
-      @data.manager_no   =  params[:manager_no]    if params[:manager_no].present?
-      @data.operation_no =  params[:operation_no]  if params[:operation_no].present?
-      @data.apply_type   =  params[:apply_type]    if params[:apply_type].present?
-      @data.local        =  params[:local]         if params[:local].present?
-      @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
-      if @data.save
-        signup  =  @data.signup
-        signup.product_id   = params[:product]     if params[:amount].present?
-        signup.amount       = params[:amount]      if params[:amount].present?
-        signup.status       = params[:status]      if params[:status].present?
-        if signup.save
-          render 'signup'
-        end
+      signup  =  @data.signup
+      signup.product_id   = params[:product]     if params[:product].present?
+      signup.amount       = params[:amount]      if params[:amount].present?
+      signup.status       = params[:status]      if params[:status].present?
+      if signup.save
+        render 'signup'
       end
     else
       {:status => :failure, :msg => '用户不存在'}.to_json
