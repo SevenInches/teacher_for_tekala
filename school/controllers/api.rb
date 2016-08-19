@@ -7,6 +7,7 @@ Tekala::School.controllers :v1 do
   before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
+			$school_remark = 'school_' + session[:school_id].to_s
 		elsif !params['demo'].present?
 	    redirect_to(url(:v1, :unlogin))  
 	  end
@@ -81,13 +82,13 @@ Tekala::School.controllers :v1 do
 		render 'all_fields'
   end
 
-	get :price,  :map => '/v1/price', :provides => [:html] do
-		key      = "20150607mm"
-		token    = Digest::MD5.hexdigest("#{params[:user_id]}#{key}")
-		if params[:token] != token
-			'token 不正确'
+	get :price,  :map => '/v1/price' do
+    key      = "20150607mm"
+    token    = Digest::MD5.hexdigest("#{params[:user_id]}#{key}")
+    if params[:token] != token
+			{:status => :failure, :msg => 'token 不正确'}.to_json
     else
-			@price = Price.first(:school_id => @school.id)
+			@price = Price.first(:school_id => session[:school_id])
 			render 'static_pages/price'
     end
 	end
@@ -112,6 +113,7 @@ Tekala::School.controllers :v1 do
 			@complains = Complain.first
 			@total     = 1
     else
+			$redis.lrem $school_remark, 0, '学员投诉'
 			@user_ids  = @school.users.aggregate(:id)
 			@complains = Complain.all(:order => :created_at.desc, :user_id => @user_ids)
 			@total     = @complains.count
@@ -125,7 +127,8 @@ Tekala::School.controllers :v1 do
 			@demo      = params['demo']
 			@feedbacks = Feedback.first
 			@total     = 1
-		else
+    else
+			$redis.lrem $school_remark, 0, '意见反馈'
 			@user_ids  = @school.users.aggregate(:id)
 			@feedbacks = Feedback.all(:order => :created_at.desc, :user_id => @user_ids)
 			@total     = @feedbacks.count
@@ -139,7 +142,8 @@ Tekala::School.controllers :v1 do
 			@demo     = params['demo']
 			@exams    = UserCycle.first
 			@total    = 1
-		else
+    else
+			$redis.lrem $school_remark, 0, '考试'
 			@exams  = @school.users.cycles.all(:order => :date.desc)
 			@total  = @exams.count
 			@exams  = @exams.paginate(:per_page => 20, :page => params[:page])
