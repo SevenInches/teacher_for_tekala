@@ -113,7 +113,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   end
 
-  get :new, :provides => [:json] do 
+  get :news, :provides => [:json] do
     @orders = []
     @order_confirm = OrderConfirm.all(:teacher_id => @teacher.id, :status => 0, :order => :created_at.desc )
 

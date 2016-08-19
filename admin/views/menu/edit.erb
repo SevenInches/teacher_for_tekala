@@ -1,0 +1,21 @@
+<body class="horizontal-menu-page">
+<section>
+  <%= partial 'layouts/nav' %>
+  <!--body wrapper start-->
+  <div class="wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6">
+          <section class="panel">
+            <% form_for :user, url(:menu, :edit_handle), :class => 'form-horizontal', :style => 'padding:20px;' do |f| %>
+                <%= partial 'menu/form', :locals => { :f => f } %>
+            <% end %>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--body wrapper end-->
+  <%= partial 'layouts/footer' %>
+</section>
+</body>
