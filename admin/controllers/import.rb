@@ -6,6 +6,7 @@ Tekala::Admin.controllers :import do
     @users = @users.all(:mobile => params[:mobile])            if params[:mobile].present?
     @users = @users.all(:status_flag => params[:status_flag])  if params[:status_flag].present?
     @users = @users.all(:exam_type => params[:exam_type])      if params[:exam_type].present?
+    @users = @users.paginate(:page => params[:page],:per_page => 20)
     render "import/index"
   end
 
@@ -17,7 +18,7 @@ Tekala::Admin.controllers :import do
         f.write(params['file'][:tempfile].read.force_encoding('utf-8'))
       end
 
-      xlsx  = Roo::Excelx.new(excel_name)
+      xlsx  = Roo::Excel.new(excel_name)
       sheet = xlsx.sheet('Worksheet1')
 
       puts sheet.count
@@ -36,23 +37,22 @@ Tekala::Admin.controllers :import do
         user.name        = name
         user.exam_type   = User.exam_type_reverse(exam_type)
         user.status_flag = User.status_flag_reverse(status_flag)
-        user.school_id   = School.first_school_id(school)
         user.password    = '123456'
         if user.save
           flash[:success] = pat(:inport_success, :model => 'User')
         end
       end
     end
-    redirect(url(:users, :index))
+    redirect(url(:import, :index))
   end
 
   get :export do
     @users = User.all(:school_id => session[:school_id])
-    # @users  = @users.all(:name.like => "%#{params[:name]}%")    if params[:name].present?
-    # @users  = @users.all(:mobile  => params[:mobile])           if params[:mobile].present?
-    # @users  = @users.all(:status_flag => params[:status_flag])  if params[:status_flag].present?
-    #
-    # @users  = @users.all(:exam_type => params[:exam_type]) if params[:exam_type].present?
+    @users  = @users.all(:name.like => "%#{params[:name]}%")    if params[:name].present?
+    @users  = @users.all(:mobile  => params[:mobile])           if params[:mobile].present?
+    @users  = @users.all(:status_flag => params[:status_flag])  if params[:status_flag].present?
+
+    @users  = @users.all(:exam_type => params[:exam_type]) if params[:exam_type].present?
     # @users  = @users.all(:school_id => params[:school_id]) if params[:school_id].present?
     # @users  = @users.all(:product_id => params[:product_id]) if params[:product_id].present?
 
@@ -61,9 +61,9 @@ Tekala::Admin.controllers :import do
     sheet[0,0]    = "#id"
     sheet[0,1]    = "学员姓名"
     sheet[0,2]    = "手机号"
-    sheet[0,3]    = "状态"
-    sheet[0,4]    = "班别"
-    sheet[0,5]    = "驾考类型"
+    sheet[0,3]    = "阶段"
+    sheet[0,4]    = "驾考类型"
+    sheet[0,5]    = "班别"
     sheet[0,6]    = "报名时间"
     format = Spreadsheet::Format.new :color => :blue,
                                      :weight => :bold,
@@ -75,8 +75,8 @@ Tekala::Admin.controllers :import do
       sheet[index+1,1]    = user.name
       sheet[index+1,2]    = user.mobile
       sheet[index+1,3]    = user.status_flag_word
-      sheet[index+1,4]    = user.signup ? user.signup.product.name : ''
-      sheet[index+1,5]    = user.exam_type_word
+      sheet[index+1,4]    = user.exam_type_word
+      sheet[index+1,5]    = user.signup ? user.signup.product.name : ''
       sheet[index+1,6]    = user.created_at.to_s[0..9]
     end
 
@@ -84,6 +84,7 @@ Tekala::Admin.controllers :import do
     book.write "public/uploads/#{output_file_name}"
 
     redirect "/uploads/#{output_file_name}"
+
   end
 
 end
