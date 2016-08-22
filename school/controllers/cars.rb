@@ -103,9 +103,12 @@ Tekala::School.controllers :v1, :cars  do
   delete :car, :map => '/v1/cars/:car_id', :provides => [:json] do
     car = Car.get(params[:car_id])
     if car.present?
-      if car.check.destroy && car.destroy
-        {:status => :success, :msg => '车辆删除成功'}.to_json
-      end
+     car.check.destroy    if car.check.present?
+     if car.destroy
+       {:status => :success, :msg => '车辆删除成功'}.to_json
+     else
+       {:status => :failure, :msg => '删除失败'}.to_json
+     end
     else
       {:status => :failure, :msg => '车辆不存在'}.to_json
     end
