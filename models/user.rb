@@ -623,4 +623,31 @@ class User
   def pay_type_demo
     '支付类型: 1=>微信 2=>支付宝 3=>POS机 4=>现金'
   end
+
+  def self.exam_type_reverse(exam_type)
+    if exam_type == 'C2'
+      2
+    else
+      1
+    end
+  end
+
+  def self.status_flag_reverse(status_flag)
+    status = {
+        "注册" => 0,
+        "已付费" => 1,
+        "拍照" => 2,
+        "体检" => 3,
+        "录指纹" => 4,
+        "科目一" => 5,
+        "科目二" => 6,
+        "科目三" => 7,
+        "考长途" => 8,
+        "科目四" => 9,
+        "已拿驾照" => 10,
+        "已离开" => 11
+    }
+    status[status_flag] if status[status_flag]
+  end
+
 end

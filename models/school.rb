@@ -71,5 +71,10 @@ class School
     city.nil? ? '--' : city.name
   end
 
+  def self.first_school_id(school)
+    current = self.first(:name.like => "%#{school}%")
+    current.id if current.present?
+  end
+
 end
 
