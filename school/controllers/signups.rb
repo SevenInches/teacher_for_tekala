@@ -74,33 +74,40 @@ Tekala::School.controllers :v1, :signups  do
   end
 
   post :signups, :map => '/v1/signups', :provides => [:json] do
-    if params[:name].present? && params[:product].present?
-      @data = User.new(:school_id =>session[:school_id])
-      @data.name         =  params[:name]
-      @data.mobile       =  params[:mobile]        if params[:mobile].present?
-      @data.sex          =  params[:sex]           if params[:sex].present?
-      @data.id_card      =  params[:id_card]       if params[:id_card].present?
-      @data.address      =  params[:address]       if params[:address].present?
-      @data.origin       =  params[:origin]        if params[:origin].present?
-      @data.branch_id    =  params[:branch]        if params[:branch].present?
-      @data.manager_no   =  params[:manager_no]    if params[:manager_no].present?
-      @data.operation_no =  params[:operation_no]  if params[:operation_no].present?
-      @data.apply_type   =  params[:apply_type]    if params[:apply_type].present?
-      @data.local        =  params[:local]         if params[:local].present?
-      @data.exam_type    =  params[:exam_type]     if params[:exam_type].present?
-      @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
-      @data.status_flag  =  1                      if params[:pay].present?
-      @data.product_id   =  params[:product]
-      @data.password     =  '123456'
-      @data.save
-
-      signup = Signup.new(:school_id =>session[:school_id], :user_id => @data.id)
-      signup.product_id  =  params[:product]
-      signup.amount      =  params[:amount].present? ? params[:amount] : Product.get(params[:product]).price
-      signup.exam_type   =  params[:exam_type]     if params[:exam_type].present?
-      signup.status      =  2                      if params[:pay].present?
-      if signup.save
-        render 'signup'
+    if params[:mobile].present? && params[:product].present?
+      user = User.first(:mobile => params[:mobile])
+      if user.present?
+        {:status => :failure, :msg => '手机号已被注册'}.to_json
+      else
+        @data = User.new(:school_id =>session[:school_id])
+        @data.name         =  params[:name]
+        @data.mobile       =  params[:mobile]        if params[:mobile].present?
+        @data.sex          =  params[:sex]           if params[:sex].present?
+        @data.id_card      =  params[:id_card]       if params[:id_card].present?
+        @data.address      =  params[:address]       if params[:address].present?
+        @data.origin       =  params[:origin]        if params[:origin].present?
+        @data.branch_id    =  params[:branch]        if params[:branch].present?
+        @data.manager_no   =  params[:manager_no]    if params[:manager_no].present?
+        @data.operation_no =  params[:operation_no]  if params[:operation_no].present?
+        @data.apply_type   =  params[:apply_type]    if params[:apply_type].present?
+        @data.local        =  params[:local]         if params[:local].present?
+        @data.exam_type    =  params[:exam_type]     if params[:exam_type].present?
+        @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
+        @data.status_flag  =  1                      if params[:pay].present?
+        @data.product_id   =  params[:product]
+        @data.password     =  '123456'
+        if @data.save
+          signup = Signup.new(:school_id =>session[:school_id], :user_id => @data.id)
+          signup.product_id  =  params[:product]
+          signup.amount      =  params[:amount].present? ? params[:amount] : Product.get(params[:product]).price
+          signup.exam_type   =  params[:exam_type]     if params[:exam_type].present?
+          signup.status      =  2                      if params[:pay].present?
+          if signup.save
+            render 'signup'
+          end
+        else
+          {:status => :failure, :msg => @data.errors.first.first}.to_json
+        end
       end
     else
       {:status => :failure, :msg => '参数错误'}.to_json

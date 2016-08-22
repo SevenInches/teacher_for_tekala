@@ -151,9 +151,6 @@ Tekala::Coach.controllers :v1 do
 	                       :order => :book_time.asc,
 	                       :status=>Order.pay_or_done)
 
-	    
-	    
-
 	    @date_remark = start_date.strftime('%Y%m%d') + (end_date-1.days).strftime('%Y%m%d')
 
         teacher_pay = TeacherWeekPay.first(:date_remark => @date_remark, :teacher_id => @teacher.id)

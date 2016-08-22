@@ -7,6 +7,7 @@ Tekala::School.controllers :v1 do
   before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
+			@role = RoleUser.get(session[:role_id])
 			$school_remark = 'school_' + session[:school_id].to_s
 		elsif !params['demo'].present?
 	    redirect_to(url(:v1, :unlogin))  
@@ -21,6 +22,7 @@ Tekala::School.controllers :v1 do
 		else
 			@user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
 			if @user
+        session[:role_id] = @user.id
 				@school = @user.role.school
 				session[:school_id] = @school.id
 				# 把订单已结束，但未点完成的订单，修改状态
@@ -42,12 +44,12 @@ Tekala::School.controllers :v1 do
 
 	put :password, :provides => [:json] do
 		if params[:old_password].present? && params[:new_password].present?
-			if @user.has_password?(params[:old_password])
+			if @role.has_password?(params[:old_password])
 				password = ::BCrypt::Password.create(params[:new_password])
-				if @user.update(:crypted_password => password)
+				if @role.update(:crypted_password => password)
 					{:status => :success, :msg => '密码修改成功'}.to_json
 				else
-					{:status => :failure, :msg => @user.errors.first.first}.to_json
+					{:status => :failure, :msg => @role.errors.first.first}.to_json
 				end
 			else
 				{:status => :failure, :msg => '原密码错误'}.to_json

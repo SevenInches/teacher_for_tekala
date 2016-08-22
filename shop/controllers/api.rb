@@ -37,13 +37,30 @@ Tekala::Shop.controllers :v1 do
 
 	get :unlogin, :provides => [:json] do
 		{:status => :failure, :msg => '未登录'}.to_json
-	end
+  end
+
+	put :password, :provides => [:json] do
+		if params[:old_password].present? && params[:new_password].present?
+			if @shop.has_password?(params[:old_password])
+				password = ::BCrypt::Password.create(params[:new_password])
+				if @shop.update(:crypted_password => password)
+					{:status => :success, :msg => '密码修改成功'}.to_json
+				else
+					{:status => :failure, :msg => @shop.errors.first.first}.to_json
+				end
+			else
+				{:status => :failure, :msg => '原密码错误'}.to_json
+			end
+		else
+			{:status => :failure, :msg => '参数错误'}.to_json
+		end
+  end
 
 	get :index, :provides => [:json], :map => '/v1' do
 		a = Student.user_num + Consultant.user_num.to_f
 		b = Student.user_num
 		c = ( a == 0 ? 1.0 : b / a )
 		{:status => :success, :data => {:consultant_count => a, :student_count => Student.user_num, :consultant_chu_student => c}}.to_json
-	end
+  end
 
 end
