@@ -9,9 +9,6 @@ Tekala::School.controllers :v1, :signups  do
   end
 
   get :signups, :map => '/v1/signups', :provides => [:json] do
-
-    $redis.lrem $school_remark, 0, "报名"
-
     if params['demo'].present?
       @demo     = params['demo']
       signup  = Signup.first
@@ -20,14 +17,14 @@ Tekala::School.controllers :v1, :signups  do
       end
       @total    = 1
     else
+      $redis.lrem $school_remark, 0, "报名"
       @data = @school.users
-
       if params[:pay].present?
-        @pay_users = Signup.all(:status => 2, :school_id => session[:school_id]).aggregate(:user_id)
-        @data  = @data.all(:id => @pay_users)
+        pay_users = Signup.all(:status => 2, :school_id => session[:school_id]).aggregate(:user_id)
+        @data  = @data.all(:id => pay_users.compact)
       else
-        @unpay_users = Signup.all(:status => 1, :school_id => session[:school_id]).aggregate(:user_id)
-        @data  = @data.all(:id => @unpay_users)
+        unpay_users = Signup.all(:status => 1, :school_id => session[:school_id]).aggregate(:user_id)
+        @data  = @data.all(:id => unpay_users.compact)
       end
 
       if params[:origin].present?

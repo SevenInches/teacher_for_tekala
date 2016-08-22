@@ -42,8 +42,8 @@ Tekala::School.controllers :v1, :cars  do
     render 'cars'
   end
 
-  get :car, :map => '/v1/cars/:id', :provides => [:json] do
-    @car = Car.get(params[:id])
+  get :car, :map => '/v1/cars/:car_id', :provides => [:json] do
+    @car = Car.get(params[:car_id])
     render 'car'
   end
 
@@ -69,9 +69,9 @@ Tekala::School.controllers :v1, :cars  do
     end
   end
 
-  put :cars, :map => '/v1/cars', :provides => [:json] do
-    if params[:id].present?
-      @car = Car.get(params[:id])
+  put :cars, :map => '/v1/cars/:car_id', :provides => [:json] do
+    @car = Car.get(params[:id])
+    if @car.present?
       @car.brand       = params[:brand]       if params[:brand].present?
       @car.branch_id   = params[:branch]      if params[:branch].present?
       @car.exam_type	 = params[:exam_type]   if params[:exam_type].present?
@@ -86,7 +86,7 @@ Tekala::School.controllers :v1, :cars  do
         render 'car'
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '车辆不存在'}.to_json
     end
   end
 
