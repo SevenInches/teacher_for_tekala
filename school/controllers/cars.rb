@@ -69,7 +69,7 @@ Tekala::School.controllers :v1, :cars  do
   end
 
   put :cars, :map => '/v1/cars/:car_id', :provides => [:json] do
-    @car = Car.get(params[:id])
+    @car = Car.get(params[:car_id])
     if @car.present?
       @car.brand       = params[:brand]       if params[:brand].present?
       @car.branch_id   = params[:branch]      if params[:branch].present?
