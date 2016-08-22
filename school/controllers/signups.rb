@@ -96,7 +96,7 @@ Tekala::School.controllers :v1, :signups  do
 
       signup = Signup.new(:school_id =>session[:school_id], :user_id => @data.id)
       signup.product_id  =  params[:product]
-      signup.amount      =  params[:amount].present? ? params[:amount] : Product.get(params[:amount]).price
+      signup.amount      =  params[:amount].present? ? params[:amount] : Product.get(params[:product]).price
       signup.exam_type   =  params[:exam_type]     if params[:exam_type].present?
       signup.status      =  2                      if params[:pay].present?
       if signup.save
