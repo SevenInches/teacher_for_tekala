@@ -12,7 +12,8 @@ class MessageCard
   property :open, Boolean, :default => 1
   property :created_at, DateTime
 
-  CONSANT_PREFIX  = (Padrino.env == 'production') ? 'http://t.tekala.cn/school/v1/' : 'localhost:8765/school/v1/'
+  CONSANT_PREFIX  = (Padrino.env == :production) ? 'http://t.tekala.cn/school/v1/' : 'localhost:8765/school/v1/'
+
    def date
     created_at.strftime('%y年%m月%d日') if created_at.present?
   end
