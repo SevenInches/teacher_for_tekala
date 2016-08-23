@@ -195,24 +195,30 @@ Tekala::School.controllers :v1 do
 
   get :news, :map => '/v1/news_card/:news_id' do
 		new  = News.get(params[:news_id])
-    @title   = new.title
-    @date    = new.created_at.strftime("%y年%m月%d日")
-    @content = new.content
-    render 'static_pages/message'
+    if new.present?
+			@title   = new.title
+			@date    = new.created_at.strftime("%y年%m月%d日")
+			@content = new.content
+			render 'static_pages/message'
+    end
   end
 
 	get :daily, :map => '/v1/daily_card/:daily_id' do
 		@daily = Daily.get(params[:daily_id])
-		@title   = @school.name.present? ? @school.name + '今日速报' : '日报'
-		@date    = @daily.created_at.strftime("%y年%m月%d日")
-		render 'static_pages/message'
+    if @daily.present?
+			@title   = @school.name.present? ? @school.name + '今日速报' : '日报'
+			@date    = @daily.created_at.strftime("%y年%m月%d日")
+			render 'static_pages/message'
+    end
   end
 
 	get :push, :map => '/v1/push_card/:push_id' do
 		push  = Push.get(params[:push_id])
-		@title   = '系统推送消息'
-		@date    = push.created_at.strftime("%y年%m月%d日")
-		@content = push.message
-		render 'static_pages/message'
+    if push.present?
+			@title   = '系统推送消息'
+			@date    = push.created_at.strftime("%y年%m月%d日")
+			@content = push.message
+			render 'static_pages/message'
+    end
 	end
 end
