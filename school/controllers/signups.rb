@@ -19,7 +19,7 @@ Tekala::School.controllers :v1, :signups  do
     else
       $redis.lrem $school_remark, 0, "报名"
       @data = @school.users
-      if params[:pay].present?
+      if params[:pay].to_i == 1
         pay_users = Signup.all(:status => 2, :school_id => session[:school_id]).aggregate(:user_id)
         @data  = @data.all(:id => pay_users.compact)
       else
