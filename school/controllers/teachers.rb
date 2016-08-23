@@ -67,7 +67,7 @@ Tekala::School.controllers :v1, :teachers  do
       @teacher.address          = params[:address]    if params[:address].present?
       @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
       @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
-      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.wechat          = params[:wechat]    if params[:wechat].present?
       @teacher.password         = '123456'
       if @teacher.save
         if params[:field].present?
@@ -94,7 +94,7 @@ Tekala::School.controllers :v1, :teachers  do
       @teacher.address          = params[:address]    if params[:address].present?
       @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
       @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
-      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.wechat          = params[:wechat]    if params[:wechat].present?
       @teacher.name             = params[:name]       if params[:name].present?
       if @teacher.save
         if params[:field].present?
