@@ -1,3 +1,3 @@
 task :report => :environment do
-  OptMessage.daily_report
+  Daily.daily_report
 end

@@ -122,7 +122,7 @@ Tekala::School.controllers :v1, :teachers  do
     end
     teacher  = Teacher.get(params[:teacher_id])
     if teacher.present?
-      if teacher.destroy
+      if teacher.destroy!
         {:status => :success, :msg => "教练(id:#{params[:teacher_id]})删除成功"}.to_json
       else
         {:status => :failure, :msg => '删除错误'}.to_json
