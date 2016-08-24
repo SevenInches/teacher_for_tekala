@@ -467,25 +467,32 @@ class JPush
     end
   end
 
-  def self.send_school_message(tags, msg, edition)
-    key, sec= convert_edition(edition)
+  def self.send_daily(school_id, content)
+    key, sec= SCHOOLKEY,SCHOOLSEC
+
+    school = School.get school_id
+    return false if school.nil?
+
+    title  = school.name.present? ? (school.name + '日报') : '日报'
+    current_alias = "school_" + school_id.to_s
+
     Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
       req=Net::HTTP::Post.new(URL.path)
       req.basic_auth key, sec
       jpush =[]
       jpush << 'platform=all'
-      jpush << 'audience={"alias" : '+tags.to_s+'}'
+      jpush << 'audience={"alias" : ["'+current_alias+'"]}'
       jpush << 'notification={
-            "alert":"'+msg+'",
+            "alert":"'+title+'",
             "ios":{
-                 "content-available":1,
-                 "extras":{"type": "message", "msg": "'+msg+'" }
+                 "content-available":1
                    }
                 }'
-      jpush << 'message={ "msg_content" : "'+msg+'", "content_type": "text", "title": "消息推送" }'
+      jpush << 'message={ "msg_content" : "'+content+'", "content_type": "text", "title": "'+title+'" }'
       jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
       req.body = jpush.join("&")
       resp=http.request(req)
+      puts resp
     end
   end
 

@@ -59,7 +59,6 @@ Tekala::School.controllers :v1 do
 		end
   end
 
-
   get :branches, :map => '/v1/all_branches', :provides => [:json] do
 		@branches = @school.branches
 		@total 		= @branches.count
@@ -84,6 +83,12 @@ Tekala::School.controllers :v1 do
 		render 'all_fields'
   end
 
+	get :cars, :map => '/v1/all_cars', :provides => [:json] do
+		@cars   = @school.cars
+		@total 		= @cars.count
+		render 'all_cars'
+	end
+
 	get :price,  :map => '/v1/price' do
     key      = "20150607mm"
     token    = Digest::MD5.hexdigest("#{params[:user_id]}#{key}")
@@ -97,7 +102,7 @@ Tekala::School.controllers :v1 do
 
 	#定价计时
 	post :price, :provides => [:html] do
-		@price = Price.new(:school_id => @school.id)
+		@price = Price.new(:school_id => session[:school_id])
 		@price.c1_common = params['c1_common']   if params['c1_common'].present?
 		@price.c2_common = params['c2_common']   if params['c2_common'].present?
 		@price.c1_hot    = params['c1_hot']      if params['c1_hot'].present?
