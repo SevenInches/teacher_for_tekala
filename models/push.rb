@@ -114,8 +114,6 @@ class Push
     if editions.present?
       editions.split(':').each do |edition|
         if edition == '3'
-          p '渠道号'
-          p edition
           tags << 'channel_' + channel_id.to_s if channel_id.present?
           tags << 'version_' + version if version.present?
           tags << 'school_'  + school_id.to_s if school_id.present?

@@ -496,6 +496,28 @@ class JPush
     end
   end
 
+  def self.send_school_message(tags, msg, edition)
+    key, sec= convert_edition(edition)
+    Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
+      req=Net::HTTP::Post.new(URL.path)
+      req.basic_auth key, sec
+      jpush =[]
+      jpush << 'platform=all'
+      jpush << 'audience={"alias" : '+tags.to_s+'}'
+      jpush << 'notification={
+            "alert":"'+msg+'",
+            "ios":{
+                 "content-available":1,
+                 "extras":{"type": "message", "msg": "'+msg+'" }
+                   }
+                }'
+      jpush << 'message={ "msg_content" : "'+msg+'", "content_type": "text", "title": "消息推送" }'
+      jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
+      req.body = jpush.join("&")
+      resp=http.request(req)
+    end
+  end
+
   def self.convert_edition(key)
     case key.to_i
       when 1 then return KEY,SEC
