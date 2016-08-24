@@ -31,6 +31,7 @@ Tekala::Admin.controllers :import do
 
         #创建一个学员
         user = User.first(:mobile => mobile)
+        p user
         if !user.present?
           user = User.new(:mobile => mobile)
         end
@@ -38,6 +39,8 @@ Tekala::Admin.controllers :import do
         user.exam_type   = User.exam_type_reverse(exam_type)
         user.status_flag = User.status_flag_reverse(status_flag)
         user.password    = '123456'
+        # 添加驾校id
+        user.school_id   = session[:school_id]
         if user.save
           flash[:success] = pat(:inport_success, :model => 'User')
         end

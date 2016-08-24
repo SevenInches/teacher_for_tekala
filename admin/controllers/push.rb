@@ -1,6 +1,7 @@
 Tekala::Admin.controllers :push do
   get :index do
     @title = '推送管理'
+    # @pushs = Push.all(:school_id => session[:school_id])
     @pushs = Push.all
     @pushs = @pushs.paginate(:page => params[:page],:per_page => 20)
     @pushs = @pushs.reverse
@@ -29,5 +30,20 @@ Tekala::Admin.controllers :push do
     push = Push.get(params[:id])
     push.jpush
     redirect(url(:push, :index))
+  end
+
+  get :delete,:with => :id do
+    push = Push.get(params[:id])
+    if push
+      if push.destroy
+        flash[:success] = pat(:delete_success, :model => 'Push', :id => "#{params[:id]}")
+      else
+        flash[:error] = pat(:delete_error, :model => 'Push')
+      end
+      redirect url(:push,:index)
+    else
+      flash[:warning] = pat(:delete_warning, :model => 'Push', :id => "#{params[:id]}")
+      halt 404
+    end
   end
 end
