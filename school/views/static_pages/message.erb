@@ -13,13 +13,13 @@
         <div class="news-content">
           <% if @daily.present? %>
               <div>一、招生</div>
-              <div>  今天咨询<%= @daily.consult %>人，招生<%= @daily.enroll %>人，转化率<%= (@daily.consult/@daily.enroll)*100.range(2) if @daily.enroll!=0 %>%</div>
+              <div>  今天咨询<%= @daily.consult %>人，招生<%= @daily.enroll %>人，转化率<%= (@daily.enroll/@daily.consult)*100.range(2) if @daily.consult!=0 %>%</div>
               <div>二、学车考试</div>
               <div>  今天练车学员<%= @daily.people %>人，总共<%= @daily.time %>学时。</div>
               <div>  科目一考试<%= @daily.exam_one %>人，通过<%= @daily.one_pass %>人，通过率<%= (@daily.one_pass/@daily.exam_one)*100.range(2) if @daily.exam_one!=0 %>%</div>
               <div>  科目二考试<%= @daily.exam_two %>人，通过<%= @daily.two_pass %>人，通过率<%= (@daily.two_pass/@daily.exam_two)*100.range(2) if @daily.exam_two!=0 %>%</div>
               <div>  科目三考试<%= @daily.exam_three %>人，通过<%= @daily.three_pass %>人，通过率<%= (@daily.three_pass/@daily.exam_three)*100.range(2) if @daily.exam_three!=0 %>%</div>
-              <div>  科目一考试<%= @daily.exam_four %>人，通过<%= @daily.four_pass %>人，通过率<%= (@daily.four_pass/@daily.exam_four)*100.range(2) if @daily.exam_one!=0 %>%</div>
+              <div>  科目四考试<%= @daily.exam_four %>人，通过<%= @daily.four_pass %>人，通过率<%= (@daily.four_pass/@daily.exam_four)*100.range(2) if @daily.exam_four!=0 %>%</div>
               <div>三、营收</div>
               <div>  营业收入<%=@daily.incomes%>元，退款人数<%=@daily.refund%>人，<%=@daily.refund_money%>元</div>
           <% else %>

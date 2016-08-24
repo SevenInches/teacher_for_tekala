@@ -102,10 +102,17 @@ Tekala::School.controllers :v1, :teachers  do
       @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
       @teacher.wechat          = params[:wechat]    if params[:wechat].present?
       @teacher.name             = params[:name]       if params[:name].present?
-      if @teacher.save
-        if params[:field].present?
-          TeacherTrainField.first(:teacher_id => @teacher.id).update(:train_field_id => params[:field])
+      if params[:field].present?
+        TeacherTrainField.first(:teacher_id => @teacher.id).update(:train_field_id => params[:field])
+      end
+      if params[:number].present?
+        @teacher.car.update(:teacher_id => nil)
+        car = Car.first(:number => params[:number])
+        if car.present?
+          car.update(:teacher_id => @teacher.id)
         end
+      end
+      if @teacher.save
         render 'teacher'
       else
         {:status => :failure, :msg => @teacher.errors.to_s}.to_json

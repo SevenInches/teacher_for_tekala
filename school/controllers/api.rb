@@ -59,7 +59,6 @@ Tekala::School.controllers :v1 do
 		end
   end
 
-
   get :branches, :map => '/v1/all_branches', :provides => [:json] do
 		@branches = @school.branches
 		@total 		= @branches.count
@@ -83,6 +82,12 @@ Tekala::School.controllers :v1 do
 		@total 		= @fields.count
 		render 'all_fields'
   end
+
+	get :cars, :map => '/v1/all_cars', :provides => [:json] do
+		@cars   = @school.cars
+		@total 		= @cars.count
+		render 'all_cars'
+	end
 
 	get :price,  :map => '/v1/price' do
     key      = "20150607mm"

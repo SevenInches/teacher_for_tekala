@@ -15,6 +15,9 @@ Tekala::School.controllers :v1, :cars  do
       @total   =  1
     else
       @cars  = @school.cars
+      if params[:number].present?
+        @cars  = @cars.all(:number.like => "%#{params[:number]}%")
+      end
       if params[:branch].present?
         branches = params[:branch].split(/-/)
         @cars  = @cars.all(:branch => branches)
