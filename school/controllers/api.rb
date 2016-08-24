@@ -102,7 +102,7 @@ Tekala::School.controllers :v1 do
 
 	#定价计时
 	post :price, :provides => [:html] do
-		@price = Price.new(:school_id => @school.id)
+		@price = Price.new(:school_id => session[:school_id])
 		@price.c1_common = params['c1_common']   if params['c1_common'].present?
 		@price.c2_common = params['c2_common']   if params['c2_common'].present?
 		@price.c1_hot    = params['c1_hot']      if params['c1_hot'].present?
