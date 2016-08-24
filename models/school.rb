@@ -51,6 +51,7 @@ class School
   has n, :roles
   has n, :pushes
   has n, :news
+  has n, :dailies
 
   before :save, :encrypt_password
 

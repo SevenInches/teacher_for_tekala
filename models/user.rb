@@ -601,7 +601,7 @@ class User
   end
 
   def exam_type_demo
-    '驾考类型: 0=>未知, 1=>C1, 2=>C2'
+    '驾考类型: 0=>未知, 1=>C1, 2=>C2, 3=>C1/C2'
   end
 
   def type_demo

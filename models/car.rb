@@ -13,7 +13,7 @@ class Car
   property :brand, String
   property :name, String
   property :exam_type, Integer
-  property :open, Boolean
+  property :open, Boolean, :default => 1
   property :teacher_id, Integer
 
   has 1, :check

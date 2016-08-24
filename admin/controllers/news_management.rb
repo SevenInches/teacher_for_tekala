@@ -11,6 +11,12 @@ Tekala::Admin.controllers :news_management do
     @news           = News.new(params[:news])
     @news.school_id = session[:school_id]
     if @news.save
+      card = MessageCard.new(:school_id => session[:school_id], :type => 1)
+      card.content    = @news.title
+      card.created_at = Time.now
+      card.message_id = @news.id
+      card.save
+
       flash[:success] = pat(:create_success, :model => 'News')
       redirect(url(:news_management, :index))
     else

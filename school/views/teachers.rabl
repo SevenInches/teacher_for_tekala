@@ -10,5 +10,5 @@ child(@teachers => :data){
 	child(:branch => :branch){attributes :id, :name }
 	child(:train_fields){ attributes :id, :name }
 	child(:car){ attributes :id, :number, :brand }
-	attributes :bank_name, :bank_card, :wechart
+	attributes :bank_name, :bank_card, :wechat, :id_card, :address
 }

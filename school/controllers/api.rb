@@ -7,6 +7,7 @@ Tekala::School.controllers :v1 do
   before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
+			@role = RoleUser.get(session[:role_id])
 			$school_remark = 'school_' + session[:school_id].to_s
 		elsif !params['demo'].present?
 	    redirect_to(url(:v1, :unlogin))  
@@ -21,6 +22,7 @@ Tekala::School.controllers :v1 do
 		else
 			@user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
 			if @user
+        session[:role_id] = @user.id
 				@school = @user.role.school
 				session[:school_id] = @school.id
 				# 把订单已结束，但未点完成的订单，修改状态
@@ -42,12 +44,12 @@ Tekala::School.controllers :v1 do
 
 	put :password, :provides => [:json] do
 		if params[:old_password].present? && params[:new_password].present?
-			if @user.has_password?(params[:old_password])
+			if @role.has_password?(params[:old_password])
 				password = ::BCrypt::Password.create(params[:new_password])
-				if @user.update(:crypted_password => password)
+				if @role.update(:crypted_password => password)
 					{:status => :success, :msg => '密码修改成功'}.to_json
 				else
-					{:status => :failure, :msg => @user.errors.first.first}.to_json
+					{:status => :failure, :msg => @role.errors.first.first}.to_json
 				end
 			else
 				{:status => :failure, :msg => '原密码错误'}.to_json
@@ -177,4 +179,46 @@ Tekala::School.controllers :v1 do
 			{:status => :failure, :msg => '此考试记录不存在'}.to_json
 		end
   end
+
+  get :hot_messages, :map => '/v1/messages/hot', :provides => [:json] do
+    @messages  = MessageCard.all(:order => [:created_at.desc, :weight.desc], :school_id =>session[:school_id].to_i, :limit => 5)
+    @total  =  @messages.count
+    render 'messages'
+  end
+
+	get :messages, :map => '/v1/messages', :provides => [:json] do
+		@messages  =  MessageCard.all(:order => [:created_at.desc, :weight.desc], :school_id =>session[:school_id].to_i)
+		@total     =  @messages.count
+		@messages  =  @messages.paginate(:per_page => 20, :page => params[:page])
+		render 'messages'
+  end
+
+  get :news, :map => '/v1/news_card/:news_id' do
+		new  = News.get(params[:news_id])
+    if new.present?
+			@title   = new.title
+			@date    = new.created_at.strftime("%y年%m月%d日")
+			@content = new.content
+			render 'static_pages/message'
+    end
+  end
+
+	get :daily, :map => '/v1/daily_card/:daily_id' do
+		@daily = Daily.get(params[:daily_id])
+    if @daily.present?
+			@title   = @school.name.present? ? @school.name + '今日速报' : '日报'
+			@date    = @daily.created_at.strftime("%y年%m月%d日")
+			render 'static_pages/message'
+    end
+  end
+
+	get :push, :map => '/v1/push_card/:push_id' do
+		push  = Push.get(params[:push_id])
+    if push.present?
+			@title   = '系统推送消息'
+			@date    = push.created_at.strftime("%y年%m月%d日")
+			@content = push.message
+			render 'static_pages/message'
+    end
+	end
 end

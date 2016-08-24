@@ -42,8 +42,8 @@ Tekala::School.controllers :v1, :cars  do
     render 'cars'
   end
 
-  get :car, :map => '/v1/cars/:id', :provides => [:json] do
-    @car = Car.get(params[:id])
+  get :car, :map => '/v1/cars/:car_id', :provides => [:json] do
+    @car = Car.get(params[:car_id])
     render 'car'
   end
 
@@ -55,7 +55,6 @@ Tekala::School.controllers :v1, :cars  do
       @car.exam_type	      = params[:exam_type]   if params[:exam_type].present?
       @car.train_field_id   = params[:field]       if params[:field].present?
       @car.save
-
       check = Check.new(:car_id => @car.id )
       check.check_end       = params[:check_end]  if params[:check_end].present?
       check.year_check_end  = params[:year_check_end]  if params[:year_check_end].present?
@@ -69,13 +68,14 @@ Tekala::School.controllers :v1, :cars  do
     end
   end
 
-  put :cars, :map => '/v1/cars', :provides => [:json] do
-    if params[:id].present?
-      @car = Car.get(params[:id])
+  put :cars, :map => '/v1/cars/:car_id', :provides => [:json] do
+    @car = Car.get(params[:car_id])
+    if @car.present?
       @car.brand       = params[:brand]       if params[:brand].present?
       @car.branch_id   = params[:branch]      if params[:branch].present?
       @car.exam_type	 = params[:exam_type]   if params[:exam_type].present?
       @car.number	     = params[:number]      if params[:number].present?
+      @car.train_field_id   = params[:field]       if params[:field].present?
       @car.save
       check = @car.check
       check.check_end       = params[:check_end]  if params[:check_end].present?
@@ -86,7 +86,7 @@ Tekala::School.controllers :v1, :cars  do
         render 'car'
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '车辆不存在'}.to_json
     end
   end
 
@@ -103,11 +103,12 @@ Tekala::School.controllers :v1, :cars  do
   delete :car, :map => '/v1/cars/:car_id', :provides => [:json] do
     car = Car.get(params[:car_id])
     if car.present?
-      if car.destroy
-        {:status => :success, :msg => '车辆删除成功'}.to_json
-      else
-        {:status => :success, :msg => car.errors.first.first }.to_json
-      end
+     car.check.destroy    if car.check.present?
+     if car.destroy
+       {:status => :success, :msg => '车辆删除成功'}.to_json
+     else
+       {:status => :failure, :msg => '删除失败'}.to_json
+     end
     else
       {:status => :failure, :msg => '车辆不存在'}.to_json
     end

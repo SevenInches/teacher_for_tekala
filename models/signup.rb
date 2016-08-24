@@ -10,8 +10,8 @@ class Signup
   property :amount, Float
   property :discount, Float
   property :pay_at, DateTime
-  property :done_at, DateTime
   property :cancel_at, DateTime
+  property :refund_at, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
   property :ch_id, String

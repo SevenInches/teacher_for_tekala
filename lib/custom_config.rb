@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class CustomConfig
-	HOST      = 'http://www.mmxueche.com'
+	HOST      = 'http://t.tekala.cn'
 	APPID     = 'wx2518632f280d206d'
 	SECRET    = "b0d8eda74319a5984cfce9f230eab6b9"
 	INSURE    = "http://121.15.1.122:9001/ThirdPartPlat/execute.action"

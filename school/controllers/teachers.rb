@@ -67,11 +67,17 @@ Tekala::School.controllers :v1, :teachers  do
       @teacher.address          = params[:address]    if params[:address].present?
       @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
       @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
-      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.wechat           = params[:wechat]     if params[:wechat].present?
       @teacher.password         = '123456'
       if @teacher.save
         if params[:field].present?
           TeacherTrainField.new(:teacher_id => @teacher.id, :train_field_id => params[:field].to_i).save
+        end
+        if params[:number].present?
+          car = Car.first(:number => params[:number])
+          if car.present?
+            car.update(:teacher_id => @teacher.id)
+          end
         end
         render 'teacher'
       else
@@ -94,7 +100,7 @@ Tekala::School.controllers :v1, :teachers  do
       @teacher.address          = params[:address]    if params[:address].present?
       @teacher.bank_name        = params[:bank_name]  if params[:bank_name].present?
       @teacher.bank_card        = params[:bank_card]  if params[:bank_card].present?
-      @teacher.wechart          = params[:wechart]    if params[:wechart].present?
+      @teacher.wechat          = params[:wechat]    if params[:wechat].present?
       @teacher.name             = params[:name]       if params[:name].present?
       if @teacher.save
         if params[:field].present?
@@ -116,7 +122,7 @@ Tekala::School.controllers :v1, :teachers  do
     end
     teacher  = Teacher.get(params[:teacher_id])
     if teacher.present?
-      if teacher.destroy
+      if teacher.destroy!
         {:status => :success, :msg => "教练(id:#{params[:teacher_id]})删除成功"}.to_json
       else
         {:status => :failure, :msg => '删除错误'}.to_json
