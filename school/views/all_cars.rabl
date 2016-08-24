@@ -1,5 +1,6 @@
 node(:status) { 'success' }
 node(:total) { @total }
 child(@cars => :data){
-  attributes :id, :number, :brand, :exam_type
+  attributes :id
+  node(:name) { |val| val.number }
 }
