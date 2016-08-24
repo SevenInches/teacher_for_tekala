@@ -1,7 +1,7 @@
 Tekala::Admin.controllers :news_management do
   get :index do
     @title = '新闻管理'
-    @news = News.all
+    @news = News.all(:school_id => session[:school_id])
     @news = @news.paginate(:page => params[:page],:per_page => 20)
     @news = @news.reverse
     render "/news_management/index"
@@ -26,6 +26,10 @@ Tekala::Admin.controllers :news_management do
 
   get :detail ,:with => :id do
     @news = News.first(:id => params[:id])
+    @news.view_count = @news.view_count + 1
+    @news.save
+    p @news
+    p @news.view_count
     render '/news_management/detail'
   end
 
@@ -45,7 +49,7 @@ Tekala::Admin.controllers :news_management do
     end
   end
 
-  get :news do
+  get :new do
     @title  = '新闻管理'
     render "/news_management/new"
   end
@@ -83,6 +87,10 @@ Tekala::Admin.controllers :news_management do
 
   get :detail_mobile ,:with => :id do
     @news = News.first(:id => params[:id])
+    @news.view_count = @news.view_count + 1
+    @news.save
+    p @news
+    p @news.view_count
     render 'news_management/detail_mobile', :layout => false
   end
 

@@ -13,6 +13,11 @@
             <!--</div>-->
             <div class="panel-body">
               <form class="form-horizontal" action="/web/edit_psd/change" method="post">
+                <% if @result == 'success'%>
+                    <div class="alert alert-success fade in">修改成功<button type="button" class="close" data-dismiss="alert">×</button></div>
+                <% elsif @result == 'error' %>
+                      <div class="alert alert-danger fade in">修改失败<button type="button" class="close" data-dismiss="alert">×</button></div>
+                <% end %>
                 <div class="form-group">
                   <label for="firstname" class="col-sm-2 control-label">原密码</label>
                   <div class="col-sm-5">
@@ -31,6 +36,7 @@
                     <input type="text" class="form-control" name="confirm_password" placeholder="请确认新密码">
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="firstname" class="col-sm-2 control-label"></label>
                   <div class="col-sm-5">

@@ -20,12 +20,12 @@ Tekala::Admin.controllers :base do
     @shop    = Shop.all(:school_id => session[:school_id])
     @order   = Order.all(:school_id => session[:school_no])
 
-
     month_beginning = Date.strptime(Time.now.beginning_of_month.to_s,'%Y-%m-%d')
 
     this_month = month_beginning  .. Date.tomorrow
     @signups = $school.signups.all(:pay_at => this_month, :status => 2).count
     @amounts = $school.signups.all(:pay_at => this_month, :status => 2).sum(:amount)
+    @amounts = @amounts ? @amounts : '0'
 
     today = Date.today .. Date.tomorrow
     @orders = $school.users.orders.all(:book_time => today, :status => [3, 4]).count
