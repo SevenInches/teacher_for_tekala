@@ -37,7 +37,7 @@
               <td></td>
               <td><%= item.created_at %></td>
               <td></td>
-              <td><a href="/web/push/send/<%= item.id %>">重新发送</a></td>
+              <td><a href="/web/push/send/<%= item.id %>">重新发送</a>|<a href="/web/push/delete/<%= item.id %>">删除</a></td>
             </tr>
           <% end %>
           </tbody>

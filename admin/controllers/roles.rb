@@ -11,7 +11,7 @@ Tekala::Admin.controllers :roles do
 
   get :index do
     @title = '人员管理'
-    @users = RoleUser.all
+    @users = RoleUser.all()
     @users = @users.all(:role_id => params[:role_id]) if params[:role_id].present?
     @users = @users.paginate(:page => params[:page],:per_page => 5)
     @users = @users.reverse
@@ -20,6 +20,7 @@ Tekala::Admin.controllers :roles do
 
   post :create do
     @user = RoleUser.new(params[:user])
+    # @user =
     if @user.save
       flash[:success] = pat(:create_success, :model => 'RoleUser')
       redirect(url(:roles, :index))
@@ -33,13 +34,13 @@ Tekala::Admin.controllers :roles do
     push = RoleUser.get(params[:id])
     if push
       if push.destroy
-        flash[:success] = pat(:delete_success, :model => 'Push', :id => "#{params[:id]}")
+        flash[:success] = pat(:delete_success, :model => 'RoleUser', :id => "#{params[:id]}")
       else
-        flash[:error] = pat(:delete_error, :model => 'Push')
+        flash[:error] = pat(:delete_error, :model => 'RoleUser')
       end
       redirect url(:roles, :index)
     else
-      flash[:warning] = pat(:delete_warning, :model => 'Push', :id => "#{params[:id]}")
+      flash[:warning] = pat(:delete_warning, :model => 'RoleUser', :id => "#{params[:id]}")
       halt 404
     end
   end
