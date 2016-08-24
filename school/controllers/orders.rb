@@ -14,7 +14,7 @@ Tekala::School.controllers :v1, :orders  do
       @orders = Order.first
       @total    = 1
     else
-      $redis.lrem $school_remark, 0, '约车订单'
+      #$redis.lrem $school_remark, 0, '约车订单'
       @orders = @school.users.orders.all
       if params[:user_key].present?
         if params[:user_key].to_i > 0
@@ -24,6 +24,8 @@ Tekala::School.controllers :v1, :orders  do
         end
         if users.present?
           @orders  = Order.all(:user_id => users.aggregate(:id))
+        else
+          @orders  = Order.all(:user_id => 0)
         end
       end
 
@@ -35,6 +37,8 @@ Tekala::School.controllers :v1, :orders  do
         end
         if teachers.present?
           @orders  = Order.all(:teacher_id => teachers.aggregate(:id))
+        else
+          @orders  = Order.all(:teacher_id => 0)
         end
       end
 
