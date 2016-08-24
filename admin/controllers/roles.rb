@@ -3,23 +3,24 @@ Tekala::Admin.controllers :roles do
     if session[:role_user_id]
       @role_user = RoleUser.get session[:role_user_id]
       @school_no = session[:school_no]
-      @mobile     = session[:mobile]
+      @mobile    = session[:mobile]
+      @title = '人员管理'
     elsif !params['demo'].present?
       redirect_to(url(:edit_psd, :unlogin))
     end
   end
 
   get :index do
-    @title = '人员管理'
     @users = RoleUser.all()
     @users = @users.all(:role_id => params[:role_id]) if params[:role_id].present?
-    @users = @users.paginate(:page => params[:page],:per_page => 5)
+    @users = @users.paginate(:page => params[:page],:per_page => 20)
     @users = @users.reverse
     render "roles/index"
   end
 
   post :create do
     @user = RoleUser.new(params[:user])
+    @user.password = '123456'
     # @user =
     if @user.save
       flash[:success] = pat(:create_success, :model => 'RoleUser')
@@ -30,7 +31,6 @@ Tekala::Admin.controllers :roles do
   end
 
   get :destroy, :with => :id do
-    @title = "人员管理"
     push = RoleUser.get(params[:id])
     if push
       if push.destroy

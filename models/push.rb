@@ -86,7 +86,18 @@ class Push
       array.each do |a|
         names << Push.get_editions(a.to_i)
       end
-      names.join(":")
+      names.join(",")
+    end
+  end
+
+  def editions_name_convertion
+    if editions.present?
+      array = editions.split(":")
+      names = []
+      array.each do |a|
+        names << '<span class="edition-'+ a +'">' + Push.get_editions(a.to_i) + '</span>'
+      end
+      names.join("")
     end
   end
 
@@ -102,11 +113,21 @@ class Push
     tags = []
     if editions.present?
       editions.split(':').each do |edition|
-        tags << 'channel_' + channel_id.to_s if channel_id.present?
-        tags << 'version_' + version if version.present?
-        tags << 'school_'  + school_id.to_s if school_id.present?
-        tags << 'status_'  + user_status.to_s if !user_status.nil?
-        JPush.send_message(tags, message, edition)
+        if edition == '3'
+          p '渠道号'
+          p edition
+          tags << 'channel_' + channel_id.to_s if channel_id.present?
+          tags << 'version_' + version if version.present?
+          tags << 'school_'  + school_id.to_s if school_id.present?
+          tags << 'status_'  + user_status.to_s if !user_status.nil?
+          JPush.send_school_message(tags, message, edition)
+        else
+          tags << 'channel_' + channel_id.to_s if channel_id.present?
+          tags << 'version_' + version if version.present?
+          tags << 'school_'  + school_id.to_s if school_id.present?
+          tags << 'status_'  + user_status.to_s if !user_status.nil?
+          JPush.send_message(tags, message, edition)
+        end
       end
     end
   end

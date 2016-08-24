@@ -17,10 +17,12 @@ Tekala::Admin.controllers :edit_psd do
   post :change do
     role_user = @role_user.change_psd(@school_no, @mobile, params[:old_password],params[:new_password], params[:confirm_password])
     if role_user
-      redirect_to(url(:edit_psd, :index))
+      @result = 'success'
     else
-
+      @result = 'error'
     end
+    # redirect_to(url(:edit_psd, :index))
+    render "/edit_psd/index"
   end
 
   get :unlogin, :provides => [:json] do

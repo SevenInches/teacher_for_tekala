@@ -4704,3 +4704,43 @@ ol.comment-list {
     border-radius: 5px;
     -webkit-border-radius: 5px;
 }
+
+/*状态底色*/
+.order-status{
+    color: #fff;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+.order-status-1{
+    background-color: #ff9800;
+}
+.order-status-2,.edition-2{
+    background-color: #009688;
+}
+.order-status-3,.edition-3{
+    background-color: #03a9f4;
+}
+.order-status-4,.edition-4{
+    background-color: #449d44;
+}
+.order-status-5{
+    background-color: #ff5722;
+}
+.order-status-6{
+    background-color: #f44336;
+}
+
+/*渠道底色*/
+.edition-1,.edition-2,.edition-3,.edition-4,.edition-5{
+    color: #fff;
+    padding: 0 2px;
+    margin-right: 2px;
+    border-radius: 3px;
+}
+.edition-1{
+   background-color: #ffc107;
+}
+.edition-5{
+    background-color: #CDDC39;
+}
+

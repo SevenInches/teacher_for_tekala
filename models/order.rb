@@ -192,6 +192,40 @@ class Order
     end
   end
 
+  def status_word_html
+    case self.status
+      when 1
+        return '<span class="order-status order-status-1">待接单</span>'
+      when 2
+        return '<span class="order-status order-status-2">已接单</span>'
+      when 3
+        return '<span class="order-status order-status-3">待评价</span>'
+      when 4
+        return '<span class="order-status order-status-4">已完成</span>'
+      when 5
+        return '<span class="order-status order-status-5">已拒单</span>'
+      when 6
+        return '<span class="order-status order-status-6">已取消</span>'
+    end
+  end
+
+  def status_class
+    case self.status
+      when 1
+        return 'wait-order'
+      when 2
+        return 'accept-order'
+      when 3
+        return 'wait-evaluate'
+      when 4
+        return 'complete'
+      when 5
+        return 'reject'
+      when 6
+        return 'cancel'
+    end
+  end
+
   def created_at_format
     created_at.strftime('%Y-%m-%d %H:%M')
   end
@@ -295,6 +329,11 @@ class Order
 
   def status_demo
     '订单状态: 待接单=>1, 已接单=>2, 待评价=>3, 已完成=>4, 已拒单=>5, 已取消=>6'
+  end
+
+  def book_time_conversion
+    hour = quantity ? quantity : '0'
+    book_time.strftime("%Y-%m-%d %H:%M:%S") + '-' + (book_time + quantity.to_i.hours).strftime("%H:%M:%S") +'|' + hour.to_s + '小时'
   end
 
 end
