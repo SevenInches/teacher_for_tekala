@@ -1,5 +1,5 @@
+#驾校人员管理
 class Role
-  #驾校人员表
   include DataMapper::Resource
 
   attr_accessor :password

@@ -32,15 +32,6 @@ Tekala::Coach.controllers  :v1, :comments  do
 	  render 'teacher_comment'
 	end
 
-	get :by_me, :provides => [:json] do 
-		@comment  = UserComment.first(:order_id => params[:order_id])
-		if @comment.nil?
-			{:status => :failure, :msg => '暂未有评论'}.to_json 
-		else
-	  		render 'user_comment'
-		end
-	end
-
 	get :to_me, :provides => [:json] do 
 		@comment  = TeacherComment.first(:order_id => params[:order_id])
 		 if @comment.nil?
@@ -50,26 +41,5 @@ Tekala::Coach.controllers  :v1, :comments  do
 		 end
   end
 
-  #添加user 评论
-  post '/', :provides => [:json] do 
-  	@order = Order.get params[:order_id]
-  	return {:status => "failure", :msg => '评论失败' }.to_json if @order && !@order.teacher_can_comment
-
-    @comment            = UserComment.new
-    @comment.content    = params[:content]
-    @comment.order_id   = @order.id
-    @comment.rate       = params[:rate] if !params[:rate].nil? && !params[:rate].empty?
-    @comment.user_id    = @order.user_id
-    @comment.teacher_id = @teacher.id
-
-    if @comment.save
-      
-    else
-      {:status => :failure, :msg => @comment.errors.full_messages.join(',') }.to_json
-    end
-    
-    render 'user_comment'
-
-  end
 
 end

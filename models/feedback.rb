@@ -1,3 +1,4 @@
+#建议反馈
 class Feedback
   include DataMapper::Resource
 

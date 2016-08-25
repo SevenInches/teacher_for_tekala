@@ -1,3 +1,4 @@
+#教练的审核信息
 class TeacherAudit
   include DataMapper::Resource
 

@@ -1,3 +1,4 @@
+#教练排名
 class TeacherRank
   include DataMapper::Resource
 

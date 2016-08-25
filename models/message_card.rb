@@ -1,3 +1,4 @@
+#消息卡片
 class MessageCard
   include DataMapper::Resource
 

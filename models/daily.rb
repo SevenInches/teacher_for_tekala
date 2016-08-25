@@ -1,3 +1,4 @@
+#日报
 class Daily
   include DataMapper::Resource
 

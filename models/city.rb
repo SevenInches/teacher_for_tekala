@@ -1,3 +1,4 @@
+#城市信息
 class City
   include DataMapper::Resource
 

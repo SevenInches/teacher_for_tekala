@@ -1,3 +1,4 @@
+#菜单ICON
 class Subpart
   include DataMapper::Resource
 

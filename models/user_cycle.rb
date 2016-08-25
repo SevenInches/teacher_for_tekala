@@ -1,3 +1,4 @@
+#用户考试记录
 class UserCycle
   include DataMapper::Resource
 

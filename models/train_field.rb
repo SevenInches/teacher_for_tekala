@@ -1,3 +1,4 @@
+#训练场管理
 class TrainField
   include DataMapper::Resource
   attr :distance, true

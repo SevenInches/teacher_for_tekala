@@ -1,3 +1,4 @@
+#驾校管理
 class School
   include DataMapper::Resource
 

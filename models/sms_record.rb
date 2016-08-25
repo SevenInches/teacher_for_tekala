@@ -1,3 +1,4 @@
+#短信消息记录
 class SmsRecord
   include DataMapper::Resource
 

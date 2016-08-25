@@ -1,3 +1,4 @@
+#用户优惠券关联
 class UserCoupon
   include DataMapper::Resource
 

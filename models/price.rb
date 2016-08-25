@@ -1,3 +1,4 @@
+#计时报价
 class Price
   include DataMapper::Resource
 

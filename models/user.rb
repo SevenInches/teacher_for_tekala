@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+#学员管理
 class User
   include DataMapper::Resource
   attr_accessor :beta
@@ -56,10 +56,6 @@ class User
 
   property :email, String
   #用户区域
-
-  #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :武昌 => 21, :洪山 => 22, :黄陂 => 23, :东西湖 => 24, :蔡甸 => 25, :汉南 => 26, :江夏 => 27, :江岸 => 28, :江汉 => 29, :硚口 => 30, :青山 => 31, :新州 => 32, :汉阳 => 33, :其他 => 0} mok 2015-08-07
-  property :work_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
-  property :live_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
 
   # {:其他 => 0, :互联网 => 1, :金融 => 2, '公务员'=>3, '医务人员' => 4, '学生'=>5, '自由职业'=>6}
   property :profession, Enum[0, 1, 2, 3, 4, 5, 6], :default => 0
@@ -143,7 +139,7 @@ class User
 
   has n, :orders
 
-  has n, :comments, :model => 'UserComment', :child_key =>'user_id'
+  has n, :comments, :model => 'TeacherComment', :child_key =>'user_id'
 
   has n, :cycles, :model => 'UserCycle', :child_key =>'user_id'
 

@@ -1,3 +1,4 @@
+#车辆检查信息
 class Check
   include DataMapper::Resource
 
