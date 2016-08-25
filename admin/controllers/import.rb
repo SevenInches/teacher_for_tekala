@@ -22,6 +22,7 @@ Tekala::Admin.controllers :import do
       sheet = xlsx.sheet('Worksheet1')
 
       puts sheet.count
+      p sheet
       #遍历excel列
       (2..(sheet.count)).each do |row|
         name          = sheet.cell("B", row)
@@ -31,7 +32,6 @@ Tekala::Admin.controllers :import do
 
         #创建一个学员
         user = User.first(:mobile => mobile)
-        p user
         if !user.present?
           user = User.new(:mobile => mobile)
         end

@@ -19,6 +19,7 @@ Tekala::Admin.controllers :login do
       params[:school] = h(params[:school])
       params[:phone]  = h(params[:phone])
       flash.now[:error] = pat('login.error')
+      @error = true
       render "/login/index"
     end
   end

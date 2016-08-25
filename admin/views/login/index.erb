@@ -12,10 +12,16 @@
         <!--<h1 class="sign-title">Sign In</h1>-->
         <!--<img src="images/login-logo.png" alt=""/>-->
     <!--</div>-->
+
     <div class="login-wrap">
       <input type="text" name="school" class="form-control" placeholder="驾校编号" autofocus>
       <input type="text" name="phone" class="form-control" placeholder="手机号码" autofocus>
       <input type="password" name="password" class="form-control" placeholder="登录密码">
+
+
+      <% if @error %>
+        <div class="alert alert-danger fade in">编号、手机号或者密码错误<button type="button" class="close" data-dismiss="alert">×</button></div>
+      <% end %>
 
       <button class="btn btn-lg btn-login btn-block" type="submit">
         <i class="fa fa-check"></i>

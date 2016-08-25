@@ -32,12 +32,26 @@
             <tr>
               <td><%= item.id %></td>
               <td><%= item.message %></td>
-              <td><%= item.editions_name if item.editions.present? %></td>
+              <td>
+                <%= item.editions_name_convertion.to_s.html_safe %>
+
+              </td>
               <td><%=  %></td>
               <td></td>
               <td><%= item.created_at %></td>
               <td></td>
-              <td><a href="/web/push/send/<%= item.id %>">重新发送</a>|<a href="/web/push/delete/<%= item.id %>">删除</a></td>
+              <td style="position: relative">
+                <a href="/web/push/send/<%= item.id %>" onclick="javascript:return false;" class="resend-message">重新发送</a>
+                <div class="popover list-row-action-popover-delete-one left" style="left: -140px;top: -24px;">
+                  <div class=arrow> </div>
+                  <h3 class=popover-title>确认重新发送吗</h3>
+                  <div class=popover-content>
+                    <%#= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
+                    <a href="" class="btn btn-success" href="/web/push/send/<%= item.id %>">发送</a>
+                    <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
+                  </div>
+                </div>
+                |<a href="/web/push/delete/<%= item.id %>">删除</a></td>
             </tr>
           <% end %>
           </tbody>
@@ -91,6 +105,14 @@
     $(document).on('click','.modal-footer .btn-success',function(){
       $form.submit();
     });
+
+    $(document).on('click','.resend-message',function(){
+      $(this).next('.popover').css('display','block');
+    })
+
+    $(document).on('click','.cancel',function(){
+      $(this).closest('.popover').css('display','none')
+    })
   })
 </script>
 </body>
