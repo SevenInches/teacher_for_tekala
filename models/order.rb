@@ -226,17 +226,17 @@ class Order
   end
 
 
-  def can_comment
-    return  status == STATUS_COMMENT && teacher_comment.nil? ? true : false
-  end
-
-  def teacher_can_comment
-    return  status == STATUS_COMMENT && user_comment.nil? ? true : false
-  end
-
-  def user_has_comment
-    teacher_comment.nil? ? false : true
-  end
+  # def can_comment
+  #   return  status == STATUS_COMMENT && teacher_comment.nil? ? true : false
+  # end
+  #
+  # def teacher_can_comment
+  #   return  status == STATUS_COMMENT && user_comment.nil? ? true : false
+  # end
+  #
+  # def user_has_comment
+  #   teacher_comment.nil? ? false : true
+  # end
 
   def is_comment
     user_comment.nil? ? false : true
