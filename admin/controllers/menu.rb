@@ -11,7 +11,7 @@ Tekala::Admin.controllers :menu do
     render "/menu/edit"
   end
 
-  post :edit_handle do
+  post :update do
     @menu = Subpart.first(:id => params[:user][:id])
     if @menu
       params[:user].each do |param|
