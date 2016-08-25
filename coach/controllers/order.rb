@@ -113,7 +113,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
   end
 
-  get :news, :provides => [:json] do
+  get :new, :provides => [:json] do
     @orders = []
     @order_confirm = OrderConfirm.all(:teacher_id => @teacher.id, :status => 0, :order => :created_at.desc )
 
@@ -205,28 +205,26 @@ Tekala::Coach.controllers  :v1, :orders  do
 
     if order && order.teacher_id == @teacher.id 
       if is_accept == 'yes'
-
         if order && order.status == Order::STATUS_CANCEL
           return {:status => :failure, :msg => '学员已取消该订单'}.to_json
         end
-        
-        order_confirm = OrderConfirm.first(:order_id => order_id)
-        order.confirm = 1 if order.train_field_id != 5
+
+        order.confirm = 1
         order.status  = Order::STATUS_RECEIVE #教练已经确定
         if order.save
+          order.order_confirm.update(:status => 1)   if order.order_confirm.present?
           JGPush::confirm_order(order.id)
         end
         
         teacher = order.teacher
-        user    = order.user  
+        user    = order.user
         train_field_name = order.train_field ? order.train_field.name : ''
         week_name = %w(周日 周一 周二 周三 周四 周五 周六)
 
         teacher_word = "#{teacher.name}教练您好，学员#{user.name}(手机:#{user.mobile})预约#{order.book_time.strftime("%m-%d %H:00")} (#{week_name[order.book_time.wday]})在#{train_field_name}训练场练车#{order.quantity}小时。请提前10分钟到场，并在教学中保持耐心和友好。如有疑问，请立即联系我们4008456866"
         member_word  = "#{user.name}同学，您已成功预约#{teacher.name}教练(手机：#{teacher.mobile})，#{order.book_time.strftime("%m-%d %H:00")}-#{(order.book_time.strftime("%H").to_i+order.quantity)}#{":00"} (#{week_name[order.book_time.wday]}) ，在#{train_field_name}训练场练车。请提前10分钟自行前往训练场，祝您学车愉快。"
-        
-        if order.has_sms != 1 
-          
+
+        if order.has_sms != 1
           info = Sms.new( :teacher_word   => teacher_word,
                           :teacher_mobile => teacher.mobile,
                           :member_mobile  => user.mobile,
@@ -236,14 +234,9 @@ Tekala::Coach.controllers  :v1, :orders  do
               order.save
            end
         end
-        
-        if order_confirm
-          order_confirm.status = 1
-          order_confirm.save
-        end
 
         #队列一个小时前推送给学员
-        begin 
+        begin
          delay_seconds = ((order.book_time).to_i - (Time.now.to_i))-3600
          NotificationJob.perform_in(delay_seconds, order.id) if order.save
         rescue Exception => e
@@ -252,12 +245,9 @@ Tekala::Coach.controllers  :v1, :orders  do
       
       #拒绝接单
       elsif is_accept == 'no'
-        order_confirm = OrderConfirm.first(:order_id => order_id)
-        order.status  = Order::STATUS_REFUSE #教练已经确定
-        order.save
-        if order_confirm
-          order_confirm.status = 2
-          order_confirm.save
+        order.order_confirm.update(:status => 2)   if order.order_confirm.present?
+        order.status  = Order::STATUS_REFUSE #教练已经拒单
+        if order.save
           JGPush::order_cancel(order.id)
         end
       end

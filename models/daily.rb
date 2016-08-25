@@ -35,8 +35,6 @@ class Daily
       school_daily.enroll   =  signups.count
       school_daily.incomes  =  signups.sum(:amount)
 
-      enroll_rate  = (school_daily.consult!=0) ? (school_daily.enroll/school_daily.consult)*100.range(2) : 0
-
       orders = school.users.orders.all(:book_time => today, :status => [3, 4])
       school_daily.people   =  orders.count
       school_daily.time     =  orders.sum(:quantity)
@@ -44,22 +42,18 @@ class Daily
       exam_one = school.users.cycles.all(:date => today, :level=> [10, 11])
       school_daily.exam_one     =  exam_one.count
       school_daily.one_pass     =  exam_one.all(:result => 1).count
-      one_rate  = (school_daily.exam_one!=0) ? (school_daily.one_pass/school_daily.exam_one)*100.range(2) : 0
 
       exam_two = school.users.cycles.all(:date => today, :level=> [20, 21])
       school_daily.exam_two     =  exam_two.count
       school_daily.two_pass     =  exam_two.all(:result => 1).count
-      two_rate  = (school_daily.exam_two!=0) ? (school_daily.two_pass/school_daily.exam_two)*100.range(2) : 0
 
       exam_three = school.users.cycles.all(:date => today, :level=> [30, 31])
       school_daily.exam_three    =  exam_three.count
       school_daily.three_pass    =  exam_three.all(:result => 1).count
-      three_rate  = (school_daily.exam_three!=0) ? (school_daily.three_pass/school_daily.exam_three)*100.range(2) : 0
 
       exam_four  = school.users.cycles.all(:date => today, :level=> [40, 41])
       school_daily.exam_four     =  exam_four.count
       school_daily.four_pass     =  exam_four.all(:result => 1).count
-      four_rate  = (school_daily.exam_four!=0) ? (school_daily.four_pass/school_daily.exam_four)*100.range(2) : 0
 
       refunds  =  school.signups.all(:refund_at => today, :status => 4)
       school_daily.refund        =  refunds.count
@@ -73,18 +67,8 @@ class Daily
         card.created_at = Time.now
         card.message_id = school_daily.id
         if card.save
-          content = "<div>一、招生</div>
-              <div>  今天咨询#{school_daily.consult}人，招生#{school_daily.enroll}人，转化率#{enroll_rate}%</div>
-              <div>二、学车考试</div>
-              <div>  今天练车学员#{school_daily.people}人，总共#{school_daily.time}学时。</div>
-              <div>  科目一考试#{school_daily.exam_one}人，通过#{school_daily.one_pass}人，通过率#{one_rate}%</div>
-              <div>  科目二考试#{school_daily.exam_two}人，通过#{school_daily.two_pass}人，通过率#{two_rate}%</div>
-              <div>  科目三考试#{school_daily.exam_three}人，通过#{school_daily.three_pass}人，通过率#{three_rate}%</div>
-              <div>  科目四考试#{school_daily.exam_four}人，通过#{school_daily.four_pass}人，通过率#{four_rate}%</div>
-              <div>三、营收</div>
-              <div>  营业收入#{school_daily.incomes}元，退款人数#{school_daily.refund}人，#{school_daily.refund_money}元</div>"
-
-          JGPush.send_daily(school.id, content)
+          url = 'http://t.tekala.cn/school/v1/daily_card/' + card.message_id.to_s
+          JGPush.send_daily(school.id, url)
         end
       end
     end

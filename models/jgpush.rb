@@ -123,6 +123,7 @@ class JGPush
   #确认新订单
   def self.confirm_order order_id
     order = Order.get order_id
+
     tname = order.teacher.name
 
     current_alias = "user_"+order.user_id.to_s
@@ -165,7 +166,7 @@ class JGPush
 
   end #order_confirm
 
-  #订单被学员取消了
+  #教练取消了订单
   def self.order_cancel order_id
 
     order = Order.get order_id
@@ -304,7 +305,7 @@ class JGPush
 
   end #order_remind
 
-  def self.send_daily(school_id, content)
+  def self.send_daily(school_id, url)
 
     school = School.get school_id
     return false if school.nil?
@@ -319,15 +320,15 @@ class JGPush
 
     audience = JPush::Push::Audience.new.set_alias(current_alias)
 
-    extras   = {type: "daily", msg: content}
+    extras   = {type: "daily", msg: url}
 
     notification = JPush::Push::Notification.new.
         set_android(
-            alert: content,
+            alert: url,
             title: title,
             extras: extras
         ).set_ios(
-        alert: content,
+        alert: url,
         available: true,
         extras: extras
     )
@@ -337,7 +338,7 @@ class JGPush
         audience: audience,
         notification: notification
     ).set_message(
-        content,
+        url,
         title: title,
         content_type: 'text',
         extras: extras

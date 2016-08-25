@@ -5,7 +5,7 @@ class Role
   property :id, Serial
   property :name, String
   property :school_id, Integer
-
+  
   has n, :role_users
 
   belongs_to :school
