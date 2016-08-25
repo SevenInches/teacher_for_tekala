@@ -84,7 +84,7 @@ class Daily
               <div>三、营收</div>
               <div>  营业收入#{school_daily.incomes}元，退款人数#{school_daily.refund}人，#{school_daily.refund_money}元</div>"
 
-          JPush.send_daily(school.id, content)
+          JGPush.send_daily(school.id, content)
         end
       end
     end

@@ -113,20 +113,18 @@ class Push
     tags = []
     if editions.present?
       editions.split(':').each do |edition|
+
         if edition == '3'
-          tags << 'channel_' + channel_id.to_s if channel_id.present?
-          tags << 'version_' + version if version.present?
-          tags << 'school_'  + school_id.to_s if school_id.present?
-          tags << 'status_'  + user_status.to_s if !user_status.nil?
-          JPush.send_school_message(tags, message, edition)
+          JGPush.send_school_message(message, school_id)
         else
           tags << 'channel_' + channel_id.to_s if channel_id.present?
           tags << 'version_' + version if version.present?
           tags << 'school_'  + school_id.to_s if school_id.present?
           tags << 'status_'  + user_status.to_s if !user_status.nil?
-          JPush.send_message(tags, message, edition)
+          JGPush.send_message(tags, message, edition)
         end
       end
+      tags.clear
     end
   end
 
