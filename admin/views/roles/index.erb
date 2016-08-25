@@ -6,6 +6,8 @@
   <!--body wrapper start-->
   <div class="wrapper">
     <div class="container-fluid" style="margin-bottom:20px">
+      <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
+
       <div class="row">
         <div class="col-lg-2">
           <select class="form-control select-role">
@@ -39,7 +41,7 @@
               <td><%= user.role_word%></td>
               <td><%= user.name%></td>
               <td><%= user.mobile%></td>
-              <td><%= user.last_login_at%></td>
+              <td><%= user.last_login_at %></td>
               <td>
                 <button class="btn btn-primary change-psd" data-id="<%= user.id %>"
                      data-toggle="modal" data-target="#myModal">修改密码</button>

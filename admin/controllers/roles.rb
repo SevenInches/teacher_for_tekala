@@ -48,10 +48,11 @@ Tekala::Admin.controllers :roles do
   post :change do
     role_user = @role_user.change_other_psd(params[:id].to_i,params[:new_password], params[:confirm_password])
     if role_user
-      redirect_to(url(:roles, :index))
+      flash[:success] = pat(:update_success, :model => 'RoleUser', :id =>  "#{params[:id]}")
     else
-      p 'change error'
+      flash.now[:error] = pat(:update_error, :model => 'RoleUser')
     end
+    redirect_to(url(:roles, :index))
   end
 
 end

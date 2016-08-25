@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-lg-6">
           <section class="panel">
-            <% form_for :user, url(:menu, :edit_handle), :class => 'form-horizontal', :style => 'padding:20px;' do |f| %>
+            <% form_for :user, url(:menu, :update), :class => 'form-horizontal', :style => 'padding:20px;' do |f| %>
                 <%= partial 'menu/form', :locals => { :f => f } %>
             <% end %>
           </section>
