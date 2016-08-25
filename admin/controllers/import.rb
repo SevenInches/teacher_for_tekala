@@ -46,6 +46,7 @@ Tekala::Admin.controllers :import do
         end
       end
     end
+    flash[:success] = pat(:import_success, :model => 'User')
     redirect(url(:import, :index))
   end
 

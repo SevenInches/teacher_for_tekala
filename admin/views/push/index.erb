@@ -3,98 +3,101 @@
   <%= partial 'layouts/nav' %>
 
   <div class="wrapper">
-  <div class="container-fluid" style="margin-bottom:20px">
-    <div class="row">
-      <div class="col-lg-2">
-        <button class="btn btn-success" data-toggle="modal" data-target="#myModal">增加推送</button>
+    <div class="container-fluid" style="margin-bottom:20px">
+      <div class="row">
+        <div class="col-lg-2">
+          <button class="btn btn-success" data-toggle="modal" data-target="#myModal">增加推送</button>
+        </div>
       </div>
     </div>
-  </div>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-12">
-      <section class="panel">
-        <table class="table table-condensed table-striped table-hover">
-          <thead>
-            <tr style="padding:0">
-              <th>ID</th>
-              <th>推送内容</th>
-              <th>渠道</th>
-              <th>条件</th>
-              <th>触达数</th>
-              <th>添加时间</th>
-              <th>推送时间</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-          <% @pushs.each do |item| %>
-            <tr>
-              <td><%= item.id %></td>
-              <td><%= item.message %></td>
-              <td>
-                <%= item.editions_name_convertion.to_s.html_safe %>
 
-              </td>
-              <td><%=  %></td>
-              <td></td>
-              <td><%= item.created_at %></td>
-              <td></td>
-              <td style="position: relative">
-                <a href="/web/push/send/<%= item.id %>" onclick="javascript:return false;" class="resend-message">重新发送</a>
-                <div class="popover list-row-action-popover-delete-one left" style="left: -140px;top: -24px;">
-                  <div class=arrow> </div>
-                  <h3 class=popover-title>确认重新发送吗</h3>
-                  <div class=popover-content>
-                    <%#= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
-                    <a href="" class="btn btn-success" href="/web/push/send/<%= item.id %>">发送</a>
-                    <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
-                  </div>
-                </div>
-                |<a href="/web/push/delete/<%= item.id %>">删除</a></td>
-            </tr>
+    <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if @result %>
+              <div class="alert alert-danger fade in">编号、手机号或者密码错误<button type="button" class="close" data-dismiss="alert">×</button></div>
           <% end %>
-          </tbody>
-        </table>
-        <p style="padding:10px">每页20条</p>
-      </section>
+          <section class="panel">
+            <table class="table table-condensed table-striped table-hover">
+              <thead>
+                <tr style="padding:0">
+                  <th>ID</th>
+                  <th>推送内容</th>
+                  <th>渠道</th>
+                  <th>条件</th>
+                  <th>触达数</th>
+                  <th>添加时间</th>
+                  <th>推送时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @pushs.each do |item| %>
+                <tr>
+                  <td><%= item.id %></td>
+                  <td><%= item.message %></td>
+                  <td><%= item.editions_name_convertion.to_s.html_safe %></td>
+                  <td><%=  %></td>
+                  <td></td>
+                  <td><%= item.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+                  <td></td>
+                  <td style="position: relative">
+                    <a href="/web/push/send/<%= item.id %>" onclick="javascript:return false;" class="resend-message">重新发送</a>
+                    <div class="popover list-row-action-popover-delete-one left" style="left: -140px;top: -24px;">
+                      <div class=arrow> </div>
+                      <h3 class=popover-title>确认重新发送吗</h3>
+                      <div class=popover-content>
+                        <%#= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
+                        <a href="" class="btn btn-success" href="/web/push/send/<%= item.id %>">发送</a>
+                        <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
+                      </div>
+                    </div>
+                    |<a href="/web/push/delete/<%= item.id %>">删除</a></td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <p style="padding:10px">每页20条</p>
+          </section>
+        </div>
+      </div>
+      <div class="row">
+        <%= will_paginate @pushs,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <%= will_paginate @pushs,renderer: WillPaginate::ViewHelpers::BoostrapLinkRenderer %>
-  </div>
-</div>
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close"
-                data-dismiss="modal" aria-hidden="true">
-          &times;
-        </button>
-        <h4 class="modal-title" id="myModalLabel">
-          添加推送
-        </h4>
-      </div>
-      <div class="modal-body">
-        <% form_for :push, url(:push, :create), :class => 'form-horizontal', :style => 'margin:auto;' do |f| %>
-            <%= partial 'push/form', :locals => { :f => f } %>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default"
-                data-dismiss="modal">关闭
-        </button>
-        <button type="button" class="btn btn-success">
-          提交更改
-        </button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal -->
-</div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+              添加推送
+            </h4>
+          </div>
+          <div class="modal-body">
+            <% form_for :push, url(:push, :create), :class => 'form-horizontal', :style => 'margin:auto;' do |f| %>
+                <%= partial 'push/form', :locals => { :f => f } %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+                    data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-success">
+              提交更改
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+    </div>
   </div>
   <%= partial 'layouts/footer' %>
 </section>

@@ -17,9 +17,8 @@ Tekala::Admin.controllers :push do
       card.created_at = Time.now
       card.message_id = @push.id
       card.save
-
       flash[:success] = pat(:create_success, :model => 'Push')
-      redirect(url(:push, :index))
+      redirect url(:push, :index)
     else
       render 'roles/index'
     end
@@ -29,7 +28,8 @@ Tekala::Admin.controllers :push do
     @title = pat(:send_title, :model => "Push #{params[:id]}")
     push = Push.get(params[:id])
     push.jpush
-    redirect(url(:push, :index))
+    flash[:success] = pat(:send_success, :model => 'Push')
+    redirect url(:push, :index)
   end
 
   get :delete,:with => :id do

@@ -113,7 +113,6 @@ class Push
     tags = []
     if editions.present?
       editions.split(':').each do |edition|
-
         if edition == '3'
           JGPush.send_school_message(message, school_id)
         else
@@ -123,8 +122,8 @@ class Push
           tags << 'status_'  + user_status.to_s if !user_status.nil?
           JGPush.send_message(tags, message, edition)
         end
+        tags.clear
       end
-      tags.clear
     end
   end
 
