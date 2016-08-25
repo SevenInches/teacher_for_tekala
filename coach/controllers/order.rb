@@ -119,7 +119,7 @@ Tekala::Coach.controllers  :v1, :orders  do
 
     @order_confirm.each do |oc|
       order = oc.order
-      @orders << order if order && order.book_time > Time.now && order.status == 2
+      @orders << order if order && order.book_time > Time.now && order.status == Order::STATUS_PAY
     end
 
     @total = @orders.count
