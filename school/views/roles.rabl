@@ -1,5 +1,5 @@
 node(:status) { 'success' }
 node(:total) { @total }
 child(@roles => :data){
-  attributes :id, :name, :total
+  attributes :id, :name, :cate_word
 }

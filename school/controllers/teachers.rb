@@ -73,8 +73,8 @@ Tekala::School.controllers :v1, :teachers  do
         if params[:field].present?
           TeacherTrainField.new(:teacher_id => @teacher.id, :train_field_id => params[:field].to_i).save
         end
-        if params[:number].present?
-          car = Car.first(:number => params[:number])
+        if params[:car].present?
+          car = Car.get(params[:car])
           if car.present?
             car.update(:teacher_id => @teacher.id)
           end
@@ -110,9 +110,9 @@ Tekala::School.controllers :v1, :teachers  do
             TeacherTrainField.new(:teacher_id => @teacher.id, :train_field_id => params[:field]).save
           end
         end
-        if params[:number].present?
+        if params[:car].present?
           @teacher.car.update(:teacher_id => nil)  if @teacher.car.present?
-          car = Car.first(:number => params[:number])
+          car = Car.get(params[:car])
           if car.present?
             car.update(:teacher_id => @teacher.id)
           end

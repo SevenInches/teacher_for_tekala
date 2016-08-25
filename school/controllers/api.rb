@@ -7,7 +7,7 @@ Tekala::School.controllers :v1 do
   before :except => [:login, :unlogin, :logout, :price] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
-			@role = RoleUser.get(session[:role_id])
+			@role = Role.get(session[:role_id])
 			$school_remark = 'school_' + session[:school_id].to_s
 		elsif !params['demo'].present?
 	    redirect_to(url(:v1, :unlogin))  
@@ -20,10 +20,10 @@ Tekala::School.controllers :v1 do
 			@school = School.first
 			render 'school'
 		else
-			@user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
-			if @user
-        session[:role_id] = @user.id
-				@school = @user.role.school
+			@role = Role.authenticate(params[:school], params[:phone], params[:password])
+			if @role.present?
+        session[:role_id] = @role.id
+				@school = @role.school
 				session[:school_id] = @school.id
 				# 把订单已结束，但未点完成的订单，修改状态
 				render 'school'
