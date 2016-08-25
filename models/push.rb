@@ -106,7 +106,7 @@ class Push
         tags << 'version_' + version if version.present?
         tags << 'school_'  + school_id.to_s if school_id.present?
         tags << 'status_'  + user_status.to_s if !user_status.nil?
-        JPush.send_message(tags, message, edition)
+        #JPush.send_message(tags, message, edition)
       end
     end
   end

@@ -213,7 +213,9 @@ Tekala::Coach.controllers  :v1, :orders  do
         order_confirm = OrderConfirm.first(:order_id => order_id)
         order.confirm = 1 if order.train_field_id != 5
         order.status  = Order::STATUS_RECEIVE #教练已经确定
-        order.save
+        if order.save
+          JGPush::confirm_order(order.id)
+        end
         
         teacher = order.teacher
         user    = order.user  
@@ -256,14 +258,13 @@ Tekala::Coach.controllers  :v1, :orders  do
         if order_confirm
           order_confirm.status = 2
           order_confirm.save
-          JPush::order_cancel(order.id)
+          JGPush::order_cancel(order.id)
         end
       end
       {:status => :success}.to_json
     else
       {:status => :failure, :code=>400, :msg => '未能找到该订单'  }.to_json
     end
-
   end
 
 end
