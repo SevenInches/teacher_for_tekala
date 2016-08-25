@@ -352,24 +352,83 @@ class JGPush
   end
 
   def self.send_message(tags, msg, edition)
-    key, sec= convert_edition(edition)
-    Net::HTTP.start(URL.host, URL.port,:use_ssl => URL.scheme == 'https') do |http|
-      req=Net::HTTP::Post.new(URL.path)
-      req.basic_auth key, sec
-      jpush =[]
-      jpush << 'platform=all'
-      jpush << 'audience={"tag_and" : '+tags.to_s+'}'
-      jpush << 'notification={
-            "alert":"'+msg+'",
-            "ios":{
-                 "content-available":1,
-                 "extras":{"type": "message", "msg": "'+msg+'" }
-                   }
-                }'
-      jpush << 'message={ "msg_content" : "'+msg+'", "content_type": "text", "title": "消息推送" }'
-      jpush << 'options={"time_to_live":60,"apns_production" : '+APNS_PRODUCTION+'}'
-      req.body = jpush.join("&")
-      resp=http.request(req)
+    key, sec = convert_edition(edition)
+
+    jpush  = JPush::Client.new(key, sec)
+
+    pusher = jpush.pusher
+
+    audience = JPush::Push::Audience.new.set_tag_and(tags)
+
+    extras   = {title: '消息推送', msg: msg}
+
+    notification = JPush::Push::Notification.new.
+        set_android(
+            alert: msg,
+            title: '消息推送',
+            extras: extras
+        ).set_ios(
+        alert: msg,
+        available: true,
+        extras: extras
+    )
+
+    push_payload = JPush::Push::PushPayload.new(
+        platform: 'all',
+        audience: audience,
+        notification: notification
+    ).set_message(
+        msg,
+        title: '消息推送',
+        content_type: 'text',
+        extras: extras
+    )
+
+    begin
+      pusher.push(push_payload)
+    rescue
+      {status: :failure, msg: '推送失败'}.to_json
+    end
+  end
+
+  def self.send_school_message(msg, school_id)
+
+    current_alias = "school_"+school_id.to_s
+
+    jpush  = JPush::Client.new(SCHOOLKEY,SCHOOLSEC)
+
+    pusher = jpush.pusher
+
+    audience = JPush::Push::Audience.new.set_alias(current_alias)
+
+    extras   = {title: '消息推送', msg: msg}
+
+    notification = JPush::Push::Notification.new.
+        set_android(
+            alert: msg,
+            title: '消息推送',
+            extras: extras
+        ).set_ios(
+        alert: msg,
+        available: true,
+        extras: extras
+    )
+
+    push_payload = JPush::Push::PushPayload.new(
+        platform: 'all',
+        audience: audience,
+        notification: notification
+    ).set_message(
+        msg,
+        title: '消息推送',
+        content_type: 'text',
+        extras: extras
+    )
+
+    begin
+      pusher.push(push_payload)
+    rescue
+      {status: :failure, msg: '推送失败'}.to_json
     end
   end
 
