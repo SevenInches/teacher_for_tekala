@@ -11,14 +11,14 @@ Tekala::School.controllers :v1, :comments do
   get :index, :provides =>[:json] do
     if params['demo'].present?
       @demo     =  params['demo']
-      @users    =  UserComment.first
+      @users    =  TeacherComment.first
       @total    =  1
     else
       $redis.lrem $school_remark, 0, '学员评价'
       users  =  @school.users
       if users.present?
         user_ids    = users.aggregate(:id)
-        @comments   =  UserComment.all(:order => :created_at.desc, :user_id => user_ids)
+        @comments   =  TeacherComment.all(:order => :created_at.desc, :user_id => user_ids)
         @total      =  @comments.count
         render 'comments'
       end
@@ -26,7 +26,7 @@ Tekala::School.controllers :v1, :comments do
   end
 
   get :show, :map => 'v1/comments/:id', :provides => [:json] do
-    @comment = UserComment.get(params[:id])
+    @comment = TeacherComment.get(params[:id])
     if @comment
       render 'comment'
     else
@@ -35,7 +35,7 @@ Tekala::School.controllers :v1, :comments do
   end
 
   delete :index, :map => 'v1/comments/:id', :provides => [:json] do
-    @comment = UserComment.first(:id => params[:id])
+    @comment = TeacherComment.first(:id => params[:id])
     if @comment.present?
       { :status => @comment.destroy ? :success : :failure }.to_json
     else

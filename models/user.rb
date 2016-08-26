@@ -145,8 +145,6 @@ class User
 
   has n, :pays, :model => 'UserPay', :child_key =>'user_id'
 
-  has 1, :promotion_user, :constraint => :destroy
-
   has 1, :signup
 
   has 1, :user_plan, :constraint => :destroy
@@ -211,11 +209,7 @@ class User
     if avatar
       CustomConfig::QINIUURL+avatar.to_s+'?imageView2/1/w/200/h/200'
     else
-      if promotion_user && promotion_user.wechat_avatar.present?
-        promotion_user.wechat_avatar
-      else
-        CustomConfig::HOST + '/images/icon180.png'
-      end
+      CustomConfig::HOST + '/images/icon180.png'
     end
   end
 
@@ -227,11 +221,7 @@ class User
     if avatar
       CustomConfig::QINIUURL+avatar.to_s
     else
-      if promotion_user && promotion_user.wechat_avatar.present?
-        promotion_user.wechat_avatar
-      else
-        CustomConfig::HOST + '/images/icon180.png'
-      end
+      CustomConfig::HOST + '/images/icon180.png'
     end
   end
 

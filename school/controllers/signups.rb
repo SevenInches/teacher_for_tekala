@@ -90,7 +90,7 @@ Tekala::School.controllers :v1, :signups  do
         @data.local        =  params[:local]         if params[:local].present?
         @data.exam_type    =  params[:exam_type]     if params[:exam_type].present?
         @data.pay_type     =  params[:pay_type]      if params[:pay_type].present?
-        @data.status_flag  =  1                      if params[:pay].present?
+        @data.status_flag  =  (params[:pay].to_i == 1) ? 1 : 0
         @data.product_id   =  params[:product]
         @data.password     =  '123456'
         if @data.save
@@ -98,7 +98,7 @@ Tekala::School.controllers :v1, :signups  do
           signup.product_id  =  params[:product]
           signup.amount      =  params[:amount].present? ? params[:amount] : Product.get(params[:product]).price
           signup.exam_type   =  params[:exam_type]     if params[:exam_type].present?
-          signup.status      =  2                      if params[:pay].present?
+          signup.status      =  (params[:pay].to_i == 1) ? 2 : 1
           if signup.save
             render 'signup'
           end
