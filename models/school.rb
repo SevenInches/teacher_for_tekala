@@ -41,9 +41,6 @@ class School
   has n, :branches  #校区
   has n, :shops # 门店
   has n, :cars  #车辆
-  #has n, :finances          # 财务记录
-  #has n, :finance_reports   # 财务报告
-  #has n, :logs  # 操作日志
   has n, :products #产品
   has n, :users
   has n, :signups
@@ -53,6 +50,8 @@ class School
   has n, :pushes
   has n, :news
   has n, :dailies
+  has n, :feedbacks         # 反馈
+  has n, :complains         # 投诉
 
   before :save, :encrypt_password
 

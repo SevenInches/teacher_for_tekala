@@ -63,13 +63,13 @@ class Daily
       school_daily.created_at    = Date.today
 
       if school_daily.save
-        card = MessageCard.new(:school_id => school.id, :type => 2)
-        card.content    = school.name.present? ?  "#{school.name}今日速报" :  "日报"
+        card = MessageCard.new(:school_id => school.id)
+        card.title      = school.name.present? ?  "#{school.name}今日速报" :  "日报"
         card.created_at = Time.now
-        card.message_id = school_daily.id
+        card.tag        = '今日速报'
+        card.url        = MessageCard::HOME + 'daily_card/' + school_daily.id.to_s
         if card.save
-          url = 'http://t.tekala.cn/school/v1/daily_card/' + card.message_id.to_s
-          JGPush.send_daily(school.id, url)
+          JGPush.send_daily(school.id, card.url)
         end
       end
     end

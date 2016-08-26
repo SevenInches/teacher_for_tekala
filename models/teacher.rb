@@ -15,15 +15,7 @@ class Teacher
            :messages => {:presence => '请填写姓名'}
   property :age, Integer
   property :sex, Integer, :default => 1#性别 1男 0女
-  # property :id_card, String, :unique => true, :required => true,
-  #          :messages => {:is_unique => "身份证号码已经存在", 
-  #                        :presence => '请填写身份证号码'}
-  # property :drive_card, String, :unique => true, :required => true,
-  #          :messages => {:is_unique => "驾驶证号码已经存在",
-  #                        :presence => '请填写驾驶证号码'}
-  # property :teach_card, String, :unique => true,
-  #          :messages => {:is_unique => "教师证号码已经存在",
-  #                        :presence => '请填写教师证号码'}
+
   property :id_card, String
   property :drive_card, String
   property :teach_card, String
@@ -100,7 +92,7 @@ class Teacher
 
   property :login_count, Integer, :default => 0
 
-  property :vip, Integer, :default => 0#收入是否已超3万元
+  property :vip, Integer, :default => 0
 
   property :school_id, Integer
 
@@ -114,8 +106,6 @@ class Teacher
   has n, :orders
 
   has n, :train_fields, 'TrainField', :through => :teacher_field, :via => :train_field
-
-  has 1, :teacher_audit, 'TeacherAudit', :child_key => 'teacher_id', :constraint => :destroy
 
   has 1, :car, 'Car', :child_key => 'teacher_id', :constraint => :destroy
 
@@ -137,30 +127,6 @@ class Teacher
   def city_name
     city.name
   end
-  
-  mount_uploader :drive_card_photo, DrivePhoto
-
-  mount_uploader :teach_card_photo, TeachPhoto
-
-  mount_uploader :avatar, TeacherAvatar
-
-  mount_uploader :id_card_photo, IdCardPhoto
-
-  mount_uploader :id_card_back_photo, IdCardPhoto
-
-  mount_uploader :car_lincese_photo, CarPhoto
-
-  mount_uploader :livecard_front_photo, LiveCardPhoto
-
-  mount_uploader :livecard_back_photo, LiveCardPhoto
-
-  mount_uploader :lincese_front_photo, TeachPhoto #教练证正面
-
-  mount_uploader :lincese_back_photo, TeachPhoto #教练证反面
-
-  mount_uploader :bank_card_photo, BankPhoto
-
-  mount_uploader :map, MapPhoto
 
   after :create, :push_manager
 
@@ -197,11 +163,6 @@ class Teacher
   def has_hour
     tech_hours.to_i if tech_hours.present?
   end
-
-  def avatar_thumb_url
-     avatar.thumb && avatar.thumb.url ? CustomConfig::HOST + avatar.thumb.url : CustomConfig::HOST + '/m/images/default_teacher_avatar.png' 
-
-  end 
 
   def avatar_url
      avatar && avatar.url ? CustomConfig::HOST + avatar.url : CustomConfig::HOST + '/m/images/teacher_default_photo.png' 

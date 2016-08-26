@@ -12,10 +12,11 @@ Tekala::Admin.controllers :push do
     @push = Push.new(params[:push])
     @push.school_id = session[:school_id]
     if @push.save
-      card = MessageCard.new(:school_id => session[:school_id], :type => 3)
-      card.content    = @push.message
+      card = MessageCard.new(:school_id => session[:school_id])
+      card.title      = @push.message
       card.created_at = Time.now
-      card.message_id = @push.id
+      card.tag        = '系统推送'
+      card.url        = MessageCard::HOME + 'push_card/' + @push.id.to_s
       card.save
       flash[:success] = pat(:create_success, :model => 'Push')
       redirect url(:push, :index)

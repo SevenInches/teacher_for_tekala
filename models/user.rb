@@ -154,6 +154,9 @@ class User
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'user_id', :constraint => :destroy
 
+  has n, :feedbacks         # 反馈
+  has n, :complains         # 投诉
+
   belongs_to :product
   belongs_to :teacher
   belongs_to :train_field

@@ -121,8 +121,7 @@ Tekala::School.controllers :v1 do
 			@total     = 1
     else
 			$redis.lrem $school_remark, 0, '学员投诉'
-			@user_ids  = @school.users.aggregate(:id)
-			@complains = Complain.all(:order => :created_at.desc, :user_id => @user_ids)
+			@complains = @school.complains.all(:order => :created_at.desc)
 			@total     = @complains.count
 			@complains = @complains.paginate(:per_page => 20, :page => params[:page])
 		end
@@ -136,8 +135,7 @@ Tekala::School.controllers :v1 do
 			@total     = 1
     else
 			$redis.lrem $school_remark, 0, '意见反馈'
-			@user_ids  = @school.users.aggregate(:id)
-			@feedbacks = Feedback.all(:order => :created_at.desc, :user_id => @user_ids)
+			@feedbacks = @school.feedbacks.all(:order => :created_at.desc)
 			@total     = @feedbacks.count
 			@feedbacks = @feedbacks.paginate(:per_page => 20, :page => params[:page])
 		end
@@ -196,6 +194,18 @@ Tekala::School.controllers :v1 do
 		@total     =  @messages.count
 		@messages  =  @messages.paginate(:per_page => 20, :page => params[:page])
 		render 'messages'
+  end
+
+  put :message, :map => '/v1/messages/:message_id', :provides => [:json] do
+		msg = MessageCard.get(params[:message_id])
+    if msg.present?
+			msg.click_num += 1
+      if msg.save
+				{:status => :success, :msg => '消息更新'}.to_json
+			end
+		else
+			{:status => :failure, :msg => '消息不存在'}.to_json
+    end
   end
 
   get :news, :map => '/v1/news_card/:news_id' do
