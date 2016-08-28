@@ -1,6 +1,8 @@
 node(:status) { 'success' }
 child(@teacher => :data){
-	attributes :id, :id_card, :rate, :name, :profile, :wechat, :driving_age, :teaching_age, :avatar_thumb_url, :avatar_url, :status, :status_flag, :all_money, :withdraw_money, :freeze_money, :exam_type,  :exam_type_word, :tech_type, :tech_type_word, :mobile, :waiting_count, :bank_card, :bank_name, :bank_account_name, :first_order_date, :pay_type, :vip, :city
+	attributes :id, :id_card, :rate, :name, :profile, :wechat, :driving_age, :teaching_age, :avatar_thumb_url
+	attributes :avatar_url, :status, :status_flag, :exam_type,  :exam_type_word, :tech_type, :tech_type_word
+    attributes :mobile, :waiting_count, :bank_card, :bank_name, :bank_account_name, :first_order_date, :pay_type, :vip, :city
 	  attributes :remark,     :if => lambda { |val| !val.remark.nil? }
 	  attributes :email,      :if => lambda { |val| !val.email.nil? }
 	  attributes :age,    :if => lambda { |val| !val.age.nil? }
