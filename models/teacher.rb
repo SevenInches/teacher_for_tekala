@@ -23,19 +23,8 @@ class Teacher
   
   property :start_drive, DateTime
   property :start_teach, DateTime
-  property :skill, String
   property :profile, Text, :lazy => false, :default => ''
-  property :hometown, String
   property :avatar, String, :auto_validation => false
-  property :id_card_photo, String, :auto_validation => false
-  property :id_card_back_photo, String, :auto_validation => false
-  property :drive_card_photo, String, :auto_validation => false
-  property :car_lincese_photo, String, :auto_validation => false #车牌照
-  property :livecard_front_photo, String, :auto_validation => false
-  property :livecard_back_photo, String, :auto_validation => false
-  property :lincese_front_photo, String, :auto_validation => false
-  property :lincese_back_photo, String, :auto_validation => false
-  property :bank_card_photo, String, :auto_validation => false
 
   property :tech_hours, Integer, :default => 0
   property :earn_money, Integer, :default => 0
@@ -63,7 +52,6 @@ class Teacher
   property :price, Integer, :default => 119, :min => 0
   property :promo_price, Integer, :default => 119, :min => 0
   property :created_at, DateTime
-  property :qq, String, :default => ''
 
   #教练排名
   property :sort, Integer,:default => 0
@@ -73,8 +61,6 @@ class Teacher
   
   #'待审核'=>1, '审核通过'=>2, '审核不通过'=>3, '报名' => 4
   property :status, Integer, :default => 1
-
-  property :map, String, :auto_validation => false
 
   property :date_setting, String, :default => ''
 
@@ -146,96 +132,6 @@ class Teacher
 
   def avatar_url
      avatar && avatar.url ? CustomConfig::HOST + avatar.url : CustomConfig::HOST + '/m/images/teacher_default_photo.png' 
-  end
-
-  def id_card_thumb_url
-     id_card_photo.thumb && id_card_photo.thumb.url ? CustomConfig::HOST + id_card_photo.thumb.url : CustomConfig::HOST + '/images/icon180.png'
-  end 
-
-  def id_card_url
-     id_card_photo && id_card_photo.url ? CustomConfig::HOST + id_card_photo.url : ''
-  end
-
-  def id_card_back_thumb_url
-     id_card_back_photo.thumb && id_card_back_photo.thumb.url ? CustomConfig::HOST + id_card_back_photo.thumb.url : ''
-  end 
-
-  def id_card_back_url
-     id_card_back_photo && id_card_back_photo.url ? CustomConfig::HOST + id_card_back_photo.url : ''
-  end
-
-  def teach_thumb_url
-     teach_card_photo.thumb && teach_card_photo.thumb.url ? CustomConfig::HOST + teach_card_photo.thumb.url : ''
-  end 
-
-  def teach_url
-     teach_card_photo && teach_card_photo.url ? CustomConfig::HOST + teach_card_photo.url : ''
-  end
-
-  def drive_thumb_url
-     drive_card_photo.thumb && drive_card_photo.thumb.url ? CustomConfig::HOST + drive_card_photo.thumb.url : ''
-  end 
-
-  def drive_url
-     drive_card_photo && drive_card_photo.url ? CustomConfig::HOST + drive_card_photo.url : ''
-  end
-
-  def car_thumb_url
-     car_lincese_photo.thumb && car_lincese_photo.thumb.url ? CustomConfig::HOST + car_lincese_photo.thumb.url : ''
-  end 
-
-  def car_url
-     car_lincese_photo && car_lincese_photo.url ? CustomConfig::HOST + car_lincese_photo.url : ''
-  end
-
-  def livecard_front_thumb_url
-     livecard_front_photo.thumb && livecard_front_photo.thumb.url ? CustomConfig::HOST + livecard_front_photo.thumb.url : ''
-  end 
-
-  def livecard_front_url
-     livecard_front_photo && livecard_front_photo.url ? CustomConfig::HOST + livecard_front_photo.url : ''
-  end
-
-  def livecard_back_thumb_url
-     livecard_back_photo.thumb && livecard_back_photo.thumb.url ? CustomConfig::HOST + livecard_back_photo.thumb.url : ''
-  end 
-
-  def livecard_back_url
-     livecard_back_photo && livecard_back_photo.url ? CustomConfig::HOST + livecard_back_photo.url : ''
-  end
-
-  def lincese_front_thumb_url
-     lincese_front_photo.thumb && lincese_front_photo.thumb.url ? CustomConfig::HOST + lincese_front_photo.thumb.url : ''
-  end 
-
-  def lincese_front_url
-     lincese_front_photo && lincese_front_photo.url ? CustomConfig::HOST + lincese_front_photo.url : ''
-  end
-
-  def lincese_back_thumb_url
-     lincese_back_photo.thumb && lincese_back_photo.thumb.url ? CustomConfig::HOST + lincese_back_photo.thumb.url : ''
-  end 
-
-  def lincese_back_url
-     lincese_back_photo && lincese_back_photo.url ? CustomConfig::HOST + lincese_back_photo.url : ''
-  end
-
-  def bank_card_photo_thumb_url
-     bank_card_photo.thumb && bank_card_photo.thumb.url ? CustomConfig::HOST + bank_card_photo.thumb.url : ''
-  end 
-
-  def bank_card_photo_url
-     bank_card_photo && bank_card_photo.url ? CustomConfig::HOST + bank_card_photo.url : ''
-  end
-
-  def map_thumb_url
-     # avatar.thumb && avatar.thumb.url ? CustomConfig::HOST + avatar.thumb.url : ''
-     map && map.file ? MapPhoto::qiniu_bucket_domain + map.file.path : ''
-
-  end 
-
-  def map_url
-     map && map.file ? MapPhoto::qiniu_bucket_domain + map.file.path+'?imageMogr2/thumbnail/100x100' : ''
   end
 
   def driving_age 
