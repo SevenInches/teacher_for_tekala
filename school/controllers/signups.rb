@@ -66,7 +66,7 @@ Tekala::School.controllers :v1, :signups  do
   end
 
   get :signup, :map => '/v1/signups/:user_id', :provides => [:json] do
-    @user = User.get(params[:user_id])
+    @data = User.get(params[:user_id])
     render 'signup'
   end
 

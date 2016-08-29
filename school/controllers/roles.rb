@@ -25,9 +25,9 @@ Tekala::School.controllers :v1, :roles  do
     if params[:name].present?
       @role = Role.new(:name => params[:name], :school_id => @school.id)
       @role.last_login_at = @role.created_at = Time.now
-      @role.mobile     =  params[:mobile]       if params[:mobile].present?
-      @role.password   =  params[:password]     if params[:password].present?
-      @role.cate       =  params[:cate]         if params[:cate].present?
+      @role.mobile        =  params[:mobile]       if params[:mobile].present?
+      @role.password      =  params[:password]     if params[:password].present?
+      @role.cate          =  params[:cate]         if params[:cate].present?
       if @role.save
         {:status => :success, :msg => '人员添加成功' }.to_json
       end
