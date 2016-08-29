@@ -4,7 +4,7 @@ Tekala::School.controllers :v1 do
   enable :sessions
   Rabl.register!
 
-  before :except => [:login, :unlogin, :logout, :price] do
+  before :except => [:login, :unlogin, :logout, :price, :news, :daily, :push] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
 			@role = Role.get(session[:role_id])
