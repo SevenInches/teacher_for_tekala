@@ -20,7 +20,7 @@ module Tekala
     # layout  :my_layout              # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 
-    set :admin_model, 'RoleUser'
+    set :admin_model, 'Role'
     set :login_page,  '/login'
 
     enable  :sessions

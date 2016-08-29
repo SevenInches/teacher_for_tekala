@@ -2,18 +2,19 @@ Tekala::Admin.controllers :base do
 
   before do
     if session[:role_user_id]
-      $role_user = RoleUser.get session[:role_user_id]
+      # $role_user = RoleUser.get session[:role_user_id]
       $school_no = session[:school_no]
       $mobile    = session[:mobile]
       $school    = School.first(:school_no => @school_no)
-    elsif !params['demo'].present?
-      redirect_to(url(:edit_psd, :unlogin))
+    else
+      redirect_to(url(:login, :index))
     end
   end
 
   get :index, :map => "/" do
     @school  = $school
-    @user    = RoleUser.first(:id => session[:role_user_id])
+    @user    = Role.first(:id => session[:role_user_id])
+    p @user
     @car     = Car.all(:school_id => session[:school_id])
     @student = Student.all(:shop_id => session[:school_id])
     @teacher = Teacher.all(:school_id => session[:school_id])
