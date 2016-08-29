@@ -1,7 +1,7 @@
 Tekala::Admin.controllers :edit_psd do
   before do
     if session[:role_user_id]
-      @role_user = RoleUser.get session[:role_user_id]
+      @role_user = Role.get session[:role_user_id]
       @school_no = session[:school_no]
       @mobile     = session[:mobile]
     elsif !params['demo'].present?

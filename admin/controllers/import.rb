@@ -22,7 +22,6 @@ Tekala::Admin.controllers :import do
       sheet = xlsx.sheet('Worksheet1')
 
       puts sheet.count
-      p sheet
       #遍历excel列
       (2..(sheet.count)).each do |row|
         name          = sheet.cell("B", row)
@@ -45,8 +44,8 @@ Tekala::Admin.controllers :import do
           flash[:success] = pat(:inport_success, :model => 'User')
         end
       end
+      flash[:success] = pat(:import_success, :model => 'User')
     end
-    flash[:success] = pat(:import_success, :model => 'User')
     redirect(url(:import, :index))
   end
 
