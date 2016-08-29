@@ -1,3 +1,4 @@
+#推送记录
 class PushRecord
   include DataMapper::Resource
 

@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+#启动广告
 class Ad
   include DataMapper::Resource
 

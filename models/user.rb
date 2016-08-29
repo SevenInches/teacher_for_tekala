@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+#学员管理
 class User
   include DataMapper::Resource
   attr_accessor :beta
@@ -12,7 +12,6 @@ class User
   property :id_card, String
 
   property :crypted_password, String, :length => 70
-  property :cookie, Text, :lazy => false
   property :name, String
 
   property :mobile, String, :required => true, :unique => true,
@@ -27,7 +26,6 @@ class User
   property :age, Integer
   property :avatar, String
   property :score, Integer, :default => 0
-  property :lavel, Integer, :default => 0
   property :birthday, Date
 
   property :daily_limit, Integer
@@ -42,8 +40,6 @@ class User
   property :device, String
   property :version, String
 
-  property :timeline, Text, :lazy => false
-
   property :motto, String
 
   property :created_at, DateTime
@@ -57,13 +53,6 @@ class User
   property :email, String
   #用户区域
 
-  #   {:龙岗 => 1, :宝安 => 2, :罗湖 => 3, :福田 => 4, :南山 => 5, :盐田 => 6, :武昌 => 21, :洪山 => 22, :黄陂 => 23, :东西湖 => 24, :蔡甸 => 25, :汉南 => 26, :江夏 => 27, :江岸 => 28, :江汉 => 29, :硚口 => 30, :青山 => 31, :新州 => 32, :汉阳 => 33, :其他 => 0} mok 2015-08-07
-  property :work_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
-  property :live_area, Enum[ 0, 1, 2, 3, 4, 5, 6, 7, 8], :default => 0
-
-  # {:其他 => 0, :互联网 => 1, :金融 => 2, '公务员'=>3, '医务人员' => 4, '学生'=>5, '自由职业'=>6}
-  property :profession, Enum[0, 1, 2, 3, 4, 5, 6], :default => 0
-
   property :live_card, Integer
 
   # mok 经纬度 2015-09-07
@@ -73,12 +62,6 @@ class User
   #mok 统计学习时长 2015-09-29
   property :learn_hours, Integer
   property :pay_type_id, Integer
-
-  # 是否已寄用户协议，1已寄出，0未寄出
-  property :send_agreement, Integer, :default => 0
-
-  #微信open_id
-  property :open_id, String
 
   property :nickname, String
 
@@ -93,6 +76,7 @@ class User
 
   #邀请码
   property :invite_code, String
+
   property :from_code, String
 
   property :product_id, Integer, :default => 11
@@ -104,15 +88,6 @@ class User
   property :product_id, Integer
 
   property :shop_id, Integer
-
-  #用户意见，用于售前跟进
-  # 0 = 待跟进
-  # 1 = 强烈意向
-  # 2 = 有意向
-  # 3 = 只是想了解
-  # 4 = 不感兴趣
-
-  property :purpose, Integer
 
   #登陆次数
   property :login_count, Integer, :default => 0
@@ -128,6 +103,7 @@ class User
 
   #来源 1=>转介绍, 2=>网络, 3=>门店, 4=>熟人
   property :origin,  Integer
+
   #所在地 1=>本地, 2=>外地
   property :local, Integer, :default => 1
 
@@ -143,13 +119,11 @@ class User
 
   has n, :orders
 
-  has n, :comments, :model => 'UserComment', :child_key =>'user_id'
+  has n, :comments, :model => 'TeacherComment', :child_key =>'user_id'
 
   has n, :cycles, :model => 'UserCycle', :child_key =>'user_id'
 
   has n, :pays, :model => 'UserPay', :child_key =>'user_id'
-
-  has 1, :promotion_user, :constraint => :destroy
 
   has 1, :signup
 
@@ -159,6 +133,9 @@ class User
 
   #教练接单
   has n, :order_confirms, :model => 'OrderConfirm', :child_key => 'user_id', :constraint => :destroy
+
+  has n, :feedbacks         # 反馈
+  has n, :complains         # 投诉
 
   belongs_to :product
   belongs_to :teacher
@@ -185,22 +162,6 @@ class User
     last_order.present? ? last_order.book_time : ''
   end
 
-  #发邮件给用户 params emails[array] template[string] sub[hash]填充参数
-  def send_email(emails, template)
-
-    vars = JSON.dump({"to" => emails , "sub" => {} })
-    response = RestClient.post "http://sendcloud.sohu.com/webapi/mail.send_template.json",
-                               :api_user => "mmxueche_service" , # 使用api_user和api_key进行验证
-                               :api_key => "ZfJF6wvqa3zKkfgN",
-                               :from => "service@yommxc.com", # 发信人，用正确邮件地址替代
-                               :fromname => "萌萌学车",
-                               :substitution_vars => vars,
-                               :template_invoke_name => template,
-                               :subject => "萌萌学车介绍及报考攻略",
-                               :resp_email_id => 'true'
-    return response
-  end
-
   def product_name
     product ? product.name : 'Error未指定产品'
   end
@@ -215,11 +176,7 @@ class User
     if avatar
       CustomConfig::QINIUURL+avatar.to_s+'?imageView2/1/w/200/h/200'
     else
-      if promotion_user && promotion_user.wechat_avatar.present?
-        promotion_user.wechat_avatar
-      else
-        CustomConfig::HOST + '/images/icon180.png'
-      end
+      CustomConfig::HOST + '/images/icon180.png'
     end
   end
 
@@ -231,14 +188,9 @@ class User
     if avatar
       CustomConfig::QINIUURL+avatar.to_s
     else
-      if promotion_user && promotion_user.wechat_avatar.present?
-        promotion_user.wechat_avatar
-      else
-        CustomConfig::HOST + '/images/icon180.png'
-      end
+      CustomConfig::HOST + '/images/icon180.png'
     end
   end
-
 
   def self.authenticate(id_card, password)
     user = first(:conditions => ["lower(id_card) = lower(?)", id_card]) if id_card.present?
@@ -286,30 +238,8 @@ class User
     self.exam_type = 1 if self.exam_type.nil?
   end
 
-  def self.type
-    {'普通班' => 0, '包过班' => 1}
-  end
-
-  def type_word
-    case type
-      when 1
-        '包过班'
-      else
-        '普通班'
-    end
-  end
-
   def self.status_flag
     {"注册" => 0, "已付费" => 1, "已入网" => 12,"拍照" => 2, "体检" => 3, "录指纹" => 4, "科目一" => 5, "科目二" => 6, "科目三" => 7, "考长途" => 8, "科目四" => 9, "已拿驾照" => 10, "已离开" => 11}
-  end
-
-  def self.city_status_flag(city)
-    case city
-      when '0755'
-        {"注册" => 0, "已付费" => 1, "拍照" => 2, "体检" => 3, "录指纹" => 4, "科目一" => 5, "科目二" => 6, "科目三" => 7, "考长途" => 8, "科目四" => 9, "已拿驾照" => 10, "已离开" => 11}
-      else
-        {"注册" => 0, "已付费" => 1, "已入网" => 12,"拍照" => 2, "体检" => 3, "科目一" => 5, "科目二" => 6, "科目三" => 7, "科目四" => 9, "已拿驾照" => 10, "已离开" => 11}
-    end
   end
 
   def status_flag_word
@@ -350,41 +280,6 @@ class User
     'C1'
   end
 
-  def self.profession
-    {'互联网' => 1, '金融' => 2, '公务员'=>3, '医务人员' => 4, '学生'=>5, '自由职业' => 6, '其他' => 0}
-  end
-
-  def profession_word
-    case self.profession
-      when 1
-        return '互联网'
-      when 2
-        return '金融'
-      when 3
-        return '公务员'
-      when 4
-        return '医务人员'
-      when 5
-        return '学生'
-      when 6
-        return '自由职业'
-      else
-        return '其他'
-    end
-  end
-
-  def rate
-    return 5.0  if comments.size < 1
-    score = 0.0
-    comments.each do |comment|
-      score = score + comment.rate.to_f
-    end
-    return (score/comments.size).to_f
-    #减少一次mysql 查询
-    # comments.avg(:rate).round(1)
-
-  end
-
   def real_age
     if id_card.to_s.length == 18
       age = 2015 - id_card[6,4].to_i
@@ -393,39 +288,6 @@ class User
       age = 0
     end
     age
-  end
-
-  #查询学过的用户占比
-  def self.hour_user_learn_count
-    num = 0
-    User.all(:type => 0).each do |user|
-      num+=1 if user.has_hour > 0
-    end
-
-    num
-
-  end
-
-  def self.vip_user_learn_count
-    # User.count(:type => 1, :learn_hours.gt => 0)
-    num = 0
-    User.all(:type => 1).each do |user|
-      num+=1 if user.has_hour > 0
-    end
-
-    num
-  end
-
-  def vip?
-    type == 1
-  end
-
-  def self.vip
-    all(:type => 1)
-  end
-
-  def self.common
-    all(:type => 0)
   end
 
   # 给用户发送短信
@@ -437,75 +299,17 @@ class User
         sms.signup
       end
     end
-
   end
 
-
-  def self.purpose
-    return {'待跟进' => 0, '强烈意向' => 1, '有意向' => 2, '只是想了解' => 3, '不感兴趣' => 4}
-  end
-
-  def purpose_name
-    case self.purpose
-      when 0
-        return '待跟进'
-      when 1
-        return '强烈意向'
-      when 2
-        return '有意向'
-      when 3
-        return '只是想了解'
-      when 4
-        return '不感兴趣'
-    end
-  end
-
-  def purpose_color
-    case self.purpose
-      when 0
-        return 'default'
-      when 1
-        return 'success'
-      when 2
-        return 'info'
-      when 3
-        return 'warning'
-      when 4
-        return 'default'
-    end
-  end
-
-
-  def check_first_tweet
-    tweet = Tweet.first(:user_id => id)
-    if tweet.nil?
-      words = ['#萌萌学车#我来到萌萌学车了，拿到驾照来一场说走就走的旅行吧~',
-               '#萌萌学车#一起围观萌萌吧，钱就该花在刀刃上，学车最便、最省、最优质！',
-               '#萌萌学车#学车我话事，教练、场地任我选~',
-               '#萌萌学车#驾照都没有，活该你单身！技多不压身，桃花朵朵开~',
-               '#萌萌学车#即将开启我愉快的学车之旅…']
-      pic   = ['tweet/signup02', 'tweet/signup03', 'tweet/signup04', 'tweet/signup05', 'tweet/signup01']
-
-      num = rand(4)
-      tweet = Tweet.new
-      tweet.user_id = id
-      tweet.content = words[num]
-      TweetPhoto.create(:tweet_id => tweet.id, :user_id => id, :url => pic[num]) if tweet.save
-
-    end
-  end
   #是否打包教练
   def has_assign
     if self.teacher_id.nil? || self.teacher_id == 0
-      return false
+     false
     else
-      return true
+      true
     end
   end
 
-  def wuhan?
-    city == '027'
-  end
 
   ##########
   #

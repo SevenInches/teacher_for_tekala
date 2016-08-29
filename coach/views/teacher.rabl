@@ -1,6 +1,8 @@
 node(:status) { 'success' }
 child(@teacher => :data){
-	attributes :id, :id_card, :rate, :name, :profile, :wechat, :driving_age, :teaching_age, :avatar_thumb_url, :avatar_url, :status, :status_flag, :all_money, :withdraw_money, :freeze_money, :exam_type,  :exam_type_word, :tech_type, :tech_type_word, :mobile, :waiting_count, :bank_card, :bank_name, :bank_account_name, :first_order_date, :pay_type, :vip, :city
+	attributes :id, :id_card, :rate, :name, :profile, :wechat, :driving_age, :teaching_age, :avatar_thumb_url
+	attributes :avatar_url, :status, :status_flag, :exam_type,  :exam_type_word, :tech_type, :tech_type_word
+    attributes :mobile, :waiting_count, :bank_card, :bank_name, :bank_account_name, :first_order_date, :pay_type, :vip, :city
 	  attributes :remark,     :if => lambda { |val| !val.remark.nil? }
 	  attributes :email,      :if => lambda { |val| !val.email.nil? }
 	  attributes :age,    :if => lambda { |val| !val.age.nil? }
@@ -8,8 +10,6 @@ child(@teacher => :data){
 	  attributes :qq,       :if => lambda { |val| !val.qq.nil? }
 	  attributes :price,  :if => lambda { |val| !val.price.nil? }
 	  attributes :promo_price,  :if => lambda { |val| !val.promo_price.nil? }
-	  attributes :hometown,   :if => lambda { |val| !val.hometown.nil? }
-	  attributes :skill,      :if => lambda { |val| !val.skill.nil? }
 	  attributes :address,  :if => lambda { |val| !val.address.nil? }
 	  attributes :training_field,    :if => lambda { |val| !val.training_field.nil? }
 	  attributes :training_address,  :if => lambda { |val| !val.training_address.nil? }

@@ -1,3 +1,4 @@
+#门店咨询
 class Consultant
   include DataMapper::Resource
 

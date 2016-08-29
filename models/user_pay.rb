@@ -1,3 +1,4 @@
+#用户缴费记录
 class UserPay
   include DataMapper::Resource
 

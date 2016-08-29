@@ -29,26 +29,6 @@ Tekala::Coach.controllers  :v1, :orders  do
     render 'order'
   end
 
-  #添加user 评论
-  post '/', :provides => [:json] do 
-  	@order = Order.get params[:order_id]
-    return {:status => "failure", :msg => '订单不存在' }.to_json if !@order
-  	return {:status => "failure", :msg => '评论失败' }.to_json if @order && !@order.teacher_can_comment
-
-    @comment            = UserComment.new
-    @comment.content    = params[:content]
-    @comment.order_id   = @order.id
-    @comment.rate       = params[:rate] if !params[:rate].nil? && !params[:rate].empty?
-    @comment.user_id    = @order.user_id
-    @comment.teacher_id = @teacher.id
-    if @comment.save
-     render 'user_comment'
-    else
-      {:status => :failure, :msg => @comment.errors.full_messages.join(',') }.to_json
-    end
-    
-  end
-
   get :done, :provides => [:json] do 
     @teacher.check_order
 

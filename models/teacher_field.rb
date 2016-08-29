@@ -1,3 +1,4 @@
+#教练驾校关联
 class TeacherTrainField
   
   include DataMapper::Resource

@@ -1,3 +1,4 @@
+#练车订单,非报名订单
 class Order
   include DataMapper::Resource
   attr_accessor :no_jpush
@@ -78,7 +79,7 @@ class Order
   belongs_to :teacher
   belongs_to :train_field
 
-  has 1, :user_comment
+  has 1, :teacher_comment
 
   #教练接单
   has 1, :order_confirm
@@ -211,18 +212,6 @@ class Order
 
   def pay_at_format
    pay_at ? pay_at.strftime('%Y-%m-%d %H:%M') : ''
-  end
-
-  def promotion_amount
-    promotion = amount.to_f-discount.to_f
-
-    if promotion > 0
-      self.update(:vip => 0)
-      promotion
-    else
-      self.update(:vip => 1)
-      0
-    end
   end
 
 

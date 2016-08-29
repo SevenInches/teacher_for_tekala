@@ -1,3 +1,4 @@
+#教练得到的评价
 class TeacherComment
   include DataMapper::Resource
 
@@ -8,18 +9,14 @@ class TeacherComment
   property :rate, Integer, :default => 5
   property :content, Text, :lazy => false 
   property :created_at, DateTime
-  property :anonymous, Integer, :default => 0
 
   #一个订单一条评论
   property :order_id, Integer
 
   belongs_to :user
   belongs_to :teacher
-  belongs_to :order
 
-  has n, :photos, :model => 'CommentPhoto', :child_key =>'comment_id' , :constraint => :destroy
-  
   def created_format
-    
+    created_at.strftime('%Y-%m-%d %H:%M')
   end
 end

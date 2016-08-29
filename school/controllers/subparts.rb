@@ -25,6 +25,7 @@ Tekala::School.controllers :v1, :subparts  do
     array = $redis.lrange $school_remark, 0, -1
     if array.present?
       @notices = []
+      @total   = 0
       count_hash = count_array(array)
       parts = Subpart.all.all(:weight.gt => 0)
       parts.each do |part|
@@ -32,6 +33,7 @@ Tekala::School.controllers :v1, :subparts  do
         count_hash.each do |value|
           if value[0].to_s == part.name
             part.count = value[1]
+            @total += value[1]
           end
         end
         @notices  << part

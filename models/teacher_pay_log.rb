@@ -1,3 +1,4 @@
+#教练工资
 class TeacherPayLog
   include DataMapper::Resource
 

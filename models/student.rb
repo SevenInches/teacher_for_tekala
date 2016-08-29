@@ -1,3 +1,4 @@
+#门店报名学员 Dragon添加
 class Student
   include DataMapper::Resource
 

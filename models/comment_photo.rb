@@ -1,3 +1,4 @@
+#评论图片
 class CommentPhoto
   include DataMapper::Resource
 

@@ -1,3 +1,4 @@
+#新闻
 class News
   include DataMapper::Resource
 
