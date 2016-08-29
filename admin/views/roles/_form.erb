@@ -15,7 +15,7 @@
 <div class="form-group ">
   <label class="col-sm-2 control-label">角色</label>
   <div class="col-sm-10">
-    <%= f.select :role_id, :options => RoleUser.get_role.invert, :class => 'form-control' %>
+    <%= f.select :cate, :options => Role.get_cate.invert, :class => 'form-control' %>
   </div>
 </div>
 

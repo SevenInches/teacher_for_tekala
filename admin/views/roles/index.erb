@@ -38,7 +38,7 @@
           <tbody>
           <% @users.each do |user|%>
             <tr>
-              <td><%= user.role_word%></td>
+              <td><%= user.cate_word%></td>
               <td><%= user.name%></td>
               <td><%= user.mobile%></td>
               <td><%= user.last_login_at %></td>
@@ -91,6 +91,7 @@
           </div>
           <div class="modal-body">
             <form action="/web/roles/change" class="form-horizontal" method="post">
+              <input type="hidden" value="" name="user_id" id="input-id">
               <div class="form-group ">
                 <label class="col-sm-2 control-label">新密码</label>
                 <div class="col-sm-10">
@@ -145,9 +146,9 @@
       location.href = '?role_id=' + _val;
     });
 
-    var $mobile = $('#mobile');
+    var $id = $('#input-id');
     $(document).on('click','.change-psd',function(){
-      $mobile.val($(event.target).attr('data-id'));
+      $id.val($(event.target).attr('data-id'));
     })
   })
 </script>

@@ -36,6 +36,7 @@ class Role
   def change_psd(school_no, mobile,old_password, new_password , confirm_password)
     role_user = self.class.authenticate(school_no, mobile, old_password)
     if role_user && new_password == confirm_password
+      role_user.crypted_password = 'modify pwd'
       role_user.password = new_password
       role_user.save
       role_user
@@ -44,9 +45,10 @@ class Role
     end
   end
 
-  def change_other_psd(id, new_password , confirm_password)
-    user = Role.first(:id => id)
+  def self.change_other_psd(user_id, new_password , confirm_password)
+    user = Role.first(:id => user_id)
     if user && new_password == confirm_password
+      user.crypted_password = 'modify pwd'
       user.password = new_password
       user.save
       user

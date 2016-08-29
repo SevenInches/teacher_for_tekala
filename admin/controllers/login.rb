@@ -5,13 +5,12 @@ Tekala::Admin.controllers :login do
   end
 
   post :create do
-    role_user = RoleUser.authenticate(params[:school], params[:phone], params[:password])
-    p role_user
+    role_user = Role.authenticate(params[:school], params[:phone], params[:password])
     if role_user.present?
       set_current_account(role_user)
-      session[:role_id] = role_user.role_id
+      # session[:role_id] = role_user.role_id
       session[:role_user_id] = role_user.id
-      session[:school_no] = params[:school]
+      session[:school_no] = role_user.school_id
       session[:mobile]    = params[:phone].to_i
       session[:school_id] = School.first(:school_no => params[:school]).id
       redirect url(:base, :index)

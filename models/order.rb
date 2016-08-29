@@ -312,7 +312,7 @@ class Order
 
   def book_time_conversion
     hour = quantity ? quantity : '0'
-    book_time.strftime("%Y-%m-%d %H:%M:%S") + '-' + (book_time + quantity.to_i.hours).strftime("%H:%M:%S") +'|' + hour.to_s + '小时'
+      book_time.strftime("%Y年%m月%d日 %H") + '点-' + (book_time + quantity.to_i.hours).strftime("%H") +'点, ' + hour.to_s + '小时'
   end
 
 end
