@@ -5,8 +5,7 @@ migration 1, :create_users do
       column :id, Integer, :serial => true
       column :id_card, DataMapper::Property::String, :length => 255
       column :password, DataMapper::Property::String, :length => 255 
-      column :crypted_password, DataMapper::Property::String, :length => 255 
-      column :cookie, DataMapper::Property::Text
+      column :crypted_password, DataMapper::Property::String, :length => 255
       column :name, DataMapper::Property::String, :length => 255
       column :mobile, DataMapper::Property::String, :length => 255
       column :city, DataMapper::Property::String, :length => 255
