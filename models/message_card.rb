@@ -11,7 +11,7 @@ class MessageCard
   property :weight, Integer
   property :url, String
   property :click_num, Integer, :default => 0
-  property :url, String
+  property :tag, String
   property :created_at, DateTime
 
    def date
