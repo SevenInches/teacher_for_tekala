@@ -103,7 +103,7 @@ Tekala::School.controllers :v1, :signups  do
             render 'signup'
           end
         else
-          {:status => :failure, :msg => @data.errors.first.first}.to_json
+         {:status => :failure, :msg => @data.errors.first.first}.to_json
         end
       end
     else
