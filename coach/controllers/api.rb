@@ -3,13 +3,19 @@ Tekala::Coach.controllers :v1 do
   register WillPaginate::Sinatra
   enable :sessions
   Rabl.register!
-  before :except => [:login, :unlogin, :logout, :about, :letter, :pay_record, :rank] do
+  before :except => [:launch_ad, :login, :unlogin, :logout, :about, :letter, :pay_record, :rank] do
 	  if session[:teacher_id]
 	    @teacher = Teacher.get(session[:teacher_id])
 	  else
 	    redirect_to(url(:v1, :unlogin))  
 	  end
 	end
+
+	get :launch_ad, :provides => [:json] do
+		channel = params[:channel].present? ? params[:channel] : 0
+		@ad = AppLaunchAd.first(:channel => channel, :status=> 2)
+		render 'ad'
+  end
 
 	post :login, :provides => [:json] do
 	    @teacher = Teacher.authenticate(params[:mobile], params[:password])
