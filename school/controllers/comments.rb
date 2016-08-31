@@ -20,6 +20,7 @@ Tekala::School.controllers :v1, :comments do
         user_ids    = users.aggregate(:id)
         @comments   =  TeacherComment.all(:order => :created_at.desc, :user_id => user_ids)
         @total      =  @comments.count
+        @comments   =  @comments .all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
         render 'comments'
       end
     end
