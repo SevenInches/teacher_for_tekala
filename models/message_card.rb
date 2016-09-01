@@ -14,7 +14,7 @@ class MessageCard
   property :tag, String
   property :created_at, DateTime
 
-   def date
+  def date
     created_at.strftime('%y年%m月%d日') if created_at.present?
   end
 
