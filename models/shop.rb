@@ -20,7 +20,7 @@ class Shop
   property :crypted_password, String, :length => 70
   property :student_count, DataMapper::Property::Integer, :default => 0 # 招生人数
   property :consultant_count, DataMapper::Property::Integer, :default => 0 # 咨询人数
-  property :longtitude, String
+  property :longitude, String
   property :latitude, String
   property :school_id, Integer
 
