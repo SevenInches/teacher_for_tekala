@@ -1,5 +1,4 @@
 Tekala::School.controllers :v1, :pushes do
-
   before :except => [] do
     if session[:school_id]
       @school = School.get(session[:school_id])
@@ -58,7 +57,16 @@ Tekala::School.controllers :v1, :pushes do
     end
   end
 
-  delete :index, :map => 'v1/pushes/:id', :provides => [:json] do
+  get :send, :map => 'v1/pushes/send/:push_id' do
+    push = Push.get(params[:push_id])
+    if push.jpush
+      {:status => :success, :msg => '推送成功'}.to_json
+    else
+      {:status => :failure, :msg => '推送失败'}.to_json
+    end
+  end
+
+  delete :push, :map => 'v1/pushes/:id', :provides => [:json] do
     @push = Push.first(:id => params[:id])
     if @push.present?
       { :status => @push.destroy ? :success : :failure }.to_json
@@ -66,5 +74,4 @@ Tekala::School.controllers :v1, :pushes do
       { :status => :failure, :msg => '该通知已删除' }.to_json
     end
   end
-
 end

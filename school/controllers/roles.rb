@@ -16,7 +16,7 @@ Tekala::School.controllers :v1, :roles  do
     else
       @roles  = @school.roles
       @total  = @roles.count
-      @roles  = @roles.paginate(:per_page => 20, :page => params[:page])
+      @roles  = @roles.all(:order => :created_at.desc).paginate(:per_page => 20, :page => params[:page])
     end
     render 'roles'
   end

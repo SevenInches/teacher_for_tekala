@@ -4,7 +4,7 @@ Tekala::School.controllers :v1 do
   enable :sessions
   Rabl.register!
 
-  before :except => [:login, :unlogin, :logout, :price, :news, :daily, :push] do
+  before :except => [:launch_ad, :login, :unlogin, :logout, :price, :news, :daily, :push] do
 	  if session[:school_id]
 	    @school = School.get(session[:school_id])
 			@role = Role.get(session[:role_id])
@@ -13,6 +13,12 @@ Tekala::School.controllers :v1 do
 	    redirect_to(url(:v1, :unlogin))  
 	  end
 	end
+
+	get :launch_ad, :provides => [:json] do
+		channel = params[:channel].present? ? params[:channel] : 0
+		@ad = AppLaunchAd.first(:channel => channel, :status=> 3)
+		render 'ad'
+  end
 
 	post :login, :provides => [:json] do
 		if params[:demo].present?

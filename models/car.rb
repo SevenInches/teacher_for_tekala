@@ -16,6 +16,7 @@ class Car
   property :exam_type, Integer
   property :open, Boolean, :default => 1
   property :teacher_id, Integer
+  property :created_at, DateTime
 
   has 1, :check
 

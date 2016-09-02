@@ -30,7 +30,7 @@ Tekala::School.controllers :v1, :shops  do
       @shop.name = params[:name]
       @shop.address = params[:address]
       @shop.latitude = params[:latitude] if params[:latitude].present?
-      @shop.longtitude = params[:longtitude] if params[:longtitude].present?
+      @shop.longitude = params[:longitude] if params[:longitude].present?
       @shop.area = params[:area] if params[:area].present?
       @shop.rent_amount = params[:rent_amount] if params[:rent_amount].present?
       @shop.contact_user = params[:contact_user] if params[:contact_user].present?
@@ -51,7 +51,7 @@ Tekala::School.controllers :v1, :shops  do
       @shop.name   = params[:name]            if params[:name].present?
       @shop.address   = params[:address]      if params[:address].present?
       @shop.latitude   = params[:latitude]      if params[:latitude].present?
-      @shop.longtitude = params[:longtitude]    if params[:longtitude].present?
+      @shop.longitude = params[:longitude]    if params[:longitude].present?
       @shop.area       = params[:area]    if params[:area].present?
       @shop.rent_amount   = params[:rent_amount]    if params[:rent_amount].present?
       @shop.contact_user  = params[:contact_user]   if params[:contact_user].present?
@@ -76,5 +76,4 @@ Tekala::School.controllers :v1, :shops  do
       {:status => :failure, :msg => '参数错误'}.to_json
     end
   end
-
 end
