@@ -15,7 +15,7 @@ Tekala::School.controllers :v1, :subparts  do
       @subparts =  Subpart.first(:weight.not => 0)
       @total    =  1
     else
-      @subparts = Subpart.all(:weight.gt => 0)
+      @subparts = Subpart.all(:weight.gt => 0,:order => :weight.asc)
       @total 		= @subparts.count
     end
     render 'subparts'
