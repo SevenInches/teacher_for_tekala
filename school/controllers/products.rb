@@ -42,7 +42,7 @@ Tekala::School.controllers :v1, :products  do
   end
 
   put :products, :map => '/v1/products/:product_id', :provides => [:json] do
-    @product = Product.get(params[:id])
+    @product = Product.get(params[:product_id])
     if @product.present?
       @product.name          = params[:name]      if params[:name].present?
       @product.detail        = params[:detail]    if params[:detail].present?
