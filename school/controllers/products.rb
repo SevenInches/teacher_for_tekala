@@ -29,6 +29,7 @@ Tekala::School.controllers :v1, :products  do
       @product.promotion	   = params[:promotion]     if params[:promotion].present?
       @product.description   = params[:description]   if params[:description].present?
       @product.introduction  = params[:introduction]  if params[:introduction].present?
+      @product.exam_type     = params[:exam_type]     if params[:exam_type].present?
       @product.show          = 1
       @product.city_id       = @school.city_id
       @product.school_id     = @school.id
@@ -50,6 +51,7 @@ Tekala::School.controllers :v1, :products  do
       @product.show          = params[:show]      if params[:show].present?
       @product.description   = params[:description]   if params[:description].present?
       @product.introduction  = params[:introduction]  if params[:introduction].present?
+      @product.exam_type     = params[:exam_type]     if params[:exam_type].present?
       if @product.save
         render 'product'
       end

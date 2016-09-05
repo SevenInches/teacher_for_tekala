@@ -42,8 +42,8 @@ Tekala::School.controllers :v1, :pushes do
     end
   end
 
-  put :push, :map => 'v1/pushes/:id', :provides => [:json] do
-    @push = Push.get(params[:id])
+  put :push, :map => 'v1/pushes/:push_id', :provides => [:json] do
+    @push = Push.get(params[:push_id])
     if @push.present?
       @push.message      =  params[:message]       if params[:message].present?
       @push.type         =  params[:type]          if params[:type].present?
