@@ -45,9 +45,9 @@ Tekala::School.controllers :v1, :shops  do
     end
   end
 
-  put :shops, :map => '/v1/shops', :provides => [:json] do
-    if params[:id].present?
-      @shop = Shop.get(params[:id])
+  put :shops, :map => '/v1/shops/:shop_id', :provides => [:json] do
+    @shop = Shop.get(params[:shop_id])
+    if @shop.present?
       @shop.name   = params[:name]            if params[:name].present?
       @shop.address   = params[:address]      if params[:address].present?
       @shop.latitude   = params[:latitude]      if params[:latitude].present?
@@ -61,7 +61,7 @@ Tekala::School.controllers :v1, :shops  do
         render 'shop'
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '该门店不存在'}.to_json
     end
   end
 
