@@ -47,10 +47,12 @@ Tekala::School.controllers :v1, :news  do
     end
   end
 
-  get :new, :map => '/v1/news/:id', :provides => [:json] do
-    @news = News.get(params[:id])
-    if @news
-      render 'new'
+  delete :new, :map => '/v1/news/:news_id', :provides => [:json] do
+    news = News.get(params[:news_id])
+    if news.present?
+      if news.destroy
+        {:status => :success, :msg => "此新闻(id:#{params[:news_id]})删除成功"}.to_json
+      end
     else
       {:status => :failure, :msg => '此新闻id不存在'}.to_json
     end

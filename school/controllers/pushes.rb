@@ -57,7 +57,7 @@ Tekala::School.controllers :v1, :pushes do
     end
   end
 
-  get :send, :map => 'v1/pushes/send/:push_id' do
+  get :send, :map => 'v1/pushes/send/:push_id', :provides => [:json] do
     push = Push.get(params[:push_id])
     if push.jpush
       {:status => :success, :msg => '推送成功'}.to_json
