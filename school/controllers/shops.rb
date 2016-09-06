@@ -65,15 +65,15 @@ Tekala::School.controllers :v1, :shops  do
     end
   end
 
-  delete :shops, :map => '/v1/shops', :provides => [:json] do
-    if params[:shop_id].present?
-      shop      = Shop.get(params[:shop_id])
-      shop_name = shop.name
+  delete :shops, :map => '/v1/shops/:shop_id', :provides => [:json] do
+    shop      = Shop.get(params[:shop_id])
+    if shop.present?
+    shop_name = shop.name
       if shop.destroy
         {:status => :success, :msg => "#{shop_name}已经被删除"}.to_json
       end
     else
-      {:status => :failure, :msg => '参数错误'}.to_json
+      {:status => :failure, :msg => '该门店不存在'}.to_json
     end
   end
 end
