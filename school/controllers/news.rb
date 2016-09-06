@@ -36,14 +36,18 @@ Tekala::School.controllers :v1, :news  do
     end
   end
 
-  put :news, :map => 'v1/news/:news_id' do
-    @news = News.get(session[:news_id])
-    @news.title   = params[:title]     if params[:title].present?
-    @news.content = params[:content]   if params[:content].present?
-    @news.photo   = params[:photo]     if params[:photo].present?
-    @news.view_count = params[:view_count] if params[:view_count].present?
-    if @news.save
-      render 'new'
+  put :news, :map => 'v1/news/:news_id', :provides => [:json] do
+    @news = News.get(params[:news_id])
+    if @news.present?
+      @news.title   = params[:title]     if params[:title].present?
+      @news.content = params[:content]   if params[:content].present?
+      @news.photo   = params[:photo]     if params[:photo].present?
+      @news.view_count = params[:view_count] if params[:view_count].present?
+      if @news.save
+        render 'new'
+      end
+    else
+      {:status => :failure, :msg => '此新闻id不存在'}.to_json
     end
   end
 

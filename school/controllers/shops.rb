@@ -50,9 +50,9 @@ Tekala::School.controllers :v1, :shops  do
     if @shop.present?
       @shop.name   = params[:name]            if params[:name].present?
       @shop.address   = params[:address]      if params[:address].present?
-      @shop.latitude   = params[:latitude]      if params[:latitude].present?
+      @shop.latitude   = params[:latitude]    if params[:latitude].present?
       @shop.longitude = params[:longitude]    if params[:longitude].present?
-      @shop.area       = params[:area]    if params[:area].present?
+      @shop.area       = params[:area]        if params[:area].present?
       @shop.rent_amount   = params[:rent_amount]    if params[:rent_amount].present?
       @shop.contact_user  = params[:contact_user]   if params[:contact_user].present?
       @shop.contact_phone = params[:contact_phone]  if params[:contact_phone].present?
