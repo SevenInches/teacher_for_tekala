@@ -56,7 +56,7 @@ Tekala::School.controllers :v1, :shops  do
       @shop.rent_amount   = params[:rent_amount]    if params[:rent_amount].present?
       @shop.contact_user  = params[:contact_user]   if params[:contact_user].present?
       @shop.contact_phone = params[:contact_phone]  if params[:contact_phone].present?
-      @shop.profile       = params[:profile]  if params[:profile].present?
+      @shop.profile       = params[:profile]        if params[:profile].present?
       if @shop.save
         render 'shop'
       end
